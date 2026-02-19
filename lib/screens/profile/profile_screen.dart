@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'edit_profile_screen.dart';
 import 'saved_addresses_screen.dart';
+import '../orders/order_history_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -124,7 +125,14 @@ class ProfileScreen extends StatelessWidget {
                     Icons.receipt_long_outlined,
                     "Order History",
                     "View your past orders",
-                    () {},
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const OrderHistoryScreen(),
+                        ),
+                      );
+                    },
                   ),
                   _divider(),
                   _menuItem(
