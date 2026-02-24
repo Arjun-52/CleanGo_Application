@@ -5,10 +5,12 @@ class ServiceTile extends StatelessWidget {
   final Color iconColor;
   final String title;
   final String subtitle;
+  final VoidCallback? onTap;
 
   const ServiceTile({
     super.key,
     required this.icon,
+    required this.onTap,
     required this.iconColor,
     required this.title,
     required this.subtitle,
@@ -17,7 +19,7 @@ class ServiceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/select-location'),
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

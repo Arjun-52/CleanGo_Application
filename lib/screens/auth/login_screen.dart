@@ -1,3 +1,4 @@
+import 'package:clean_go/routes/app_routes.dart' show AppRoutes;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,11 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         setState(() => _isLoading = false);
         print("DEBUG: Bypass - Navigating to OTP screen");
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (_) => OtpScreen(verificationId: "test-verification-id"),
-          ),
+          AppRoutes.otp,
+          arguments: "test-verification-id",
         );
       }
     });

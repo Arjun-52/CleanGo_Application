@@ -1,3 +1,4 @@
+import 'package:clean_go/widgets/order_screens_widgets/order_timeline.dart';
 import 'package:flutter/material.dart';
 
 class OrderTrackingScreen extends StatelessWidget {
@@ -10,10 +11,9 @@ class OrderTrackingScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF6F7F9),
 
-      /// APPBAR
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 1,
+        elevation: 5,
         leading: const BackButton(color: Colors.black),
         title: const Text(
           "Order Tracking",
@@ -21,7 +21,6 @@ class OrderTrackingScreen extends StatelessWidget {
         ),
       ),
 
-      /// BODY
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -53,7 +52,6 @@ class OrderTrackingScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
 
-                      /// Order details
                       const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +68,6 @@ class OrderTrackingScreen extends StatelessWidget {
                         ),
                       ),
 
-                      /// Status
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
@@ -129,148 +126,71 @@ class OrderTrackingScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
 
-            /// TIMELINE
-            _timelineCard(),
+            /// ✅ NEW TIMELINE WIDGET
+            const OrderTimeline(),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
 
             /// QR + OTP
-            _qrOtpCard(),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: const [
+                  BoxShadow(color: Colors.black12, blurRadius: 6),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Order QR Code & OTP",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  Container(
+                    height: 110,
+                    width: 110,
+                    color: Colors.black,
+                    child: const Center(
+                      child: Icon(Icons.qr_code, color: Colors.white, size: 60),
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+                  const Text(
+                    "CLN-2026-001-QR",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+
+                  const Divider(height: 24),
+
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.key, size: 18, color: Colors.grey),
+                      SizedBox(width: 6),
+                      Text("Pickup OTP", style: TextStyle(color: Colors.grey)),
+                    ],
+                  ),
+
+                  const SizedBox(height: 4),
+
+                  const Text(
+                    "5646",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
-      ),
-    );
-  }
-
-  /// ---------- TIMELINE CARD ----------
-  static Widget _timelineCard() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text("Order Timeline", style: TextStyle(fontWeight: FontWeight.bold)),
-
-          SizedBox(height: 16),
-
-          _TimelineStep("Order Confirmed", "Feb 26, 02:58 PM", true),
-          _TimelineStep("Items Pickup Up", "Feb 26, 3:18 PM", true),
-          _TimelineStep("Processing at Facility", "Feb 27, 11:02", true),
-          _TimelineStep("Quality Check", "", true, active: true),
-          _TimelineStep("Out For Delivery", "Feb 28, 01:02 PM", false),
-          _TimelineStep("Delivered", "Feb 28, 03:00 PM", false),
-        ],
-      ),
-    );
-  }
-
-  /// ---------- QR & OTP CARD ----------
-  static Widget _qrOtpCard() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
-      ),
-      child: Column(
-        children: [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Order QR Code & OTP",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          /// QR placeholder
-          Container(
-            height: 110,
-            width: 110,
-            color: Colors.black,
-            child: const Center(
-              child: Icon(Icons.qr_code, color: Colors.white, size: 60),
-            ),
-          ),
-
-          const SizedBox(height: 10),
-          const Text("CLN-2026-001-QR", style: TextStyle(color: Colors.grey)),
-
-          const Divider(height: 24),
-
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.key, size: 18, color: Colors.grey),
-              SizedBox(width: 6),
-              Text("Pickup OTP", style: TextStyle(color: Colors.grey)),
-            ],
-          ),
-
-          const SizedBox(height: 4),
-
-          const Text(
-            "5646",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// ---------- TIMELINE STEP ----------
-class _TimelineStep extends StatelessWidget {
-  final String title;
-  final String time;
-  final bool done;
-  final bool active;
-
-  const _TimelineStep(this.title, this.time, this.done, {this.active = false});
-
-  @override
-  Widget build(BuildContext context) {
-    final color = active
-        ? Colors.teal
-        : done
-        ? Colors.teal
-        : Colors.grey.shade400;
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        children: [
-          Icon(
-            done ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: color,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                ),
-                if (time.isNotEmpty)
-                  Text(
-                    time,
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      /// Start app at login screen
       initialRoute: AppRoutes.login,
 
       routes: AppRoutes.routes,

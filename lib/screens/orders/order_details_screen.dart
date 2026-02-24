@@ -180,4 +180,19 @@ class OrderDetailsScreen extends StatelessWidget {
   }
 }
 
-QrOtpCard() {}
+Widget QrOtpCard() {
+  return ReusableCard(
+    child: Column(
+      children: const [
+        Icon(Icons.qr_code, size: 60, color: Colors.black),
+        SizedBox(height: 8),
+        Text(
+          "Show this QR at pickup",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 6),
+        Text("OTP: 1234", style: TextStyle(color: Colors.grey)),
+      ],
+    ),
+  );
+}

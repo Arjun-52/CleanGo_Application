@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../routes/app_routes.dart';
 
 class AddressFormSheet extends StatefulWidget {
   const AddressFormSheet({super.key});
@@ -18,22 +19,16 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(22),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           /// LOCATION TITLE
           const Text(
             "Madhapur, Hyderabad",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
 
           const SizedBox(height: 4),
@@ -105,12 +100,16 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
                 ),
               ),
               onPressed: () {
-                Navigator.pop(context);
+                onPressed:
+                () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    AppRoutes.main,
+                    (route) => false,
+                  );
+                };
               },
-              child: const Text(
-                "Done",
-                style: TextStyle(color: Colors.white),
-              ),
+              child: const Text("Done", style: TextStyle(color: Colors.white)),
             ),
           ),
 
@@ -126,8 +125,7 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
     return GestureDetector(
       onTap: () => setState(() => selectedType = type),
       child: Container(
-        padding:
-            const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(

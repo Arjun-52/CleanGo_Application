@@ -51,30 +51,21 @@ class _OtpScreenState extends State<OtpScreen> {
     String otp = getOtp();
 
     if (otp.length != 6) {
-      showError("Enter valid OTP");
+      showError("Enter 6 digit OTP");
       return;
     }
 
     setState(() => isLoading = true);
 
-    try {
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: widget.verificationId,
-        smsCode: otp,
-      );
+    // Simulate network delay
+    await Future.delayed(const Duration(seconds: 1));
 
-      await _auth.signInWithCredential(credential);
+    if (!mounted) return;
 
-      if (mounted) {
-        setState(() => isLoading = false);
-        Navigator.pushReplacementNamed(context, AppRoutes.main);
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() => isLoading = false);
-        showError("Invalid OTP");
-      }
-    }
+    setState(() => isLoading = false);
+
+    // Navigate regardless of OTP
+    Navigator.pushReplacementNamed(context, AppRoutes.selectLocation);
   }
 
   void showError(String msg) {

@@ -59,7 +59,12 @@ class AppRoutes {
   static Map<String, WidgetBuilder> get routes => {
     splash: (context) => const SplashScreen(),
     login: (context) => const LoginScreen(),
-    otp: (context) => OtpScreen(verificationId: ''),
+    otp: (context) {
+      final verificationId =
+          ModalRoute.of(context)!.settings.arguments as String;
+
+      return OtpScreen(verificationId: verificationId);
+    },
 
     selectLocation: (context) => const SelectLocationScreen(),
     confirmLocation: (context) => const ConfirmLocationScreen(),
@@ -104,9 +109,38 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _screens),
-      bottomNavigationBar: BottomNavBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xff0B3C5D),
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.inventory_2_outlined),
+            label: "Orders",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.access_time),
+            label: "Track",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_wallet_outlined),
+            label: "Wallet",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: "Profile",
+          ),
+        ],
       ),
     );
   }

@@ -8,33 +8,43 @@ class OrderTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ReusableCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            "Order Timeline",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          SizedBox(height: 14),
-          TimelineItem(
-            title: "Order Confirmed",
-            time: "Feb 26, 02:58 PM",
-            completed: true,
-          ),
-          TimelineItem(
-            title: "Items Picked Up",
-            time: "Feb 26, 03:18 PM",
-            completed: true,
-          ),
-          TimelineItem(
-            title: "Processing at Facility",
-            time: "Feb 27, 11:02",
-            completed: true,
-          ),
-          TimelineItem(title: "Quality Check", time: "", active: true),
-          TimelineItem(title: "Out For Delivery", time: ""),
-          TimelineItem(title: "Delivered", time: ""),
-        ],
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        constraints: const BoxConstraints(minHeight: 420),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              "Order Timeline",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            SizedBox(height: 20),
+
+            TimelineItem(
+              title: "Order Confirmed",
+              time: "Feb 26, 02:58 PM",
+              completed: true,
+            ),
+
+            TimelineItem(
+              title: "Items Picked Up",
+              time: "Feb 26, 03:18 PM",
+              completed: true,
+            ),
+
+            TimelineItem(
+              title: "Processing at Facility",
+              time: "Feb 27, 11:02 AM",
+              completed: true,
+            ),
+
+            TimelineItem(title: "Quality Check", time: "", active: true),
+
+            TimelineItem(title: "Out For Delivery", time: ""),
+
+            TimelineItem(title: "Delivered", time: "", isLast: true),
+          ],
+        ),
       ),
     );
   }

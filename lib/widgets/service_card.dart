@@ -35,7 +35,7 @@ class ServiceCard extends StatelessWidget {
                 ),
                 child: Icon(icon, size: 32, color: iconColor ?? Colors.blue),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               Text(
                 title,
                 style: const TextStyle(fontWeight: FontWeight.bold),
@@ -43,7 +43,11 @@ class ServiceCard extends StatelessWidget {
               ),
               if (subtitle != null) ...[
                 const SizedBox(height: 4),
-                Text(subtitle!, style: const TextStyle(fontSize: 12, color: Colors.grey), textAlign: TextAlign.center),
+                Text(
+                  subtitle!,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
               ],
             ],
           ),

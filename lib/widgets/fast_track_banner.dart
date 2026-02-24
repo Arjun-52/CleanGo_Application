@@ -8,13 +8,13 @@ class FastTrackBanner extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Container(
-        height: 80,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: BoxDecoration(
           color: const Color(0xFF008847),
           borderRadius: BorderRadius.circular(18),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               padding: const EdgeInsets.all(12),
@@ -25,25 +25,31 @@ class FastTrackBanner extends StatelessWidget {
               child: const Icon(Icons.flash_on, color: Colors.green),
             ),
             const SizedBox(width: 12),
-            const Expanded(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                mainAxisSize: MainAxisSize.min,
+                children: const [
                   Text(
-                    "Fast track Mode",
+                    "Fast Track Mode",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(height: 2),
                   Text(
                     "Same-day delivery available!",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.white, fontSize: 13),
                   ),
                 ],
               ),
             ),
+            const SizedBox(width: 8),
             const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
           ],
         ),

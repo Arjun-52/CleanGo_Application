@@ -1,50 +1,40 @@
 import 'package:flutter/material.dart';
-import '../../widgets/home_header.dart';
-import '../../widgets/fast_track_banner.dart';
-import '../../widgets/active_order_card.dart';
-import '../../widgets/service_tile.dart';
+import 'home_content.dart';
+import '../orders/order_tracking_screen.dart';
+import '../orders/new_order_screen.dart';
+import '../../../widgets/bottom_navbar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = const [
+    HomeContent(),
+    NewOrderScreen(),
+    OrderTrackingScreen(),
+    Center(child: Text("Wallet")),
+    Center(child: Text("Profile")),
+  ];
+
+  void _onNavTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF5F5F5),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              HomeHeader(),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10),
-                    Text(
-                      "Hello, John!",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      "Fresh clothes, delivered with care",
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ),
-              FastTrackBanner(),
-              SizedBox(height: 20),
-              ActiveOrderCard(),
-              SizedBox(height: 20),
-            ],
-          ),
-        ),
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: _onNavTap,
       ),
     );
   }
