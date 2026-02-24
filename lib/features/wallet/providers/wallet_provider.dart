@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
-import '../services/payment_service.dart';
+import '../../../services/payment_service.dart';
 
 class WalletProvider with ChangeNotifier {
   final PaymentService _paymentService = PaymentService();
-  
+
   double _balance = 0.0;
   List<Map<String, dynamic>> _transactions = [];
   bool _isLoading = false;

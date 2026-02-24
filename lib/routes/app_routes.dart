@@ -24,10 +24,10 @@ import '../screens/services/service_detail_screen.dart';
 /// Booking
 import '../screens/booking/cart_screen.dart';
 import '../screens/booking/booking_summary_screen.dart';
-import '../screens/booking/payment_screen.dart';
+import '../features/payment/screens/booking_payment_screen.dart';
 
 /// Wallet & Profile
-import '../screens/wallet/wallet_screen.dart';
+import '../features/wallet/screens/wallet_screen.dart';
 import '../screens/profile/profile_screen.dart';
 import '../screens/profile/edit_profile_screen.dart';
 import '../screens/profile/saved_addresses_screen.dart';

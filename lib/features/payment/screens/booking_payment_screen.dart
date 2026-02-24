@@ -1,6 +1,6 @@
 import 'package:clean_go/screens/orders/order_placed_screen.dart';
-import 'package:clean_go/widgets/add_upi_row.dart';
-import 'package:clean_go/widgets/upi_option_tile.dart';
+import 'package:clean_go/features/payment/widgets/add_upi_row.dart';
+import 'package:clean_go/features/payment/widgets/upi_option_tile.dart';
 import 'package:clean_go/widgets/wallet_card.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:clean_go/screens/booking/payment_screen.dart';
+import 'package:clean_go/features/payment/screens/booking_payment_screen.dart';
 
 import 'package:clean_go/widgets/order_screens_widgets/order_section_card.dart';
 import 'package:clean_go/widgets/order_screens_widgets/order_item_row.dart';

@@ -147,7 +147,7 @@ class OrderDetailsScreen extends StatelessWidget {
         ),
       ),
 
-      /// ---------------- BOTTOM NAV ----------------
+      ///   BOTTOM NAV
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
