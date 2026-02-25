@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../models/booking_model.dart';
-import '../../../models/service_model.dart';
+import '../../services/models/service_model.dart';
 import '../services/booking_service.dart';
 
 class BookingProvider with ChangeNotifier {

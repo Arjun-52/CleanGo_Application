@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'address_form_screen.dart';
-import '../home/home_screen.dart';// ✅ Import Home Screen
+import 'package:clean_go/routes/app_routes.dart';
 
 class ConfirmLocationScreen extends StatelessWidget {
   const ConfirmLocationScreen({super.key});
@@ -13,7 +13,6 @@ class ConfirmLocationScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-
           /// REAL GOOGLE MAP
           Positioned.fill(
             child: GoogleMap(
@@ -39,10 +38,7 @@ class ConfirmLocationScreen extends StatelessWidget {
                   ),
                   const Text(
                     "Confirm Location",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
@@ -85,17 +81,10 @@ class ConfirmLocationScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: const Color(0x1A06C167),
-                border: Border.all(
-                  color: const Color(0xff06C167),
-                  width: 1.5,
-                ),
+                border: Border.all(color: const Color(0xff06C167), width: 1.5),
               ),
               child: const Center(
-                child: Icon(
-                  Icons.location_on,
-                  size: 40,
-                  color: Colors.red,
-                ),
+                child: Icon(Icons.location_on, size: 40, color: Colors.red),
               ),
             ),
           ),
@@ -107,30 +96,24 @@ class ConfirmLocationScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(20),
-                ),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   /// LOCATION INFO
                   const Row(
                     children: [
-                      Icon(Icons.location_on,
-                          color: Colors.blueGrey),
+                      Icon(Icons.location_on, color: Colors.blueGrey),
                       SizedBox(width: 8),
                       Expanded(
                         child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Hyderabad",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600),
+                              style: TextStyle(fontWeight: FontWeight.w600),
                             ),
                             Text(
                               "Bhagya Nagar Colony, Kukatpally,\nHyderabad, Telangana",
@@ -155,25 +138,16 @@ class ConfirmLocationScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryColor,
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       onPressed: () {
-                        // ✅ Navigate to Home Screen
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const HomeScreen(),
-                          ),
-                        );
+                        Navigator.pushReplacementNamed(context, AppRoutes.main);
+                        ;
                       },
                       child: const Text(
                         "Confirm Location",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16),
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
                   ),
@@ -186,27 +160,22 @@ class ConfirmLocationScreen extends StatelessWidget {
                     height: 50,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(
-                            color: primaryColor),
+                        side: const BorderSide(color: primaryColor),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       onPressed: () {
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
-                          backgroundColor:
-                              Colors.transparent,
-                          builder: (_) =>
-                              AddressFormSheet(),
+                          backgroundColor: Colors.transparent,
+                          builder: (_) => AddressFormSheet(),
                         );
                       },
                       child: const Text(
                         "Enter complete address",
-                        style: TextStyle(
-                            color: primaryColor),
+                        style: TextStyle(color: primaryColor),
                       ),
                     ),
                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/strings.dart';
-import '../../widgets/service_card.dart';
+import '../../../core/constants/strings.dart';
+import '../widgets/service_card.dart';
 
 class ServiceListScreen extends StatelessWidget {
   const ServiceListScreen({super.key});
@@ -8,9 +8,7 @@ class ServiceListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppStrings.services),
-      ),
+      appBar: AppBar(title: const Text(AppStrings.services)),
       body: GridView.count(
         crossAxisCount: 2,
         padding: const EdgeInsets.all(16),

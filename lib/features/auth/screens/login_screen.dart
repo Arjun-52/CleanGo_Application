@@ -131,6 +131,20 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               const Spacer(flex: 2),
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Icon(
+                  Icons.checkroom,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              ),
+
+              const SizedBox(height: 20),
 
               /// App Name
               const Text(

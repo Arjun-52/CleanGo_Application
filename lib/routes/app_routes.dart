@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-/// Splash & Auth
-import '../screens/splash/splash_screen.dart';
+//  Auth
 import '../features/auth/screens/login_screen.dart';
 import '../features/auth/screens/otp_screen.dart';
 
 /// Location
-import '../screens/location/select_location_screen.dart';
-import '../screens/location/confirm_location_screen.dart';
-import '../screens/location/address_form_screen.dart';
+import '../features/location/screens/select_location_screen.dart';
+import '../features/location/screens/confirm_location_screen.dart';
+import '../features/location/screens/address_form_screen.dart';
 
 /// Core Screens
 import '../screens/home/home_screen.dart';
@@ -18,8 +17,8 @@ import '../features/orders/screens/new_order_screen.dart';
 import '../features/orders/screens/order_tracking_screen.dart';
 
 /// Services
-import '../screens/services/service_list_screen.dart';
-import '../screens/services/service_detail_screen.dart';
+import '../features/services/screens/service_list_screen.dart';
+import '../features/services/screens/service_detail_screen.dart';
 
 /// Booking
 import '../features/booking/screens/cart_screen.dart';
@@ -36,7 +35,6 @@ import '../features/profile/screens/saved_addresses_screen.dart';
 import '../widgets/bottom_navbar.dart';
 
 class AppRoutes {
-  static const String splash = '/';
   static const String login = '/login';
   static const String otp = '/otp';
 
@@ -57,7 +55,6 @@ class AppRoutes {
   static const String savedAddresses = '/saved-addresses';
 
   static Map<String, WidgetBuilder> get routes => {
-    splash: (context) => const SplashScreen(),
     login: (context) => const LoginScreen(),
     otp: (context) {
       final verificationId =
