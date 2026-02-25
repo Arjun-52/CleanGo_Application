@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'order_review_screen.dart';
-import '../../widgets/bottom_navbar.dart';
+import '../../../widgets/bottom_navbar.dart';
 
 class SelectPickupSlotScreen extends StatefulWidget {
   const SelectPickupSlotScreen({super.key});

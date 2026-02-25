@@ -1,5 +1,5 @@
 import 'package:clean_go/routes/app_routes.dart';
-import 'package:clean_go/widgets/otp_input_field.dart';
+import 'package:clean_go/features/auth/widgets/otp_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

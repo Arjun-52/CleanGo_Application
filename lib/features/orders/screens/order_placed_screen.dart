@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:clean_go/screens/orders/order_tracking_screen.dart';
+import 'package:clean_go/features/orders/screens/order_tracking_screen.dart';
 
-import '../../routes/app_routes.dart';
+import '../../../routes/app_routes.dart';
 
 class OrderPlacedScreen extends StatelessWidget {
   const OrderPlacedScreen({super.key});

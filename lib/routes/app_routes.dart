@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 /// Splash & Auth
 import '../screens/splash/splash_screen.dart';
-import '../screens/auth/login_screen.dart';
-import '../screens/auth/otp_screen.dart';
+import '../features/auth/screens/login_screen.dart';
+import '../features/auth/screens/otp_screen.dart';
 
 /// Location
 import '../screens/location/select_location_screen.dart';
@@ -14,8 +14,8 @@ import '../screens/location/address_form_screen.dart';
 import '../screens/home/home_screen.dart';
 
 /// Orders
-import '../screens/orders/new_order_screen.dart';
-import '../screens/orders/order_tracking_screen.dart';
+import '../features/orders/screens/new_order_screen.dart';
+import '../features/orders/screens/order_tracking_screen.dart';
 
 /// Services
 import '../screens/services/service_list_screen.dart';

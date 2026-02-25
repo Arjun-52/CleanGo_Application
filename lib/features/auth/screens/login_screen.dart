@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../core/constants/colors.dart';
-import '../../widgets/custom_button.dart';
+import '../../../core/constants/colors.dart';
+import '../../../widgets/custom_button.dart';
 import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {

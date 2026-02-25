@@ -1,4 +1,5 @@
-import 'package:clean_go/screens/orders/order_placed_screen.dart';
+import 'package:clean_go/features/orders/screens/order_placed_screen.dart';
+
 import 'package:flutter/material.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -132,14 +133,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 ),
                 onPressed: () {
-  Navigator.of(context).pushAndRemoveUntil(
-    MaterialPageRoute(
-      builder: (_) => const OrderPlacedScreen(),
-    ),
-    (route) => false,
-  );
-},
-
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (_) => const OrderPlacedScreen(),
+                    ),
+                    (route) => false,
+                  );
+                },
 
                 child: const Text("Pay ₹95", style: TextStyle(fontSize: 16)),
               ),

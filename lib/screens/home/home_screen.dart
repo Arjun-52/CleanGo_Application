@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_content.dart';
-import '../orders/order_tracking_screen.dart';
-import '../orders/new_order_screen.dart';
+import '../../features/orders/screens/order_tracking_screen.dart';
+import '../../features/orders/screens/new_order_screen.dart';
 import '../../../widgets/bottom_navbar.dart';
 
 class HomeScreen extends StatefulWidget {

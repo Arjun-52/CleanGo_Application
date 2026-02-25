@@ -1,5 +1,6 @@
+import 'package:clean_go/models/tracking_model.dart';
+
 import '../models/order_model.dart';
-import '../models/tracking_model.dart';
 
 class OrderService {
   // Get all orders

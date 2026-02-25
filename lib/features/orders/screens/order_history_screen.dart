@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../orders/order_details_screen.dart';
+import 'package:clean_go/features/orders/screens/order_details_screen.dart';
 
 class OrderHistoryScreen extends StatelessWidget {
   const OrderHistoryScreen({super.key});

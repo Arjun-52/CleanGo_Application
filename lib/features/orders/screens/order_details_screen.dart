@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:clean_go/widgets/order_screens_widgets/order_info_card.dart';
-import 'package:clean_go/widgets/order_screens_widgets/order_items_card.dart';
-import 'package:clean_go/widgets/order_screens_widgets/order_timeline.dart';
-import 'package:clean_go/widgets/order_screens_widgets/reusable_card.dart';
+import 'package:clean_go/features/orders/widgets/order_info_card.dart';
+import 'package:clean_go/features/orders/widgets/order_items_card.dart';
+import 'package:clean_go/features/orders/widgets/order_timeline.dart';
+import 'package:clean_go/features/orders/widgets/reusable_card.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   final String orderId;

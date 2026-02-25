@@ -1,4 +1,4 @@
-import 'package:clean_go/widgets/order_screens_widgets/order_timeline.dart';
+import 'package:clean_go/features/orders/widgets/order_timeline.dart';
 import 'package:flutter/material.dart';
 
 class OrderTrackingScreen extends StatelessWidget {

@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
+import '../../../models/tracking_model.dart';
 import '../models/order_model.dart';
-import '../models/tracking_model.dart';
+
 import '../services/order_service.dart';
 
 class OrderProvider with ChangeNotifier {
   final OrderService _orderService = OrderService();
-  
+
   List<OrderModel> _activeOrders = [];
   List<OrderModel> _pastOrders = [];
   OrderModel? _currentOrder;

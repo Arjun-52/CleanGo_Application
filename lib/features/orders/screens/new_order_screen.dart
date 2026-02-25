@@ -8,7 +8,7 @@ import 'package:clean_go/widgets/item_row.dart';
 import 'package:clean_go/widgets/addon_row.dart';
 // ignore: unused_import
 import 'package:clean_go/widgets/service_card.dart';
-import 'package:clean_go/screens/orders/select_pickup_slot_screen.dart';
+import 'package:clean_go/features/orders/screens/select_pickup_slot_screen.dart';
 
 class NewOrderScreen extends StatefulWidget {
   const NewOrderScreen({super.key});

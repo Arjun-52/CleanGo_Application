@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import '../models/user_model.dart';
+import '../../../models/user_model.dart';
 import '../services/auth_service.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
-  
+
   UserModel? _user;
   bool _isLoading = false;
   String? _error;
