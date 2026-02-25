@@ -1,5 +1,5 @@
 import '../models/booking_model.dart';
-import '../models/service_model.dart';
+import '../../../models/service_model.dart';
 
 class BookingService {
   /// Get all services

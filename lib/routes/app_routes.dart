@@ -22,8 +22,8 @@ import '../screens/services/service_list_screen.dart';
 import '../screens/services/service_detail_screen.dart';
 
 /// Booking
-import '../screens/booking/cart_screen.dart';
-import '../screens/booking/booking_summary_screen.dart';
+import '../features/booking/screens/cart_screen.dart';
+import '../features/booking/screens/booking_summary_screen.dart';
 import '../features/payment/screens/booking_payment_screen.dart';
 
 /// Wallet & Profile

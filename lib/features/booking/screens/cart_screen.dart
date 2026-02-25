@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/strings.dart';
-import '../../widgets/custom_button.dart';
+import '../../../core/constants/strings.dart';
+import '../../../widgets/custom_button.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -16,9 +16,16 @@ class CartScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.shopping_cart_outlined, size: 64, color: Colors.grey),
+                  Icon(
+                    Icons.shopping_cart_outlined,
+                    size: 64,
+                    color: Colors.grey,
+                  ),
                   SizedBox(height: 16),
-                  Text('Your cart is empty', style: TextStyle(fontSize: 18, color: Colors.grey)),
+                  Text(
+                    'Your cart is empty',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
                 ],
               ),
             ),
