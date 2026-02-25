@@ -1,8 +1,8 @@
-import 'package:clean_go/widgets/active_order_card.dart';
-import 'package:clean_go/widgets/fast_track_banner.dart';
-import 'package:clean_go/widgets/home_header.dart';
+import 'active_order_card.dart';
+import 'fast_track_banner.dart';
+import 'home_header.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/service_tile.dart';
+import '../../services/widgets/service_tile.dart';
 
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});

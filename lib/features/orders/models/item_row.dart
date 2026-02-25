@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/item_model.dart';
+import 'item_model.dart';
 
 class ItemRow extends StatelessWidget {
   final ItemModel item;

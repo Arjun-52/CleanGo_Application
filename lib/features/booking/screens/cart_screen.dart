@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/strings.dart';
-import '../../../widgets/custom_button.dart';
+import '../../../core/common_widgets/custom_button.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});

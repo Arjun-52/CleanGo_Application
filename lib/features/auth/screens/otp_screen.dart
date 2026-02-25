@@ -1,6 +1,7 @@
 import 'package:clean_go/routes/app_routes.dart';
 import 'package:clean_go/features/auth/widgets/otp_input_field.dart';
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:firebase_auth/firebase_auth.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -13,8 +14,6 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   final List<TextEditingController> controllers = List.generate(
     6,
     (_) => TextEditingController(),

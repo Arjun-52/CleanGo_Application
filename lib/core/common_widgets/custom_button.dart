@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../core/constants/colors.dart';
+import '../constants/colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -30,8 +30,15 @@ class CustomButton extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         child: isLoading
-            ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))
-            : Text(text, style: TextStyle(color: textColor ?? AppColors.primary)),
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : Text(
+                text,
+                style: TextStyle(color: textColor ?? AppColors.primary),
+              ),
       );
     }
 
@@ -43,7 +50,14 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       child: isLoading
-          ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Colors.white,
+              ),
+            )
           : Text(text, style: TextStyle(color: textColor ?? Colors.white)),
     );
   }

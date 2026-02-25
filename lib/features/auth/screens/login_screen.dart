@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../core/constants/colors.dart';
-import '../../../widgets/custom_button.dart';
+import '../../../core/common_widgets/custom_button.dart';
+// ignore: unused_import
 import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {

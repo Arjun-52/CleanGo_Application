@@ -80,29 +80,70 @@ class OrderReviewScreen extends StatelessWidget {
                   const Divider(),
                   const SizedBox(height: 8),
 
-                  const Text("Pickup by", style: TextStyle(color: Colors.grey)),
-                  const SizedBox(height: 4),
-                  const Text(
-                    "Thursday, Jan 01, 09:00 - 11:00",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff0D47A1),
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.access_time, // clock icon
+                        size: 20,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(width: 10),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              "Pickup by",
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              "Thursday, Jan 01, 09:00 - 11:00",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff0D47A1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 14),
 
-                  const Text(
-                    "Estimated Delivery Date",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    "Saturday, Feb 28, 03:00 PM",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff0D47A1),
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.local_shipping_outlined, // delivery-style icon
+                        size: 20,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(width: 10),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              "Estimated Delivery Date",
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              "Saturday, Feb 28, 03:00 PM",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff0D47A1),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -180,8 +221,8 @@ class OrderReviewScreen extends StatelessWidget {
             OrderSectionCard(
               title: "Items (2)",
               children: const [
-                OrderItemRow(name: "Shirt", price: "₹30"),
-                OrderItemRow(name: "Trousers", price: "₹40"),
+                OrderItemRow(name: "Shirt", qty: 1, price: "₹30"),
+                OrderItemRow(name: "Trousers", qty: 1, price: "₹40"),
               ],
             ),
 

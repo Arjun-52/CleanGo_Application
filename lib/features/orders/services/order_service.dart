@@ -1,4 +1,4 @@
-import 'package:clean_go/models/tracking_model.dart';
+import 'package:clean_go/features/orders/models/tracking_model.dart';
 
 import '../models/order_model.dart';
 

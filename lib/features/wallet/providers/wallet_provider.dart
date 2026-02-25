@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../../../services/payment_service.dart';
+import '../../../core/services/payment_service.dart';
 
 class WalletProvider with ChangeNotifier {
   final PaymentService _paymentService = PaymentService();

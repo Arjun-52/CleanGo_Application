@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/strings.dart';
-import '../../../widgets/custom_button.dart';
+import '../../../core/common_widgets/custom_button.dart';
 
 class BookingSummaryScreen extends StatelessWidget {
   const BookingSummaryScreen({super.key});

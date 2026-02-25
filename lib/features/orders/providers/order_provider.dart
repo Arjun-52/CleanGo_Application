@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../../../models/tracking_model.dart';
+import '../models/tracking_model.dart';
 import '../models/order_model.dart';
 
 import '../services/order_service.dart';

@@ -19,170 +19,116 @@ class WalletScreen extends StatelessWidget {
       body: Column(
         children: [
           /// Wallet Card
-          Expanded(
-            flex: 3,
-            child: Container(
-              margin: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xff1E3A8A), Color(0xff3B82F6)],
+          Container(
+            height: 270,
+            child: Expanded(
+              flex: 2,
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 16,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Stack(
-                children: [
-                  /// Card Pattern
-                  Positioned(
-                    top: -50,
-                    right: -50,
-                    child: Container(
-                      width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.1),
+                child: Column(
+                  children: [
+                    ///
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(24),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Color(0xff1E3A8A), Color(0xff3B82F6)],
+                        ),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            "Available Balance",
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            "₹250",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: -30,
-                    left: -30,
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.1),
+
+                    ///
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        children: [
+                          /// Add Money
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: () {},
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: const Color(0xff1E3A8A),
+                                side: const BorderSide(
+                                  color: Color(0xff1E3A8A),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
+                              ),
+                              icon: const Icon(Icons.add),
+                              label: const Text("Add Money"),
+                            ),
+                          ),
+
+                          const SizedBox(width: 16),
+
+                          /// Redeem
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: () {},
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: const Color(0xff1E3A8A),
+                                side: const BorderSide(
+                                  color: Color(0xff1E3A8A),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
+                              ),
+                              icon: const Icon(Icons.card_giftcard),
+                              label: const Text("Redeem"),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-
-                  /// Card Content
-                  Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 20),
-
-                        /// Wallet Icon
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Icon(
-                            Icons.account_balance_wallet_outlined,
-                            color: Colors.white,
-                            size: 28,
-                          ),
-                        ),
-
-                        const Spacer(),
-
-                        /// Available Balance
-                        const Text(
-                          "Available Balance",
-                          style: TextStyle(color: Colors.white70, fontSize: 14),
-                        ),
-
-                        const SizedBox(height: 8),
-
-                        const Text(
-                          "₹250.00",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        /// Action Buttons
-                        Row(
-                          children: [
-                            Expanded(
-                              child: OutlinedButton.icon(
-                                onPressed: () {},
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  side: const BorderSide(color: Colors.white54),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                  ),
-                                ),
-                                icon: const Icon(Icons.add, size: 20),
-                                label: const Text("Add Money"),
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: OutlinedButton.icon(
-                                onPressed: () {},
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  side: const BorderSide(color: Colors.white54),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  Icons.calendar_today,
-                                  size: 20,
-                                ),
-                                label: const Text("Redeem"),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        /// Card Number
-                        Row(
-                          children: [
-                            Container(
-                              width: 40,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: const Icon(
-                                Icons.credit_card,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            const Expanded(
-                              child: Text(
-                                "•••• •••• •••• 4532",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  letterSpacing: 2,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 24),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -207,32 +153,39 @@ class WalletScreen extends StatelessWidget {
                     child: ListView(
                       children: [
                         _transactionItem(
-                          "Added to Wallet",
-                          "05 Feb 2026",
-                          "+₹100.00",
+                          "Order Payment",
+                          "Jan 08, 4:00 PM",
+                          "-₹100.00",
+                          Colors.red,
+                          Icons.north_east,
+                        ),
+                        _transactionItem(
+                          "Wallet Recharge",
+                          "Jan 06, 11:06 AM",
+                          "+₹300.00",
                           Colors.green,
-                          Icons.add_circle_outline,
+                          Icons.south_west,
                         ),
                         _transactionItem(
                           "Order Payment",
-                          "04 Feb 2026",
-                          "-₹50.00",
+                          "Jan 08, 4:00 PM",
+                          "-₹100.00",
                           Colors.red,
-                          Icons.remove_circle_outline,
-                        ),
-                        _transactionItem(
-                          "Added to Wallet",
-                          "03 Feb 2026",
-                          "+₹200.00",
-                          Colors.green,
-                          Icons.add_circle_outline,
+                          Icons.north_east,
                         ),
                         _transactionItem(
                           "Order Payment",
-                          "02 Feb 2026",
-                          "-₹75.00",
+                          "Jan 08, 4:00 PM",
+                          "-₹100.00",
                           Colors.red,
-                          Icons.remove_circle_outline,
+                          Icons.north_east,
+                        ),
+                        _transactionItem(
+                          "Wallet Recharge",
+                          "Jan 08, 4:00 PM",
+                          "+₹250.00",
+                          Colors.green,
+                          Icons.south_west,
                         ),
                       ],
                     ),

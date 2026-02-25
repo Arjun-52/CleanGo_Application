@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'order_review_screen.dart';
-import '../../../widgets/bottom_navbar.dart';
+import '../../../core/common_widgets/bottom_navbar.dart';
 
 class SelectPickupSlotScreen extends StatefulWidget {
   const SelectPickupSlotScreen({super.key});
@@ -181,31 +181,43 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
               color: Colors.white,
-              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6)],
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 2)],
             ),
             child: Row(
               children: [
                 Expanded(
-                  child: Text(
-                    "Pickup: ${slots[selectedSlot]["time"]}",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Jan 08, ${slots[selectedSlot]["time"]}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text("Pickup Slot", style: TextStyle(color: Colors.grey)),
+                    ],
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const OrderReviewScreen(),
+                SizedBox(
+                  width: 120,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const OrderReviewScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff0D47A1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff0D47A1),
-                  ),
-                  child: const Text(
-                    "Next",
-                    style: TextStyle(color: Colors.white),
+                    ),
+                    child: const Text(
+                      "Next",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],

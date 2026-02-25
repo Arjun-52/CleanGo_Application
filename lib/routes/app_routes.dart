@@ -10,7 +10,7 @@ import '../features/location/screens/confirm_location_screen.dart';
 import '../features/location/screens/address_form_screen.dart';
 
 /// Core Screens
-import '../screens/home/home_screen.dart';
+import '../features/home/screens/home_screen.dart';
 
 /// Orders
 import '../features/orders/screens/new_order_screen.dart';
@@ -32,7 +32,7 @@ import '../features/profile/screens/edit_profile_screen.dart';
 import '../features/profile/screens/saved_addresses_screen.dart';
 
 /// Bottom Nav
-import '../widgets/bottom_navbar.dart';
+import '../core/common_widgets/bottom_navbar.dart';
 
 class AppRoutes {
   static const String login = '/login';

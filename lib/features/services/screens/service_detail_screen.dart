@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/strings.dart';
-import '../../../widgets/custom_button.dart';
+import '../../../core/common_widgets/custom_button.dart';
 
 class ServiceDetailScreen extends StatelessWidget {
   const ServiceDetailScreen({super.key});

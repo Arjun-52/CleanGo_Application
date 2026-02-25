@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/addon_model.dart';
+import 'addon_model.dart';
 
 class AddonRow extends StatelessWidget {
   final AddonModel addon;

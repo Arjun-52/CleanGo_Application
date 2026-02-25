@@ -1,11 +1,11 @@
-import 'package:clean_go/widgets/service_tile.dart';
+import 'package:clean_go/features/services/widgets/service_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:clean_go/models/item_model.dart';
-import 'package:clean_go/models/addon_model.dart';
-import 'package:clean_go/widgets/location_card.dart';
-import 'package:clean_go/widgets/mode_card.dart';
-import 'package:clean_go/widgets/item_row.dart';
-import 'package:clean_go/widgets/addon_row.dart';
+import 'package:clean_go/features/orders/models/item_model.dart';
+import 'package:clean_go/features/orders/models/addon_model.dart';
+import 'package:clean_go/features/location/widgets/location_card.dart';
+import 'package:clean_go/features/location/widgets/mode_card.dart';
+import 'package:clean_go/features/orders/models/item_row.dart';
+import 'package:clean_go/features/orders/models/addon_row.dart';
 import 'package:clean_go/features/orders/screens/select_pickup_slot_screen.dart';
 
 class NewOrderScreen extends StatefulWidget {
@@ -16,11 +16,13 @@ class NewOrderScreen extends StatefulWidget {
 }
 
 class _NewOrderScreenState extends State<NewOrderScreen> {
-  int selectedMode = 1;
+  bool get canSelectItems => selectedMode != -1 && selectedService != -1;
+  int selectedMode = -1;
   int selectedService = -1;
 
   Map<String, int> cart = {};
   Set<String> selectedAddons = {};
+
   int selectedFilter = 0;
   final Map<int, List<ItemModel>> categorizedItems = {
     0: [
@@ -199,339 +201,150 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   "Service Type",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-
                 const SizedBox(height: 16),
-                GridView.count(
-                  crossAxisCount: 2,
+
+                GridView.builder(
+                  itemCount: services.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 1.24,
-                  children: [
-                    ///  Wash & Iron
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: selectedService == 0
-                                  ? const Color(0xff0D47A1)
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(
-                                  0.08,
-                                ), // soft shadow
-                                blurRadius: 12,
-                                offset: const Offset(0, 6), // downward shadow
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Stack(
-                              children: [
-                                /// Service Card
-                                ServiceTile(
-                                  title: "Wash and Iron",
-                                  subtitle: "Elegant Finish",
-                                  icon: Icons.iron,
-                                  iconColor: const Color(0xffF4A300),
-                                  onTap: () {
-                                    setState(() {
-                                      selectedService = 0;
-                                    });
-                                  },
-                                ),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: 1.3,
+                  ),
+                  itemBuilder: (context, index) {
+                    final service = services[index];
+                    final bool isSelected = selectedService == index;
 
-                                /// Tick INSIDE container
-                                if (selectedService == 0)
-                                  Positioned(
-                                    top: 8,
-                                    right: 8,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xff0D47A1),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      padding: const EdgeInsets.all(4),
-                                      child: const Icon(
-                                        Icons.check,
-                                        size: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedService = index;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: isSelected
+                                ? const Color(0xff0D47A1)
+                                : Colors.transparent,
+                            width: 2,
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.08),
+                              blurRadius: 12,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-
-                    /// Iron Only
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: selectedService == 1
-                                  ? const Color(0xff0D47A1)
-                                  : Colors.transparent,
-                              width: 2,
+                        child: Stack(
+                          children: [
+                            ServiceTile(
+                              title: service["title"],
+                              subtitle: service["subtitle"],
+                              icon: service["icon"],
+                              iconColor: service["color"],
+                              onTap: () {
+                                setState(() {
+                                  selectedService = index;
+                                });
+                              },
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(
-                                  0.08,
-                                ), // soft shadow
-                                blurRadius: 12,
-                                offset: const Offset(0, 6), // downward shadow
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Stack(
-                              children: [
-                                /// Service Card
-                                ServiceTile(
-                                  title: "Iron Only",
-                                  subtitle: "Crisp finish",
-                                  icon: Icons.iron,
-                                  iconColor: const Color(0xffF4A300),
-                                  onTap: () {
-                                    setState(() {
-                                      selectedService = 1;
-                                    });
-                                  },
-                                ),
-
-                                /// Tick INSIDE the bordered container
-                                if (selectedService == 1)
-                                  Positioned(
-                                    top: 8,
-                                    right: 8,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xff0D47A1),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      padding: const EdgeInsets.all(4),
-                                      child: const Icon(
-                                        Icons.check,
-                                        size: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                            if (isSelected)
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xff0D47A1),
+                                    shape: BoxShape.circle,
                                   ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    ///  Dry Clean
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: selectedService == 2
-                                  ? const Color(0xff0D47A1)
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(
-                                  0.08,
-                                ), // soft shadow
-                                blurRadius: 12,
-                                offset: const Offset(0, 6), // downward shadow
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Stack(
-                              children: [
-                                /// Service Card
-                                ServiceTile(
-                                  title: "Dry Clean",
-                                  subtitle: "Premium care",
-                                  icon: Icons.auto_awesome,
-                                  iconColor: const Color(0xff0B3C5D),
-                                  onTap: () {
-                                    setState(() {
-                                      selectedService = 2;
-                                    });
-                                  },
-                                ),
-
-                                /// Tick INSIDE border
-                                if (selectedService == 2)
-                                  Positioned(
-                                    top: 8,
-                                    right: 8,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xff0D47A1),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      padding: const EdgeInsets.all(4),
-                                      child: const Icon(
-                                        Icons.check,
-                                        size: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                  padding: const EdgeInsets.all(4),
+                                  child: const Icon(
+                                    Icons.check,
+                                    size: 14,
+                                    color: Colors.white,
                                   ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    /// Wash & Fold
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: selectedService == 3
-                                  ? const Color(0xff0D47A1)
-                                  : Colors.transparent,
-                              width: 2,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(
-                                  0.08,
-                                ), // soft shadow
-                                blurRadius: 12,
-                                offset: const Offset(0, 6), // downward shadow
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Stack(
-                              children: [
-                                /// Service Card
-                                ServiceTile(
-                                  title: "Wash & Fold",
-                                  subtitle: "Quick service",
-                                  icon: Icons.local_laundry_service,
-                                  iconColor: const Color(0xff0B3C5D),
-                                  onTap: () {
-                                    setState(() {
-                                      selectedService = 3;
-                                    });
-                                  },
                                 ),
-
-                                /// Tick INSIDE border
-                                if (selectedService == 3)
-                                  Positioned(
-                                    top: 8,
-                                    right: 8,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xff0D47A1),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      padding: const EdgeInsets.all(4),
-                                      child: const Icon(
-                                        Icons.check,
-                                        size: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
+                              ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-
-                const Text(
-                  "Service Type",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  },
                 ),
 
-                const SizedBox(height: 12),
+                /// SHOW BELOW ONLY IF BOTH SELECTED
+                if (canSelectItems) ...[
+                  const SizedBox(height: 30),
 
-                Row(
-                  children: [
-                    _buildFilterButton("Clothing", 0),
-                    const SizedBox(width: 10),
-                    _buildFilterButton("Household", 1),
-                    const SizedBox(width: 10),
-                    _buildFilterButton("Speciality", 2),
-                  ],
-                ),
+                  const Text(
+                    "Service Type",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 12),
 
-                const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      _buildFilterButton("Clothing", 0),
+                      const SizedBox(width: 10),
+                      _buildFilterButton("Household", 1),
+                      const SizedBox(width: 10),
+                      _buildFilterButton("Speciality", 2),
+                    ],
+                  ),
 
-                /// CLOTHES SELECTION
-                const Text(
-                  "Clothes",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                const SizedBox(height: 12),
+                  const SizedBox(height: 16),
 
-                ...categorizedItems[selectedFilter]!.map((item) {
-                  int qty = cart[item.name] ?? 0;
+                  const Text(
+                    "Clothes",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  const SizedBox(height: 12),
 
-                  return ItemRow(
-                    item: item,
-                    qty: qty,
-                    onAdd: () => setState(() => cart[item.name] = qty + 1),
-                    onRemove: () => setState(() {
-                      if (qty == 1) {
-                        cart.remove(item.name);
-                      } else if (qty > 1) {
-                        cart[item.name] = qty - 1;
-                      }
-                    }),
-                  );
-                }),
-                const SizedBox(height: 30),
+                  ...categorizedItems[selectedFilter]!.map((item) {
+                    int qty = cart[item.name] ?? 0;
 
-                /// ADDONS
-                const Text(
-                  "Add-ons",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                const SizedBox(height: 12),
+                    return ItemRow(
+                      item: item,
+                      qty: qty,
+                      onAdd: () => setState(() => cart[item.name] = qty + 1),
+                      onRemove: () => setState(() {
+                        if (qty == 1) {
+                          cart.remove(item.name);
+                        } else if (qty > 1) {
+                          cart[item.name] = qty - 1;
+                        }
+                      }),
+                    );
+                  }),
 
-                ...addons.map((addon) {
-                  bool selected = selectedAddons.contains(addon.name);
+                  const SizedBox(height: 30),
 
-                  return AddonRow(
-                    addon: addon,
-                    selected: selected,
-                    onTap: () => setState(() {
-                      selected
-                          ? selectedAddons.remove(addon.name)
-                          : selectedAddons.add(addon.name);
-                    }),
-                  );
-                }),
+                  const Text(
+                    "Add-ons",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  const SizedBox(height: 12),
+
+                  ...addons.map((addon) {
+                    bool selected = selectedAddons.contains(addon.name);
+
+                    return AddonRow(
+                      addon: addon,
+                      selected: selected,
+                      onTap: () => setState(() {
+                        selected
+                            ? selectedAddons.remove(addon.name)
+                            : selectedAddons.add(addon.name);
+                      }),
+                    );
+                  }),
+                ],
 
                 const SizedBox(height: 100),
               ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'add_address_sheet.dart';
-import '../../../widgets/bottom_navbar.dart';
+import '../../../core/common_widgets/bottom_navbar.dart';
 
 class SavedAddressesScreen extends StatefulWidget {
   const SavedAddressesScreen({super.key});
