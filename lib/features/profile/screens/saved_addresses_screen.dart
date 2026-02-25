@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'add_address_sheet.dart';
-import '../../widgets/bottom_navbar.dart';
+import '../../../widgets/bottom_navbar.dart';
 
 class SavedAddressesScreen extends StatefulWidget {
   const SavedAddressesScreen({super.key});
@@ -10,7 +10,7 @@ class SavedAddressesScreen extends StatefulWidget {
 }
 
 class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
-  final int _currentIndex = 2; // Profile tab active   
+  final int _currentIndex = 2; // Profile tab active
 
   @override
   Widget build(BuildContext context) {

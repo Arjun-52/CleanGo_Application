@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:clean_go/widgets/profile_screen_widgets/sheet_handle_bar.dart';
-import 'package:clean_go/widgets/profile_screen_widgets/address_map_preview.dart';
-import 'package:clean_go/widgets/profile_screen_widgets/address_summary_card.dart';
-import 'package:clean_go/widgets/profile_screen_widgets/custom_text_field_box.dart';
-import 'package:clean_go/widgets/profile_screen_widgets/address_type_selector.dart';
-import 'package:clean_go/widgets/profile_screen_widgets/bottom_primary_button.dart';
+import 'package:clean_go/features/profile/widgets/sheet_handle_bar.dart';
+import 'package:clean_go/features/profile/widgets/address_map_preview.dart';
+import 'package:clean_go/features/profile/widgets/address_summary_card.dart';
+import 'package:clean_go/features/profile/widgets/custom_text_field_box.dart';
+import 'package:clean_go/features/profile/widgets/address_type_selector.dart';
+import 'package:clean_go/features/profile/widgets/bottom_primary_button.dart';
 
 class AddAddressSheet extends StatefulWidget {
   const AddAddressSheet({super.key});

@@ -28,9 +28,9 @@ import '../features/payment/screens/booking_payment_screen.dart';
 
 /// Wallet & Profile
 import '../features/wallet/screens/wallet_screen.dart';
-import '../screens/profile/profile_screen.dart';
-import '../screens/profile/edit_profile_screen.dart';
-import '../screens/profile/saved_addresses_screen.dart';
+import '../features/profile/screens/profile_screen.dart';
+import '../features/profile/screens/edit_profile_screen.dart';
+import '../features/profile/screens/saved_addresses_screen.dart';
 
 /// Bottom Nav
 import '../widgets/bottom_navbar.dart';
