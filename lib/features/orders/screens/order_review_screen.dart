@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_go/features/payment/screens/booking_payment_screen.dart';
 
@@ -12,7 +13,7 @@ class OrderReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F7F9),
+      backgroundColor: AppColors.scaffoldBackground,
 
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -33,7 +34,7 @@ class OrderReviewScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 6),
@@ -86,7 +87,7 @@ class OrderReviewScreen extends StatelessWidget {
                       const Icon(
                         Icons.access_time, // clock icon
                         size: 20,
-                        color: Colors.grey,
+                        color: AppColors.grey,
                       ),
                       const SizedBox(width: 10),
 
@@ -120,7 +121,7 @@ class OrderReviewScreen extends StatelessWidget {
                       const Icon(
                         Icons.local_shipping_outlined, // delivery-style icon
                         size: 20,
-                        color: Colors.grey,
+                        color: AppColors.grey,
                       ),
                       const SizedBox(width: 10),
 
@@ -270,7 +271,7 @@ class OrderReviewScreen extends StatelessWidget {
                 ),
                 child: const Text(
                   "Proceed to Payment",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: AppColors.white, fontSize: 16),
                 ),
               ),
             ),

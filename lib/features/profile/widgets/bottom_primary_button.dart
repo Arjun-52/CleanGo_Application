@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class BottomPrimaryButton extends StatelessWidget {
@@ -15,7 +16,7 @@ class BottomPrimaryButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         border: Border(top: BorderSide(color: Colors.black12)),
       ),
       child: SizedBox(
@@ -25,7 +26,7 @@ class BottomPrimaryButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xff0B3C5D),
-            foregroundColor: Colors.white,
+            foregroundColor: AppColors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),

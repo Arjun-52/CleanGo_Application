@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class SelectLocationScreen extends StatelessWidget {
@@ -15,7 +16,6 @@ class SelectLocationScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               /// HEADER
               const SizedBox(height: 10),
               Row(
@@ -26,10 +26,7 @@ class SelectLocationScreen extends StatelessWidget {
                   ),
                   const Text(
                     "Select Location",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
@@ -61,37 +58,29 @@ class SelectLocationScreen extends StatelessWidget {
               /// CURRENT LOCATION (Clickable)
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(
-                      context, '/confirm-location');
+                  Navigator.pushNamed(context, '/confirm-location');
                 },
                 child: Row(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.my_location,
-                        color: primaryColor,
-                        size: 20),
+                    Icon(Icons.my_location, color: primaryColor, size: 20),
                     const SizedBox(width: 10),
                     const Expanded(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment
-                                .start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "Use Current Location",
                             style: TextStyle(
-                              fontWeight:
-                                  FontWeight.w600,
-                              color: Color(
-                                  0xff0B3C5D),
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xff0B3C5D),
                             ),
                           ),
                           SizedBox(height: 4),
                           Text(
                             "Rd No.60, Madhapur, Hyderabad,\n500033",
                             style: TextStyle(
-                              color: Colors.grey,
+                              color: AppColors.grey,
                               height: 1.4,
                             ),
                           ),
@@ -115,26 +104,19 @@ class SelectLocationScreen extends StatelessWidget {
                 height: 50,
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(
-                        color: primaryColor,
-                        width: 1.5),
+                    side: const BorderSide(color: primaryColor, width: 1.5),
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(
-                              12),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(
-                        context,
-                        '/confirm-location');
+                    Navigator.pushNamed(context, '/confirm-location');
                   },
                   child: const Text(
                     "Enter location manually",
                     style: TextStyle(
                       color: primaryColor,
-                      fontWeight:
-                          FontWeight.w600,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/features/orders/widgets/order_timeline.dart';
 import 'package:flutter/material.dart';
 
@@ -9,10 +10,10 @@ class OrderTrackingScreen extends StatelessWidget {
     const primaryColor = Color(0xff0D47A1);
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F7F9),
+      backgroundColor: AppColors.scaffoldBackground,
 
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 5,
         leading: const BackButton(color: Colors.black),
         title: const Text(
@@ -29,7 +30,7 @@ class OrderTrackingScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 6),
@@ -47,7 +48,7 @@ class OrderTrackingScreen extends StatelessWidget {
                         ),
                         child: const Icon(
                           Icons.inventory_2,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -137,7 +138,7 @@ class OrderTrackingScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 6),
@@ -159,7 +160,11 @@ class OrderTrackingScreen extends StatelessWidget {
                     width: 110,
                     color: Colors.black,
                     child: const Center(
-                      child: Icon(Icons.qr_code, color: Colors.white, size: 60),
+                      child: Icon(
+                        Icons.qr_code,
+                        color: AppColors.white,
+                        size: 60,
+                      ),
                     ),
                   ),
 

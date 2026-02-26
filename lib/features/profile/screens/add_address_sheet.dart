@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_go/features/profile/widgets/sheet_handle_bar.dart';
 import 'package:clean_go/features/profile/widgets/address_map_preview.dart';
@@ -30,7 +31,7 @@ class _AddAddressSheetState extends State<AddAddressSheet> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.85,
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(

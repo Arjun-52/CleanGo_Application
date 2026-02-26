@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'address_form_screen.dart';
@@ -54,7 +55,7 @@ class ConfirmLocationScreen extends StatelessWidget {
               height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(14),
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 6),
@@ -95,7 +96,7 @@ class ConfirmLocationScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
               child: Column(
@@ -118,7 +119,7 @@ class ConfirmLocationScreen extends StatelessWidget {
                             Text(
                               "Bhagya Nagar Colony, Kukatpally,\nHyderabad, Telangana",
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: AppColors.grey,
                                 fontSize: 13,
                               ),
                             ),
@@ -151,7 +152,7 @@ class ConfirmLocationScreen extends StatelessWidget {
                       },
                       child: const Text(
                         "Confirm Location",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                        style: TextStyle(color: AppColors.white, fontSize: 16),
                       ),
                     ),
                   ),

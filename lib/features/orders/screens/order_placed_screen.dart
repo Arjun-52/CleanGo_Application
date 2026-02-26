@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_go/features/orders/screens/order_tracking_screen.dart';
 
@@ -9,7 +10,7 @@ class OrderPlacedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F7F9),
+      backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -27,7 +28,7 @@ class OrderPlacedScreen extends StatelessWidget {
                 child: const CircleAvatar(
                   radius: 40,
                   backgroundColor: Color(0xff22B573),
-                  child: Icon(Icons.check, color: Colors.white, size: 40),
+                  child: Icon(Icons.check, color: AppColors.white, size: 40),
                 ),
               ),
 
@@ -57,7 +58,7 @@ class OrderPlacedScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: const [
                     BoxShadow(color: Colors.black12, blurRadius: 6),
@@ -159,7 +160,7 @@ class OrderPlacedScreen extends StatelessWidget {
                 height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff0D47A1),
+                    backgroundColor: AppColors.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

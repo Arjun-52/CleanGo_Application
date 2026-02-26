@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'add_address_sheet.dart';
 import '../../../core/common_widgets/bottom_navbar.dart';
@@ -18,7 +19,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
       backgroundColor: const Color(0xffF5F5F5),
 
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
         leading: const BackButton(color: Colors.black),
         title: const Text(
@@ -46,7 +47,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xffEEF8FF),
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                     side: const BorderSide(color: Color(0xff0D47A1)),
@@ -102,7 +103,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(

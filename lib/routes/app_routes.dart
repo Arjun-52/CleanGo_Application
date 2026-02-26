@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 //  Auth
@@ -115,7 +116,7 @@ class _MainScreenState extends State<MainScreen> {
         },
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xff0B3C5D),
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: AppColors.grey,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

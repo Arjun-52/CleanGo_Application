@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/routes/app_routes.dart';
 import 'package:clean_go/features/auth/widgets/otp_input_field.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +146,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           "Continue",
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: AppColors.white,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class ServiceTile extends StatelessWidget {
@@ -37,7 +38,7 @@ class ServiceTile extends StatelessWidget {
             Text(
               subtitle,
               style: const TextStyle(
-                color: Colors.grey,
+                color: AppColors.grey,
                 fontSize: 13, // 🔥 slightly bigger subtitle
               ),
             ),

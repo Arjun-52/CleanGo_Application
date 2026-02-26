@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'order_review_screen.dart';
 import '../../../core/common_widgets/bottom_navbar.dart';
@@ -34,10 +35,10 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F7F9),
+      backgroundColor: AppColors.scaffoldBackground,
 
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
         leading: const BackButton(color: Colors.black),
         title: const Text(
@@ -80,7 +81,7 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
                               vertical: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: AppColors.white,
                               borderRadius: BorderRadius.circular(14),
                               border: Border.all(
                                 color: selected
@@ -138,7 +139,7 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.white,
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
                               color: selected
@@ -155,7 +156,7 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
                                 slots[index]["left"]!,
                                 style: const TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey,
+                                  color: AppColors.grey,
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -180,7 +181,7 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 2)],
             ),
             child: Row(
@@ -209,7 +210,7 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff0D47A1),
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),

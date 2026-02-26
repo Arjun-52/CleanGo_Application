@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:clean_go/features/orders/widgets/order_info_card.dart';
@@ -17,7 +18,7 @@ class OrderDetailsScreen extends StatelessWidget {
 
       /// ---------------- APP BAR ----------------
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 6,
         iconTheme: const IconThemeData(color: Colors.black),
         title: Column(
@@ -32,7 +33,7 @@ class OrderDetailsScreen extends StatelessWidget {
             ),
             const Text(
               "Processing • 02:58 PM",
-              style: TextStyle(color: Colors.grey, fontSize: 12),
+              style: TextStyle(color: AppColors.grey, fontSize: 12),
             ),
           ],
         ),
@@ -164,7 +165,7 @@ class OrderDetailsScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: AppColors.grey,
         currentIndex: 1,
         items: const [
           BottomNavigationBarItem(
@@ -219,7 +220,7 @@ Widget QrOtpCard() {
 
         const Text(
           "CLN-2026-001-QR",
-          style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
+          style: TextStyle(color: AppColors.grey, fontWeight: FontWeight.w500),
         ),
 
         const SizedBox(height: 16),

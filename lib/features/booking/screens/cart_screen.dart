@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/strings.dart';
 import '../../../core/common_widgets/custom_button.dart';
@@ -19,7 +20,7 @@ class CartScreen extends StatelessWidget {
                   Icon(
                     Icons.shopping_cart_outlined,
                     size: 64,
-                    color: Colors.grey,
+                    color: AppColors.grey,
                   ),
                   SizedBox(height: 16),
                   Text(

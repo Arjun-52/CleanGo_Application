@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/features/orders/screens/order_history_screen.dart';
 import 'package:flutter/material.dart';
 import 'edit_profile_screen.dart';
@@ -11,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
         leading: const BackButton(color: Colors.black),
         title: const Text(
@@ -37,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(18),
                   border: Border.all(color: Colors.grey.withOpacity(0.15)),
                   boxShadow: [
@@ -59,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     child: const Icon(
                       Icons.person_outline,
-                      color: Colors.white,
+                      color: AppColors.white,
                       size: 30,
                     ),
                   ),
@@ -69,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   subtitle: const Text(
                     "johnkevin@gmail.com",
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    style: TextStyle(color: AppColors.grey, fontSize: 14),
                   ),
                   trailing: const Icon(Icons.chevron_right, color: Colors.grey),
                 ),
@@ -171,7 +172,7 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: Colors.grey.withOpacity(0.15), width: 1),
         boxShadow: [

@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class OtpInputField extends StatelessWidget {
@@ -30,7 +31,7 @@ class OtpInputField extends StatelessWidget {
             decoration: InputDecoration(
               counterText: "",
               filled: true,
-              fillColor: Colors.white,
+              fillColor: AppColors.white,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(color: Colors.grey.shade300),

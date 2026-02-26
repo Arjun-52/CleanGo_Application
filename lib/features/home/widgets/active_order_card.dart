@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class ActiveOrderCard extends StatelessWidget {
@@ -12,7 +13,7 @@ class ActiveOrderCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [
             BoxShadow(
@@ -37,7 +38,7 @@ class ActiveOrderCard extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.inventory_2_outlined,
-                    color: Colors.white,
+                    color: AppColors.white,
                   ),
                 ),
                 const SizedBox(width: 14),
@@ -57,7 +58,7 @@ class ActiveOrderCard extends StatelessWidget {
                       SizedBox(height: 4),
                       Text(
                         "Processing",
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                        style: TextStyle(color: AppColors.grey, fontSize: 14),
                       ),
                     ],
                   ),
@@ -118,7 +119,7 @@ class ActiveOrderCard extends StatelessWidget {
             /// DELIVERY ROW
             Row(
               children: [
-                const Icon(Icons.access_time, color: Colors.grey, size: 18),
+                const Icon(Icons.access_time, color: AppColors.grey, size: 18),
                 const SizedBox(width: 8),
 
                 const Text(

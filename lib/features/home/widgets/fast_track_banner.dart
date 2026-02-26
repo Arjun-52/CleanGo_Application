@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class FastTrackBanner extends StatelessWidget {
@@ -19,7 +20,7 @@ class FastTrackBanner extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(Icons.flash_on, color: Colors.green),
@@ -35,7 +36,7 @@ class FastTrackBanner extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.white,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -44,13 +45,17 @@ class FastTrackBanner extends StatelessWidget {
                     "Same-day delivery available!",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.white, fontSize: 13),
+                    style: TextStyle(color: AppColors.white, fontSize: 13),
                   ),
                 ],
               ),
             ),
             const SizedBox(width: 8),
-            const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: AppColors.white,
+              size: 16,
+            ),
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/features/services/widgets/service_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_go/features/orders/models/item_model.dart';
@@ -147,9 +148,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F7F9),
+      backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
         leading: const BackButton(color: Colors.black),
         title: const Text("New Order", style: TextStyle(color: Colors.black)),
@@ -225,7 +226,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.white,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isSelected
@@ -267,7 +268,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                   child: const Icon(
                                     Icons.check,
                                     size: 14,
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                   ),
                                 ),
                               ),
@@ -355,7 +356,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6)],
             ),
             child: Row(
@@ -381,7 +382,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                           );
                         },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff0D47A1),
+                    backgroundColor: AppColors.primary,
                   ),
                   child: const Text(
                     "Select Slot",

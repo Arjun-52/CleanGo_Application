@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart' show AppColors;
 import 'package:flutter/material.dart';
 import 'package:clean_go/features/orders/screens/order_details_screen.dart';
 
@@ -13,7 +14,7 @@ class OrderHistoryScreen extends StatelessWidget {
           "Order History",
           style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 1,
         leading: const BackButton(color: Colors.black),
       ),
@@ -85,7 +86,7 @@ class OrderHistoryCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(14),
           boxShadow: const [
             BoxShadow(
@@ -107,7 +108,7 @@ class OrderHistoryCard extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.inventory_2_outlined,
-                    color: Colors.white,
+                    color: AppColors.white,
                   ),
                 ),
                 const SizedBox(width: 12),

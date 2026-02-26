@@ -1,3 +1,4 @@
+import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class WalletCard extends StatelessWidget {
@@ -10,7 +11,7 @@ class WalletCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xff013E6D), width: 1.5),
         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
@@ -26,7 +27,7 @@ class WalletCard extends StatelessWidget {
             ),
             child: const Icon(
               Icons.account_balance_wallet,
-              color: Colors.white,
+              color: AppColors.white,
             ),
           ),
           const SizedBox(width: 12),
