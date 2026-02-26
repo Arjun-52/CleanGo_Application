@@ -73,6 +73,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     onSelect: (val) {
                       setState(() => selectedUpi = val);
                     },
+                    iconPath: 'assets/images/paytm.jpg',
                   ),
                   const Divider(),
 
@@ -83,6 +84,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     onSelect: (val) {
                       setState(() => selectedUpi = val);
                     },
+                    iconPath: 'assets/images/phonepay.jpg',
                   ),
                   const Divider(),
 
@@ -93,6 +95,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     onSelect: (val) {
                       setState(() => selectedUpi = val);
                     },
+                    iconPath: 'assets/images/gpay.jpg',
                   ),
                   const Divider(),
 

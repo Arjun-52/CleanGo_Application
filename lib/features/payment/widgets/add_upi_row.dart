@@ -9,7 +9,19 @@ class AddUpiRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.add_card),
+
+      leading: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            "assets/images/upi.jpg",
+            height: 24,
+            width: 24,
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
       title: const Text("Add UPI ID"),
       trailing: const Icon(Icons.chevron_right),
       onTap: onTap,
