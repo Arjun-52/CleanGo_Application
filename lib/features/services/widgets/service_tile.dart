@@ -37,10 +37,7 @@ class ServiceTile extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               subtitle,
-              style: const TextStyle(
-                color: AppColors.grey,
-                fontSize: 13, // 🔥 slightly bigger subtitle
-              ),
+              style: const TextStyle(color: AppColors.grey, fontSize: 13),
             ),
           ],
         ),

@@ -131,51 +131,64 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              const Spacer(flex: 2),
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Icon(
-                  Icons.checkroom,
-                  color: AppColors.white,
-                  size: 40,
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              /// App Name
-              const Text(
-                'CleanGo',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              /// Login Title
-              SizedBox(
-                width: 200,
-                height: 36,
-                child: Center(
-                  child: Text(
-                    'Login or Sign Up',
-                    style: GoogleFonts.poppins(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
+              /// Logo + App Name Section
+              Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Image.asset(
+                      "assets/images/logo.jpg",
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.contain,
                     ),
                   ),
+
+                  const SizedBox(height: 28),
+
+                  const Text(
+                    'CleanGo',
+                    style: TextStyle(
+                      fontSize: 42,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                      color: AppColors.primary,
+                    ),
+                  ),
+
+                  const SizedBox(height: 6),
+
+                  const Text(
+                    'Customer',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              /// Login Title
+              Text(
+                'Login or Sign Up',
+                style: GoogleFonts.poppins(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
                 ),
               ),
 
-              const SizedBox(height: 48),
+              const SizedBox(height: 18),
+
+              // Rest of your widgets here...
+              const SizedBox(height: 18),
 
               /// Phone Input
               Container(
