@@ -18,6 +18,7 @@ class TimelineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final Color color = completed || active
         ? Colors.teal
         : Colors.grey.shade400;

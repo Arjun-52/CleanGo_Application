@@ -2,7 +2,7 @@ import 'active_order_card.dart';
 import 'fast_track_banner.dart';
 import 'home_header.dart';
 import 'package:flutter/material.dart';
-import '../../services/widgets/service_tile.dart';
+import 'service_tile.dart';
 
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
@@ -84,6 +84,8 @@ class HomeContent extends StatelessWidget {
                         crossAxisCount: 2,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
+                        clipBehavior: Clip.none,
+                        padding: const EdgeInsets.all(12),
                         crossAxisSpacing: 16,
                         mainAxisSpacing: 16,
                         childAspectRatio: 1.3,

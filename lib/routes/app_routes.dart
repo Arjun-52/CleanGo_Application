@@ -32,9 +32,6 @@ import '../features/profile/screens/profile_screen.dart';
 import '../features/profile/screens/edit_profile_screen.dart';
 import '../features/profile/screens/saved_addresses_screen.dart';
 
-/// Bottom Nav
-import '../core/common_widgets/bottom_navbar.dart';
-
 class AppRoutes {
   static const String login = '/login';
   static const String otp = '/otp';

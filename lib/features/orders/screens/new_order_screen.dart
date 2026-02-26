@@ -1,5 +1,5 @@
 import 'package:clean_go/core/constants/colors.dart';
-import 'package:clean_go/features/services/widgets/service_tile.dart';
+import 'package:clean_go/features/home/widgets/service_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_go/features/orders/models/item_model.dart';
 import 'package:clean_go/features/orders/models/addon_model.dart';

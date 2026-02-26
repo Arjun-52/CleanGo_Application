@@ -1,6 +1,6 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'address_form_screen.dart';
 import 'package:clean_go/routes/app_routes.dart';
 
@@ -14,16 +14,8 @@ class ConfirmLocationScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          /// REAL GOOGLE MAP
           Positioned.fill(
-            child: GoogleMap(
-              initialCameraPosition: const CameraPosition(
-                target: LatLng(17.4435, 78.3772),
-                zoom: 15,
-              ),
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-            ),
+            child: Image.asset("assets/images/cl_map.png", fit: BoxFit.cover),
           ),
 
           /// HEADER
@@ -57,6 +49,7 @@ class ConfirmLocationScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: Colors.black, width: 0.8),
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 6),
                 ],
@@ -70,6 +63,49 @@ class ConfirmLocationScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.grey),
                   ),
                 ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Positioned(
+            top: 130,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: const Color(0xFF06C167),
+                    width: 1.2,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x14000000),
+                      blurRadius: 6,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.my_location, size: 18, color: Color(0xFF06C167)),
+                    SizedBox(width: 8),
+                    Text(
+                      "Use my current Location",
+                      style: TextStyle(
+                        color: Color(0xFF06C167),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -106,7 +142,7 @@ class ConfirmLocationScreen extends StatelessWidget {
                   /// LOCATION INFO
                   const Row(
                     children: [
-                      Icon(Icons.location_on, color: Colors.blueGrey),
+                      Icon(Icons.location_on, color: Color(0xFF013E6D)),
                       SizedBox(width: 8),
                       Expanded(
                         child: Column(
@@ -114,7 +150,7 @@ class ConfirmLocationScreen extends StatelessWidget {
                           children: [
                             Text(
                               "Hyderabad",
-                              style: TextStyle(fontWeight: FontWeight.w600),
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
                               "Bhagya Nagar Colony, Kukatpally,\nHyderabad, Telangana",

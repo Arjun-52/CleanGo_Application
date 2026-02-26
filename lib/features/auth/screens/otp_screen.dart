@@ -102,7 +102,7 @@ class _OtpScreenState extends State<OtpScreen> {
               const SizedBox(height: 80),
 
               const Text(
-                "We have sent a verification code",
+                "We have sent a verification code\nto +91 9347830977",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -155,11 +155,22 @@ class _OtpScreenState extends State<OtpScreen> {
 
               const SizedBox(height: 25),
 
-              const Text(
-                "Didn’t receive the OTP? Resend OTP",
-                style: TextStyle(
-                  color: Colors.orange,
-                  fontWeight: FontWeight.w600,
+              Text.rich(
+                const TextSpan(
+                  text: "Didn’t receive the OTP? ",
+                  style: TextStyle(
+                    color: Color(0xFF5B5B5E),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: "Resend OTP",
+                      style: TextStyle(
+                        color: Colors.orange,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
