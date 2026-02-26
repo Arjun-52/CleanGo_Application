@@ -50,14 +50,27 @@ class OrderDetailsScreen extends StatelessWidget {
             const OrderItemsCard(),
 
             /// Address Card
-            const ReusableCard(
+            ReusableCard(
               child: ListTile(
-                leading: Icon(Icons.location_on, color: Color(0xFF013E6D)),
-                title: Text(
-                  "Pickup & Delivery Address",
+                leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFC7E6FF),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.location_on,
+                    color: Color(0xFF013E6D),
+                    size: 26,
+                  ),
+                ),
+                title: const Text(
+                  "Pickup & Delivery Address:",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text("Mega Hills, 18, Madhapur,\nHyderabad, 50003"),
+                subtitle: const Text(
+                  "Mega Hills, 18, Madhapur,\nHyderabad, 50003",
+                ),
               ),
             ),
 
@@ -69,9 +82,10 @@ class OrderDetailsScreen extends StatelessWidget {
                 Expanded(
                   child: ReusableCard(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(
                               Icons.access_time,
@@ -101,31 +115,30 @@ class OrderDetailsScreen extends StatelessWidget {
                 SizedBox(width: 12),
                 Expanded(
                   child: ReusableCard(
-                    child: Column(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.access_time,
-                              size: 22,
-                              color: Colors.orange,
-                            ),
-                            SizedBox(width: 6),
+                        Icon(Icons.access_time, size: 22, color: Colors.orange),
+                        const SizedBox(width: 8),
+
+                        // 👇 All text inside ONE column
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
                             Text(
                               "Delivery",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
+                            SizedBox(height: 6),
+                            Text(
+                              "Feb 28",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "09:00 - 11:00",
+                              style: TextStyle(color: Colors.grey),
+                            ),
                           ],
-                        ),
-                        SizedBox(height: 6),
-                        Text(
-                          "Feb 28",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "09:00 - 11:00",
-                          style: TextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
@@ -183,15 +196,57 @@ class OrderDetailsScreen extends StatelessWidget {
 Widget QrOtpCard() {
   return ReusableCard(
     child: Column(
-      children: const [
-        Icon(Icons.qr_code, size: 60, color: Colors.black),
-        SizedBox(height: 8),
-        Text(
-          "Show this QR at pickup",
-          style: TextStyle(fontWeight: FontWeight.bold),
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Title
+        const Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Order QR Code & OTP",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
         ),
-        SizedBox(height: 6),
-        Text("OTP: 1234", style: TextStyle(color: Colors.grey)),
+
+        const SizedBox(height: 20),
+
+        Image.asset(
+          "assets/images/ffcdb9513a78678ba246a95018506475.jpg",
+          height: 120,
+          width: 120,
+        ),
+
+        const SizedBox(height: 12),
+
+        const Text(
+          "CLN-2026-001-QR",
+          style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
+        ),
+
+        const SizedBox(height: 16),
+        const Divider(),
+
+        const SizedBox(height: 12),
+
+        // OTP Section
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(Icons.key, size: 18, color: Colors.blueGrey),
+            SizedBox(width: 6),
+            Text("Pickup OTP", style: TextStyle(fontWeight: FontWeight.w500)),
+          ],
+        ),
+
+        const SizedBox(height: 8),
+
+        const Text(
+          "5646",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 2,
+          ),
+        ),
       ],
     ),
   );

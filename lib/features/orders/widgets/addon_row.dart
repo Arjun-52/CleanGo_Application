@@ -16,8 +16,10 @@ class AddonRow extends StatelessWidget {
           child: Icon(Icons.check, size: 14, color: Colors.white),
         ),
         const SizedBox(width: 10),
-        Expanded(child: Text(item)),
-        Text(price),
+        Expanded(
+          child: Text(item, style: TextStyle(fontWeight: FontWeight.bold)),
+        ),
+        Text(price, style: TextStyle(fontWeight: FontWeight.bold)),
       ],
     );
   }

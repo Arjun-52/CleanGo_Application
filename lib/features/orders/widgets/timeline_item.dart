@@ -31,20 +31,47 @@ class TimelineItem extends StatelessWidget {
           Column(
             children: [
               Container(
-                width: 33,
-                height: 33,
+                width: 30,
+                height: 30,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: completed ? Colors.teal : Colors.white,
-                  border: Border.all(color: color, width: 2),
+                  color: completed
+                      ? const Color(0xFF148C81)
+                      : Colors.transparent,
+                  border: Border.all(
+                    color: completed
+                        ? const Color(0xFF148C81)
+                        : active
+                        ? const Color(0xFF148C81)
+                        : Colors.grey,
+                    width: 2,
+                  ),
                 ),
-                child: completed
-                    ? const Icon(Icons.check, size: 14, color: Colors.white)
-                    : null,
+                child: Center(
+                  child: completed
+                      ? const Icon(Icons.check, size: 14, color: Colors.white)
+                      : Container(
+                          width: 10,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: active
+                                ? const Color(0xFF148C81)
+                                : Colors.grey,
+                          ),
+                        ),
+                ),
               ),
 
               if (!isLast)
-                Container(width: 4, height: 100, color: Color(0xFF148C81)),
+                Transform.translate(
+                  offset: const Offset(0, 23),
+                  child: Container(
+                    width: 3,
+                    height: 90,
+                    color: const Color(0xFF148C81),
+                  ),
+                ),
             ],
           ),
 

@@ -142,7 +142,11 @@ class ConfirmLocationScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, AppRoutes.main);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRoutes.main,
+                          (route) => false,
+                        );
                         ;
                       },
                       child: const Text(

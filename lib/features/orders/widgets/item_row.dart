@@ -25,8 +25,13 @@ class ItemRow extends StatelessWidget {
           child: const Icon(Icons.checkroom),
         ),
         const SizedBox(width: 12),
-        Expanded(child: Text("$item  $qty")),
-        Text(price),
+        Expanded(
+          child: Text(
+            "$item  $qty",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Text(price, style: TextStyle(fontWeight: FontWeight.bold)),
       ],
     );
   }

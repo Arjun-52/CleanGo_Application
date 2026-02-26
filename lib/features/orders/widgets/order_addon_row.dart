@@ -14,7 +14,12 @@ class OrderAddonRow extends StatelessWidget {
         children: [
           const Icon(Icons.check_circle, color: Color(0xff0D47A1)),
           const SizedBox(width: 10),
-          Expanded(child: Text(name, style: const TextStyle(fontSize: 14))),
+          Expanded(
+            child: Text(
+              name,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+          ),
           Text(price, style: const TextStyle(fontSize: 14)),
         ],
       ),

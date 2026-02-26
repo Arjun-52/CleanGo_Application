@@ -40,9 +40,13 @@ class OrderTimeline extends StatelessWidget {
 
             TimelineItem(title: "Quality Check", time: "", active: true),
 
-            TimelineItem(title: "Out For Delivery", time: ""),
+            TimelineItem(title: "Out For Delivery", time: "Feb 28, 01:02 PM"),
 
-            TimelineItem(title: "Delivered", time: "", isLast: true),
+            TimelineItem(
+              title: "Delivered",
+              time: "Feb 28, 03:00 PM",
+              isLast: true,
+            ),
           ],
         ),
       ),

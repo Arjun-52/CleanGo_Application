@@ -45,17 +45,22 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff0B3C5D),
+                  backgroundColor: Color(0xffEEF8FF),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
+                    side: const BorderSide(color: Color(0xff0D47A1)),
                   ),
                   elevation: 0,
                 ),
-                icon: const Icon(Icons.add, size: 20),
+                icon: const Icon(Icons.add, size: 20, color: Color(0xff0D47A1)),
                 label: const Text(
                   "Add address",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xff0D47A1),
+                  ),
                 ),
               ),
             ),

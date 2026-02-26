@@ -36,12 +36,12 @@ class OrderItemsCard extends StatelessWidget {
           Divider(height: 24),
 
           ItemRow(item: "Shirt", qty: "x1", price: "₹30"),
-          Divider(),
+          SizedBox(height: 8),
           ItemRow(item: "Trousers", qty: "x1", price: "₹40"),
 
           Divider(height: 24),
 
-          Text("Add-ons"),
+          Text("Add-ons", style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 10),
 
           AddonRow(item: "Fabric Softener", price: "₹25"),
