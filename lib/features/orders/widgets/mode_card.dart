@@ -38,7 +38,15 @@ class ModeCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(icon),
+                Container(
+                  height: 56,
+                  width: 56,
+                  decoration: BoxDecoration(
+                    color: const Color(0xB2E2E2E2),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: Icon(icon, size: 28, color: Colors.grey.shade700),
+                ),
                 const SizedBox(height: 8),
                 Text(
                   title,

@@ -158,12 +158,13 @@ class OrderTrackingScreen extends StatelessWidget {
                   Container(
                     height: 110,
                     width: 110,
-                    color: Colors.black,
-                    child: const Center(
-                      child: Icon(
-                        Icons.qr_code,
-                        color: AppColors.white,
-                        size: 60,
+                    color: Colors.white,
+                    child: Center(
+                      child: Image.asset(
+                        "assets/images/qr.jpg",
+                        height: 160,
+                        width: 160,
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:clean_go/features/orders/models/item_model.dart';
 import 'package:clean_go/features/orders/models/addon_model.dart';
 import 'package:clean_go/features/location/widgets/location_card.dart';
-import 'package:clean_go/features/location/widgets/mode_card.dart';
+import 'package:clean_go/features/orders/widgets/mode_card.dart';
 import 'package:clean_go/features/orders/models/item_row.dart';
 import 'package:clean_go/features/orders/models/addon_row.dart';
 import 'package:clean_go/features/orders/screens/select_pickup_slot_screen.dart';
@@ -99,19 +99,21 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   ];
 
   double get totalPrice {
-    double itemTotal = cart.entries.fold(
-      0.0,
-      (sum, e) =>
-          sum +
-          e.value *
-              categorizedItems[selectedFilter]!
-                  .firstWhere((i) => i.name == e.key)
-                  .price,
-    );
+    // Get ALL items from all categories
+    final allItems = categorizedItems.values.expand((list) => list).toList();
+
+    double itemTotal = cart.entries.fold(0.0, (sum, e) {
+      final item = allItems.firstWhere(
+        (i) => i.name == e.key,
+        orElse: () => ItemModel(name: '', price: 0),
+      );
+
+      return sum + (e.value * item.price);
+    });
 
     double addonTotal = addons
         .where((a) => selectedAddons.contains(a.name))
-        .fold(0, (sum, a) => sum + a.price);
+        .fold(0.0, (sum, a) => sum + a.price);
 
     double fastTrackFee = selectedMode == 0 ? 40 : 0;
 
