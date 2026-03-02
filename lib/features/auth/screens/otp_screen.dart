@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/routes/app_routes.dart';
 import 'package:clean_go/features/auth/widgets/otp_input_field.dart';
@@ -15,6 +17,9 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+  int _secondsRemaining = 30;
+  bool _canResend = false;
+  Timer? _timer;
   final List<TextEditingController> controllers = List.generate(
     6,
     (_) => TextEditingController(),
@@ -23,6 +28,29 @@ class _OtpScreenState extends State<OtpScreen> {
   final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
 
   bool isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _secondsRemaining = 30;
+    _canResend = false;
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_secondsRemaining > 0) {
+        setState(() {
+          _secondsRemaining--;
+        });
+      } else {
+        timer.cancel();
+        setState(() {
+          _canResend = true;
+        });
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -33,6 +61,7 @@ class _OtpScreenState extends State<OtpScreen> {
       f.dispose();
     }
     super.dispose();
+    _timer?.cancel();
   }
 
   void moveNext(int index, String value) {
@@ -155,23 +184,33 @@ class _OtpScreenState extends State<OtpScreen> {
 
               const SizedBox(height: 25),
 
-              Text.rich(
-                const TextSpan(
-                  text: "Didn’t receive the OTP? ",
-                  style: TextStyle(
-                    color: Color(0xFF5B5B5E),
-                    fontWeight: FontWeight.w500,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Didn’t receive the OTP? ",
+                    style: TextStyle(
+                      color: Color(0xFF5B5B5E),
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                  children: [
-                    TextSpan(
-                      text: "Resend OTP",
+                  GestureDetector(
+                    onTap: _canResend
+                        ? () {
+                            _startTimer();
+                          }
+                        : null,
+                    child: Text(
+                      _canResend
+                          ? "Resend OTP"
+                          : "Resend in ${_secondsRemaining}s",
                       style: TextStyle(
-                        color: Colors.orange,
+                        color: _canResend ? Colors.orange : Colors.grey,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
