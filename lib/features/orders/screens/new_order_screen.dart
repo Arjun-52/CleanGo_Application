@@ -207,81 +207,56 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                 const SizedBox(height: 16),
 
                 GridView.builder(
-                  itemCount: services.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
+                  itemCount: services.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 12,
+                    crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-                    childAspectRatio: 1.3,
+                    childAspectRatio: 1,
                   ),
                   itemBuilder: (context, index) {
                     final service = services[index];
                     final bool isSelected = selectedService == index;
 
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedService = index;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: isSelected
-                                ? const Color(0xff0D47A1)
-                                : Colors.transparent,
-                            width: 2,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.08),
-                              blurRadius: 12,
-                              offset: const Offset(0, 6),
-                            ),
-                          ],
+                    return Stack(
+                      children: [
+                        ServiceTile(
+                          icon: service["icon"],
+                          iconColor: service["color"],
+                          title: service["title"],
+                          subtitle: service["subtitle"],
+                          isSelected: isSelected,
+                          onTap: () {
+                            setState(() {
+                              selectedService = index;
+                            });
+                          },
                         ),
-                        child: Stack(
-                          children: [
-                            ServiceTile(
-                              title: service["title"],
-                              subtitle: service["subtitle"],
-                              icon: service["icon"],
-                              iconColor: service["color"],
-                              onTap: () {
-                                setState(() {
-                                  selectedService = index;
-                                });
-                              },
-                            ),
-                            if (isSelected)
-                              Positioned(
-                                top: 8,
-                                right: 8,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xff0D47A1),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  padding: const EdgeInsets.all(4),
-                                  child: const Icon(
-                                    Icons.check,
-                                    size: 14,
-                                    color: AppColors.white,
-                                  ),
-                                ),
+
+                        if (isSelected)
+                          Positioned(
+                            top: 8,
+                            right: 8,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: Color(0xff0D47A1),
+                                shape: BoxShape.circle,
                               ),
-                          ],
-                        ),
-                      ),
+                              padding: const EdgeInsets.all(4),
+                              child: const Icon(
+                                Icons.check,
+                                size: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                      ],
                     );
                   },
                 ),
 
-                /// SHOW BELOW ONLY IF BOTH SELECTED
                 if (canSelectItems) ...[
                   const SizedBox(height: 30),
 

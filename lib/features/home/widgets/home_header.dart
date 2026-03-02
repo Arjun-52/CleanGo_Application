@@ -1,7 +1,62 @@
+import 'package:clean_go/features/home/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeHeader extends StatelessWidget {
+class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
+
+  @override
+  State<HomeHeader> createState() => _HomeHeaderState();
+}
+
+class _HomeHeaderState extends State<HomeHeader> {
+  String selectedAddress = "Madhapur, Hyderabad";
+
+  final List<String> addresses = [
+    "Madhapur, Hyderabad",
+    "Gachibowli, Hyderabad",
+    "Kukatpally, Hyderabad",
+    "Hitech City, Hyderabad",
+  ];
+
+  void _showAddressSelector() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Select Address",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 20),
+              ...addresses.map(
+                (address) => ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(address),
+                  trailing: address == selectedAddress
+                      ? const Icon(Icons.check, color: Colors.green)
+                      : null,
+                  onTap: () {
+                    setState(() {
+                      selectedAddress = address;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,46 +67,61 @@ class HomeHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            children: const [
-              Icon(Icons.home_outlined),
-              SizedBox(width: 6),
+            children: [
+              const Icon(Icons.home_outlined),
+              const SizedBox(width: 6),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Home",
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(width: 4),
-                      Icon(Icons.keyboard_arrow_down, size: 18),
-                    ],
+                  GestureDetector(
+                    onTap: _showAddressSelector,
+                    child: Row(
+                      children: const [
+                        Text(
+                          "Home",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(width: 4),
+                        Icon(Icons.keyboard_arrow_down, size: 18),
+                      ],
+                    ),
                   ),
+                  const SizedBox(height: 2),
                   Text(
-                    "Madhapur, Hyderabad...",
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                    selectedAddress,
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],
               ),
             ],
           ),
-          Stack(
-            children: [
-              const Icon(Icons.notifications_none, size: 26),
-              Positioned(
-                right: 3,
-                top: 3,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
+          InkWell(
+            borderRadius: BorderRadius.circular(30),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationScreen(),
+                ),
+              );
+            },
+            child: Stack(
+              children: [
+                const Icon(Icons.notifications_none, size: 26),
+                Positioned(
+                  right: 3,
+                  top: 3,
+                  child: Container(
+                    width: 8,
+                    height: 8,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

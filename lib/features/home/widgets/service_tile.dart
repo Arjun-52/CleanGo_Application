@@ -7,6 +7,7 @@ class ServiceTile extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback? onTap;
+  final bool isSelected;
 
   const ServiceTile({
     super.key,
@@ -15,6 +16,7 @@ class ServiceTile extends StatelessWidget {
     required this.title,
     required this.subtitle,
     this.onTap,
+    this.isSelected = false,
   });
 
   @override
@@ -23,14 +25,15 @@ class ServiceTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-
-        border: Border.all(color: AppColors.greyLight, width: 1),
-
-        boxShadow: const [
+        border: Border.all(
+          color: isSelected ? const Color(0xff0D47A1) : AppColors.greyLight,
+          width: isSelected ? 2 : 1,
+        ),
+        boxShadow: [
           BoxShadow(
-            color: Color(0x14000000),
-            blurRadius: 8,
-            offset: Offset(0, 4),
+            color: Colors.black.withOpacity(isSelected ? 0.12 : 0.06),
+            blurRadius: isSelected ? 16 : 8,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -41,7 +44,6 @@ class ServiceTile extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(icon, color: iconColor, size: 40),
               const SizedBox(height: 10),

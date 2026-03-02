@@ -3,6 +3,7 @@ import 'fast_track_banner.dart';
 import 'home_header.dart';
 import 'package:flutter/material.dart';
 import 'service_tile.dart';
+import '../screens/notification_screen.dart';
 
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
