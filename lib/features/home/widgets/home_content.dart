@@ -1,8 +1,14 @@
+import 'package:clean_go/features/orders/models/order_model.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'active_order_card.dart';
 import 'fast_track_banner.dart';
 import 'home_header.dart';
-import 'package:flutter/material.dart';
 import 'service_tile.dart';
+
+import 'package:clean_go/features/auth/providers/auth_provider.dart';
+import 'package:clean_go/features/orders/providers/order_provider.dart';
 import 'package:clean_go/features/orders/screens/new_order_screen.dart';
 
 class HomeContent extends StatelessWidget {
@@ -10,6 +16,11 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthProvider>();
+    final orderProvider = context.watch<OrderProvider>();
+
+    final userName = authProvider.user?.name ?? "User";
+
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 80),
@@ -19,18 +30,21 @@ class HomeContent extends StatelessWidget {
             const HomeHeader(),
             const SizedBox(height: 10),
 
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    "Hello, John!",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    "Hello, $userName!",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  SizedBox(height: 4),
-                  Text(
+                  const SizedBox(height: 4),
+                  const Text(
                     "Fresh clothes, delivered with care",
                     style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
@@ -51,7 +65,21 @@ class HomeContent extends StatelessWidget {
             ),
 
             const SizedBox(height: 12),
-            const ActiveOrderCard(),
+
+            ActiveOrderCard(
+              order: orderProvider.activeOrders.isNotEmpty
+                  ? orderProvider.activeOrders.first
+                  : OrderModel(
+                      id: "CLN-2026-001",
+                      userId: "1",
+                      items: [],
+                      totalAmount: 0,
+                      status: OrderStatus.processing,
+                      deliveryTime: DateTime.now(),
+                      createdAt: DateTime.now(),
+                    ),
+            ),
+
             const SizedBox(height: 30),
 
             const Padding(
@@ -93,6 +121,7 @@ class HomeContent extends StatelessWidget {
                       );
                     },
                   ),
+
                   ServiceTile(
                     title: "Iron Only",
                     subtitle: "Crisp finish",
@@ -110,6 +139,7 @@ class HomeContent extends StatelessWidget {
                       );
                     },
                   ),
+
                   ServiceTile(
                     title: "Dry Clean",
                     subtitle: "Premium care",
@@ -127,6 +157,7 @@ class HomeContent extends StatelessWidget {
                       );
                     },
                   ),
+
                   ServiceTile(
                     title: "Wash & Fold",
                     subtitle: "Quick service",

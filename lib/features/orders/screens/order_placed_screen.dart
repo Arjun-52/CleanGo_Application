@@ -1,7 +1,11 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:clean_go/features/orders/screens/order_tracking_screen.dart';
 
+import 'package:clean_go/features/orders/widgets/order_success_icon.dart';
+import 'package:clean_go/features/orders/widgets/order_summary_card.dart';
+import 'package:clean_go/features/orders/widgets/pickup_otp_info_box.dart';
+
+import 'package:clean_go/features/orders/screens/order_tracking_screen.dart';
 import '../../../routes/app_routes.dart';
 
 class OrderPlacedScreen extends StatelessWidget {
@@ -11,30 +15,19 @@ class OrderPlacedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
+
           child: Column(
             children: [
               const SizedBox(height: 20),
 
-              /// Success Icon
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xffD7F2E3),
-                ),
-                child: const CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Color(0xff22B573),
-                  child: Icon(Icons.check, color: AppColors.white, size: 40),
-                ),
-              ),
+              const OrderSuccessIcon(),
 
               const SizedBox(height: 24),
 
-              /// Title
               const Text(
                 "Order Placed!",
                 style: TextStyle(
@@ -54,107 +47,19 @@ class OrderPlacedScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              /// Order Card
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: const [
-                    BoxShadow(color: Colors.black12, blurRadius: 6),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Center(
-                      child: Column(
-                        children: [
-                          Text(
-                            "Order Number",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            "CLN-2026-001",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff0D47A1),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 12),
-                    const Divider(),
-                    const SizedBox(height: 12),
-
-                    /// Items info
-                    Row(
-                      children: const [
-                        CircleAvatar(
-                          backgroundColor: Color(0xffE8F0FE),
-                          child: Icon(
-                            Icons.inventory_2,
-                            color: Color(0xff0D47A1),
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        Expanded(child: Text("2 items • Standard")),
-                      ],
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    /// Amount
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          "Amount Paid",
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          "₹95",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff0D47A1),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              const OrderSummaryCard(
+                orderNumber: "CLN-2026-001",
+                itemCount: 2,
+                serviceType: "Standard",
+                amount: "₹95",
               ),
 
               const SizedBox(height: 20),
 
-              /// Info box
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: const Color(0xffE3F2FD),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xff90CAF9)),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.sms, color: Color(0xff0D47A1)),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        "You'll receive pickup OTP via SMS before the pickup slot",
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const PickupOtpInfoBox(),
 
               const Spacer(),
 
-              /// Track Order button
               SizedBox(
                 width: double.infinity,
                 height: 52,
@@ -168,12 +73,9 @@ class OrderPlacedScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (_) => const OrderTrackingScreen(),
-                      ),
+                      MaterialPageRoute(builder: (_) => OrderTrackingScreen()),
                     );
                   },
-
                   child: const Text(
                     "Track Order",
                     style: TextStyle(color: Colors.white),
@@ -183,7 +85,6 @@ class OrderPlacedScreen extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              /// Home button
               SizedBox(
                 width: double.infinity,
                 height: 52,

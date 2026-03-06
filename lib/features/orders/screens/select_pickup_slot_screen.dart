@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'order_review_screen.dart';
 import '../../../core/common_widgets/bottom_navbar.dart';
 
+import '../widgets/pickup_date_card.dart';
+import '../widgets/pickup_slot_card.dart';
+import '../widgets/pickup_slot_bottom_bar.dart';
+
 class SelectPickupSlotScreen extends StatefulWidget {
   const SelectPickupSlotScreen({super.key});
 
@@ -13,8 +17,6 @@ class SelectPickupSlotScreen extends StatefulWidget {
 class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
   int selectedDate = 0;
   int selectedSlot = 0;
-
-  // Bottom nav selected index (Track tab)
   int _currentIndex = 2;
 
   final dates = [
@@ -68,42 +70,11 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
                       scrollDirection: Axis.horizontal,
                       itemCount: dates.length,
                       itemBuilder: (context, index) {
-                        bool selected = selectedDate == index;
-
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() => selectedDate = index);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 12),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 18,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(
-                                color: selected
-                                    ? const Color(0xff0D47A1)
-                                    : Colors.grey.shade300,
-                                width: 1.5,
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(dates[index]["day"]!),
-                                const SizedBox(height: 4),
-                                Text(
-                                  dates[index]["date"]!,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        return PickupDateCard(
+                          day: dates[index]["day"]!,
+                          date: dates[index]["date"]!,
+                          selected: selectedDate == index,
+                          onTap: () => setState(() => selectedDate = index),
                         );
                       },
                     ),
@@ -130,45 +101,11 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
                           mainAxisExtent: 70,
                         ),
                     itemBuilder: (context, index) {
-                      bool selected = selectedSlot == index;
-
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() => selectedSlot = index);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(14),
-                            border: Border.all(
-                              color: selected
-                                  ? const Color(0xff0D47A1)
-                                  : Colors.grey.shade300,
-                              width: 1.5,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                slots[index]["left"]!,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.grey,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                slots[index]["time"]!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      return PickupSlotCard(
+                        time: slots[index]["time"]!,
+                        slotsLeft: slots[index]["left"]!,
+                        selected: selectedSlot == index,
+                        onTap: () => setState(() => selectedSlot = index),
                       );
                     },
                   ),
@@ -177,57 +114,18 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
             ),
           ),
 
-          /// Bottom button
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: AppColors.white,
-              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 2)],
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Jan 08, ${slots[selectedSlot]["time"]}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text("Pickup Slot", style: TextStyle(color: Colors.grey)),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const OrderReviewScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          PickupSlotBottomBar(
+            time: slots[selectedSlot]["time"]!,
+            onNext: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const OrderReviewScreen()),
+              );
+            },
           ),
         ],
       ),
 
-      /// Bottom navigation added here
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
         onTap: (index) {

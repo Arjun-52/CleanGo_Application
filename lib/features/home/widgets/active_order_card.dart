@@ -1,9 +1,12 @@
-import 'package:clean_go/core/constants/colors.dart';
-import 'package:clean_go/features/orders/screens/order_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:clean_go/core/constants/colors.dart';
+import 'package:clean_go/features/orders/models/order_model.dart';
+import 'package:intl/intl.dart';
 
 class ActiveOrderCard extends StatelessWidget {
-  const ActiveOrderCard({super.key});
+  final OrderModel order;
+
+  const ActiveOrderCard({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -11,159 +14,150 @@ class ActiveOrderCard extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  const OrderDetailsScreen(orderId: "CLN-2026-001"),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 8,
+              offset: Offset(0, 3),
             ),
-          );
-        },
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// TOP ROW
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Icon(
-                      Icons.inventory_2_outlined,
-                      color: AppColors.white,
-                    ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /// TOP ROW
+            Row(
+              children: [
+                /// ICON
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  const SizedBox(width: 14),
-
-                  /// Order Info
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "CLN-2026-001",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          "Processing",
-                          style: TextStyle(color: AppColors.grey, fontSize: 14),
-                        ),
-                      ],
-                    ),
+                  child: const Icon(
+                    Icons.inventory_2_outlined,
+                    color: Colors.white,
                   ),
-
-                  /// ON TRACK BADGE
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xffE6F4EA),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.green),
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.check_circle, size: 16, color: Colors.green),
-                        SizedBox(width: 4),
-                        Text(
-                          "On Track",
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 18),
-
-              /// PROGRESS BAR
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: LinearProgressIndicator(
-                  value: 0.6,
-                  minHeight: 8,
-                  color: Colors.green,
-                  backgroundColor: Colors.grey.shade300,
                 ),
+
+                const SizedBox(width: 12),
+
+                /// ORDER INFO
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        order.id ?? "",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
+                      ),
+
+                      const SizedBox(height: 2),
+
+                      const Text(
+                        "Processing",
+                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                      ),
+                    ],
+                  ),
+                ),
+
+                /// STATUS BADGE
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffE6F4EA),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.check_circle, size: 14, color: Colors.green),
+                      SizedBox(width: 4),
+                      Text(
+                        "On track",
+                        style: TextStyle(color: Colors.green, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 14),
+
+            /// PROGRESS BAR
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: LinearProgressIndicator(
+                value: 0.6,
+                minHeight: 6,
+                backgroundColor: Colors.grey.shade300,
+                color: Colors.green,
               ),
+            ),
 
-              const SizedBox(height: 8),
+            const SizedBox(height: 8),
 
-              const Text("Step 4 of 7", style: TextStyle(color: Colors.grey)),
+            /// STEP
+            const Text(
+              "Step 4 of 7",
+              style: TextStyle(color: Colors.grey, fontSize: 12),
+            ),
 
-              const SizedBox(height: 16),
+            const SizedBox(height: 10),
 
-              const Divider(),
+            const Divider(),
 
-              const SizedBox(height: 12),
+            const SizedBox(height: 8),
 
-              /// DELIVERY ROW
-              Row(
-                children: [
-                  const Icon(
-                    Icons.access_time,
-                    color: AppColors.grey,
-                    size: 18,
+            /// DELIVERY INFO
+            Row(
+              children: [
+                const Icon(Icons.access_time, size: 16, color: Colors.grey),
+
+                const SizedBox(width: 6),
+
+                const Text(
+                  "Delivery by · ",
+                  style: TextStyle(color: Colors.grey),
+                ),
+
+                Text(
+                  order.deliveryTime != null
+                      ? DateFormat(
+                          'MMM dd, hh:mm a',
+                        ).format(order.deliveryTime!)
+                      : "",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: primaryColor,
                   ),
-                  const SizedBox(width: 8),
+                ),
 
-                  const Text(
-                    "Delivery by ",
-                    style: TextStyle(color: Colors.grey),
+                const Spacer(),
+
+                const Text(
+                  "-02h -21m",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.w600,
                   ),
-
-                  const Text(
-                    "Feb 28, 03:00 PM",
-                    style: TextStyle(
-                      color: Color(0xff0B3C5D),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-
-                  const Spacer(),
-
-                  const Text(
-                    "-02h -21m",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

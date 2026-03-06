@@ -6,6 +6,7 @@ enum OrderStatus {
   outForDelivery,
   delivered,
   cancelled,
+  processing,
 }
 
 class OrderModel {
@@ -87,12 +88,7 @@ class OrderItem {
   final int? quantity;
   final double? price;
 
-  OrderItem({
-    this.serviceId,
-    this.serviceName,
-    this.quantity,
-    this.price,
-  });
+  OrderItem({this.serviceId, this.serviceName, this.quantity, this.price});
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(

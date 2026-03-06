@@ -1,5 +1,4 @@
 import 'package:clean_go/features/orders/models/tracking_model.dart';
-
 import '../models/order_model.dart';
 
 class OrderService {
@@ -23,8 +22,35 @@ class OrderService {
 
   // Get order by ID
   Future<OrderModel?> getOrderById(String orderId) async {
-    // TODO: Implement get order by ID logic
-    return null;
+    // Mock data for order details
+    await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
+
+    return OrderModel(
+      id: orderId,
+      userId: "user123",
+      items: [
+        OrderItem(
+          serviceId: "1",
+          serviceName: "Wash & Iron",
+          quantity: 5,
+          price: 499.0,
+        ),
+        OrderItem(
+          serviceId: "2",
+          serviceName: "Dry Clean",
+          quantity: 2,
+          price: 300.0,
+        ),
+      ],
+      totalAmount: 799.0,
+      status: OrderStatus.inProgress,
+      pickupOtp: "5646",
+      deliveryOtp: "7890",
+      pickupTime: DateTime.now().subtract(const Duration(days: 1)),
+      deliveryTime: DateTime.now().add(const Duration(days: 1)),
+      addressId: "address123",
+      createdAt: DateTime.now().subtract(const Duration(days: 2)),
+    );
   }
 
   // Get order tracking

@@ -1,14 +1,34 @@
-import 'package:clean_go/core/constants/colors.dart' show AppColors;
 import 'package:flutter/material.dart';
-import 'package:clean_go/features/orders/screens/order_details_screen.dart';
+import 'package:provider/provider.dart';
 
-class OrderHistoryScreen extends StatelessWidget {
+import 'package:clean_go/core/constants/colors.dart';
+import 'package:clean_go/features/orders/providers/order_provider.dart';
+import 'package:clean_go/features/orders/widgets/order_card.dart';
+
+class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
 
   @override
+  State<OrderHistoryScreen> createState() => _OrderHistoryScreenState();
+}
+
+class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      context.read<OrderProvider>().loadPastOrders();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final provider = context.watch<OrderProvider>();
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
+
       appBar: AppBar(
         title: const Text(
           "Order History",
@@ -18,162 +38,46 @@ class OrderHistoryScreen extends StatelessWidget {
         elevation: 1,
         leading: const BackButton(color: Colors.black),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: const [
-          OrderHistoryCard(
-            orderId: "CLN-2026-001",
-            status: "On Track",
-            items: "Processing • 2 items",
-            date: "Feb 26, 02:58 PM",
-            price: "₹95",
-            statusColor: Colors.green,
-          ),
-          SizedBox(height: 12),
-          OrderHistoryCard(
-            orderId: "CLN-2026-002",
-            status: "On Track",
-            items: "Processing • 6 items",
-            date: "Feb 26, 02:58 PM",
-            price: "₹95",
-            statusColor: Colors.green,
-          ),
-          SizedBox(height: 12),
-          OrderHistoryCard(
-            orderId: "CLN-2026-003",
-            status: "Breached",
-            items: "Processing • 4 items",
-            date: "Feb 26, 02:58 PM",
-            price: "₹95",
-            statusColor: Colors.red,
-          ),
-        ],
-      ),
-    );
-  }
-}
 
-class OrderHistoryCard extends StatelessWidget {
-  final String orderId;
-  final String status;
-  final String items;
-  final String date;
-  final String price;
-  final Color statusColor;
+      body: Builder(
+        builder: (_) {
+          if (provider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-  const OrderHistoryCard({
-    super.key,
-    required this.orderId,
-    required this.status,
-    required this.items,
-    required this.date,
-    required this.price,
-    required this.statusColor,
-  });
+          if (provider.error != null) {
+            return Center(
+              child: Text(
+                provider.error!,
+                style: const TextStyle(color: Colors.red),
+              ),
+            );
+          }
 
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(14),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => OrderDetailsScreen(orderId: orderId),
-          ),
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 5,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade900,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.inventory_2_outlined,
-                    color: AppColors.white,
-                  ),
+          if (provider.pastOrders.isEmpty) {
+            return const Center(child: Text("No past orders"));
+          }
+
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: provider.pastOrders.length,
+            itemBuilder: (context, index) {
+              final order = provider.pastOrders[index];
+
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: OrderCard(
+                  order: order,
+                  orderId: '',
+                  status: '',
+                  date: '',
+                  amount: '',
+                  onTap: () {},
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        orderId,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(items, style: TextStyle(color: Colors.grey[600])),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: statusColor),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.check_circle, size: 16, color: statusColor),
-                      const SizedBox(width: 6),
-                      Text(
-                        status,
-                        style: TextStyle(
-                          color: statusColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const Divider(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(date, style: TextStyle(color: Colors.grey[600])),
-                Row(
-                  children: [
-                    Text(
-                      price,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff013E6D),
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    const Icon(Icons.arrow_forward_ios, size: 14),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
+              );
+            },
+          );
+        },
       ),
     );
   }

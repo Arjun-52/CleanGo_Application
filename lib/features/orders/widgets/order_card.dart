@@ -1,3 +1,4 @@
+import 'package:clean_go/features/orders/models/order_model.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
@@ -14,6 +15,7 @@ class OrderCard extends StatelessWidget {
     required this.date,
     required this.amount,
     required this.onTap,
+    required OrderModel order,
   });
 
   @override
@@ -31,7 +33,10 @@ class OrderCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Order #$orderId', style: const TextStyle(fontWeight: FontWeight.bold)),
+                  Text(
+                    'Order #$orderId',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   _buildStatusChip(status),
                 ],
               ),
@@ -40,7 +45,10 @@ class OrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(date, style: const TextStyle(color: Colors.grey)),
-                  Text(amount, style: const TextStyle(fontWeight: FontWeight.bold)),
+                  Text(
+                    amount,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             ],
@@ -52,6 +60,7 @@ class OrderCard extends StatelessWidget {
 
   Widget _buildStatusChip(String status) {
     Color color;
+
     switch (status.toLowerCase()) {
       case 'delivered':
         color = Colors.green;
@@ -66,7 +75,7 @@ class OrderCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(status, style: TextStyle(color: color, fontSize: 12)),

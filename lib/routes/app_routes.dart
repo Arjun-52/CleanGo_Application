@@ -98,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
       serviceName: 'wash and iron',
       isFastTrack: false,
     ), // Orders tab
-    const OrderTrackingScreen(), // Track tab
+    OrderTrackingScreen(), // Track tab
     const WalletScreen(),
     const ProfileScreen(),
   ];

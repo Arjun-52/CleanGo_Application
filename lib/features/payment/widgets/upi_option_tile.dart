@@ -19,7 +19,7 @@ class UpiOptionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 8),
 
       leading: Row(
         mainAxisSize: MainAxisSize.min,

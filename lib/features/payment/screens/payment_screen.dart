@@ -1,5 +1,9 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/features/orders/screens/order_placed_screen.dart';
+import 'package:clean_go/features/payment/widgets/add_upi_row.dart';
+import 'package:clean_go/features/payment/widgets/upi_option_tile.dart';
+
+import 'package:clean_go/features/wallet/widgets/wallet_card.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,6 +16,13 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   int selectedUpi = 0;
+
+  /// UPI options list
+  final List<Map<String, String>> upiOptions = [
+    {"name": "Paytm", "icon": "assets/images/paytm.png"},
+    {"name": "PhonePe", "icon": "assets/images/phonepe.png"},
+    {"name": "GPay", "icon": "assets/images/gpay.png"},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -40,63 +51,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
             const SizedBox(height: 14),
 
-            /// WALLET CARD
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: const Color(0xff013E6D), width: 1.5),
-              ),
-              child: Row(
-                children: [
-                  /// Icon left
-                  Container(
-                    height: 46,
-                    width: 46,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff013E6D),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(
-                      Icons.account_balance_wallet,
-                      color: AppColors.white,
-                    ),
-                  ),
-
-                  const SizedBox(width: 12),
-
-                  /// Wallet text
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Wallet",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          "Balance : ₹250",
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  /// Tick
-                  const Icon(Icons.check_circle, color: Color(0xff013E6D)),
-                ],
-              ),
-            ),
+            /// Wallet Card
+            const WalletCard(balance: "250"),
 
             const SizedBox(height: 20),
 
-            /// PAYMENT OPTIONS GROUP
+            /// UPI Options Container
             Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(14),
@@ -106,23 +68,42 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               child: Column(
                 children: [
-                  _upiOption(0, Icons.account_balance, "Paytm"),
+                  /// Generate UPI options
+                  ...List.generate(upiOptions.length, (index) {
+                    return Column(
+                      children: [
+                        UpiOptionTile(
+                          index: index,
+                          selectedIndex: selectedUpi,
+                          name: upiOptions[index]["name"]!,
+                          iconPath: upiOptions[index]["icon"]!,
+                          onSelect: (val) {
+                            setState(() {
+                              selectedUpi = val;
+                            });
+                          },
+                        ),
+                        if (index != upiOptions.length - 1)
+                          const Divider(height: 1),
+                      ],
+                    );
+                  }),
+
                   const Divider(height: 1),
 
-                  _upiOption(1, Icons.account_balance_wallet, "PhonePe"),
-                  const Divider(height: 1),
-
-                  _upiOption(2, Icons.account_balance, "GPay"),
-                  const Divider(height: 1),
-
-                  _addUpiRow(),
+                  /// Add UPI row
+                  AddUpiRow(
+                    onTap: () {
+                      print("Add UPI clicked");
+                    },
+                  ),
                 ],
               ),
             ),
 
             const Spacer(),
 
-            /// PAY BUTTON
+            /// Pay Button
             SizedBox(
               width: double.infinity,
               height: 52,
@@ -141,45 +122,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     (route) => false,
                   );
                 },
-
                 child: const Text("Pay ₹95", style: TextStyle(fontSize: 16)),
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  /// ---------- UPI OPTIONS ----------
-  Widget _upiOption(int index, IconData icon, String name) {
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-      leading: Radio(
-        value: index,
-        groupValue: selectedUpi,
-        activeColor: const Color(0xff013E6D),
-        onChanged: (val) {
-          setState(() => selectedUpi = val!);
-        },
-      ),
-      title: Row(
-        children: [Icon(icon, size: 22), const SizedBox(width: 12), Text(name)],
-      ),
-      onTap: () {
-        setState(() => selectedUpi = index);
-      },
-    );
-  }
-
-  /// ---------- ADD UPI ROW ----------
-  Widget _addUpiRow() {
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-      leading: const Icon(Icons.add_card),
-      title: const Text("Add UPI ID"),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () {},
     );
   }
 }

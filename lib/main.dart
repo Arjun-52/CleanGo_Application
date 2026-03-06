@@ -1,4 +1,5 @@
 import 'package:clean_go/features/location/providers/location_provider.dart';
+import 'package:clean_go/features/orders/providers/new_order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
+        ChangeNotifierProvider(create: (_) => NewOrderProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
