@@ -1,6 +1,9 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+
 import '../../../core/common_widgets/bottom_navbar.dart';
+import '../widgets/custom_text_field_box.dart';
+import '../widgets/bottom_primary_button.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -10,9 +13,10 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final _nameController = TextEditingController(text: 'John Kevin');
-  final _emailController = TextEditingController(text: 'johnkevin@gmail.com');
-  final _phoneController = TextEditingController(text: '+91 9123456789');
+  final _nameController = TextEditingController(text: "John Kevin");
+  final _emailController = TextEditingController(text: "johnkevin@gmail.com");
+  final _phoneController = TextEditingController(text: "+91 9123456789");
+
   final int _currentIndex = 2;
 
   @override
@@ -23,10 +27,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
+  void _saveProfile() {
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F5),
+
       appBar: AppBar(
         backgroundColor: AppColors.white,
         elevation: 0,
@@ -36,11 +45,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         ),
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            /// Profile Picture
+            /// Profile Avatar
             Container(
               width: 120,
               height: 120,
@@ -61,125 +71,40 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
             const SizedBox(height: 40),
 
-            /// Full Name Field
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: "Full Name",
-                  labelStyle: TextStyle(color: Color(0xff64748B), fontSize: 16),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
-                ),
-                style: const TextStyle(fontSize: 16, color: Color(0xff1F2A44)),
-              ),
+            /// Name Field
+            CustomTextFieldBox(
+              controller: _nameController,
+              labelText: "Full Name",
             ),
 
             const SizedBox(height: 20),
 
-            /// Mobile Number Field
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: TextField(
-                controller: _phoneController,
-                decoration: const InputDecoration(
-                  labelText: "Mobile Number",
-                  labelStyle: TextStyle(color: Color(0xff64748B), fontSize: 16),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
-                ),
-                style: const TextStyle(fontSize: 16, color: Color(0xff1F2A44)),
-                keyboardType: TextInputType.phone,
-              ),
+            /// Phone Field
+            CustomTextFieldBox(
+              controller: _phoneController,
+              labelText: "Mobile Number",
+              keyboardType: TextInputType.phone,
             ),
 
             const SizedBox(height: 20),
 
             /// Email Field
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: "Enter Email",
-                  labelStyle: TextStyle(color: Color(0xff64748B), fontSize: 16),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
-                ),
-                style: const TextStyle(fontSize: 16, color: Color(0xff1F2A44)),
-                keyboardType: TextInputType.emailAddress,
-              ),
+            CustomTextFieldBox(
+              controller: _emailController,
+              labelText: "Email",
+              keyboardType: TextInputType.emailAddress,
             ),
 
             const SizedBox(height: 40),
 
-            /// Save Changes Button
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff0B3C5D),
-                  foregroundColor: AppColors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 0,
-                ),
-                child: const Text(
-                  "Save Changes",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
+            /// Save Button
+            BottomPrimaryButton(text: "Save Changes", onPressed: _saveProfile),
 
             const SizedBox(height: 20),
           ],
         ),
       ),
+
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
         onTap: (index) {

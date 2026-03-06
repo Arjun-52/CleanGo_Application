@@ -2,28 +2,113 @@ import 'package:clean_go/features/orders/models/tracking_model.dart';
 import '../models/order_model.dart';
 
 class OrderService {
-  // Get all orders
+  /// Get all orders
   Future<List<OrderModel>> getOrders() async {
-    // TODO: Implement get orders logic
-    return [];
+    await Future.delayed(const Duration(milliseconds: 500));
+    return [...await getActiveOrders(), ...await getPastOrders()];
   }
 
-  // Get active orders
+  /// Active Orders
   Future<List<OrderModel>> getActiveOrders() async {
-    // TODO: Implement get active orders logic
-    return [];
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    return [
+      OrderModel(
+        id: "CLN-2026-001",
+        userId: "user123",
+        items: [
+          OrderItem(
+            serviceId: "1",
+            serviceName: "Wash & Iron",
+            quantity: 2,
+            price: 95,
+          ),
+        ],
+        totalAmount: 95,
+        status: OrderStatus.inProgress,
+        pickupOtp: "1234",
+        deliveryOtp: "5678",
+        pickupTime: DateTime.now(),
+        deliveryTime: DateTime.now().add(const Duration(days: 2)),
+        addressId: "address1",
+        createdAt: DateTime.now(),
+      ),
+    ];
   }
 
-  // Get past orders
+  /// Past Orders (THIS FIXES YOUR SCREEN)
   Future<List<OrderModel>> getPastOrders() async {
-    // TODO: Implement get past orders logic
-    return [];
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    return [
+      OrderModel(
+        id: "CLN-2026-001",
+        userId: "user123",
+        items: [
+          OrderItem(
+            serviceId: "1",
+            serviceName: "Wash & Iron",
+            quantity: 2,
+            price: 95,
+          ),
+        ],
+        totalAmount: 95,
+        status: OrderStatus.processing,
+        pickupOtp: "1234",
+        deliveryOtp: "5678",
+        pickupTime: DateTime.now().subtract(const Duration(days: 2)),
+        deliveryTime: DateTime.now().subtract(const Duration(days: 1)),
+        addressId: "address1",
+        createdAt: DateTime.now().subtract(const Duration(days: 2)),
+      ),
+
+      OrderModel(
+        id: "CLN-2026-002",
+        userId: "user123",
+        items: [
+          OrderItem(
+            serviceId: "2",
+            serviceName: "Dry Clean",
+            quantity: 6,
+            price: 95,
+          ),
+        ],
+        totalAmount: 95,
+        status: OrderStatus.processing,
+        pickupOtp: "2222",
+        deliveryOtp: "3333",
+        pickupTime: DateTime.now().subtract(const Duration(days: 5)),
+        deliveryTime: DateTime.now().subtract(const Duration(days: 4)),
+        addressId: "address2",
+        createdAt: DateTime.now().subtract(const Duration(days: 5)),
+      ),
+
+      OrderModel(
+        id: "CLN-2026-003",
+        userId: "user123",
+        items: [
+          OrderItem(
+            serviceId: "3",
+            serviceName: "Steam Iron",
+            quantity: 4,
+            price: 95,
+          ),
+        ],
+        totalAmount: 95,
+        status: OrderStatus.delivered,
+        pickupOtp: "4444",
+        deliveryOtp: "5555",
+        pickupTime: DateTime.now().subtract(const Duration(days: 8)),
+        deliveryTime: DateTime.now().subtract(const Duration(days: 7)),
+        addressId: "address3",
+        createdAt: DateTime.now().subtract(const Duration(days: 8)),
+      ),
+    ];
   }
 
-  // Get order by ID
+  /// Get order by ID
   Future<OrderModel?> getOrderById(String orderId) async {
-    // Mock data for order details
-    await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
+    await Future.delayed(const Duration(seconds: 1));
 
     return OrderModel(
       id: orderId,
@@ -33,16 +118,16 @@ class OrderService {
           serviceId: "1",
           serviceName: "Wash & Iron",
           quantity: 5,
-          price: 499.0,
+          price: 499,
         ),
         OrderItem(
           serviceId: "2",
           serviceName: "Dry Clean",
           quantity: 2,
-          price: 300.0,
+          price: 300,
         ),
       ],
-      totalAmount: 799.0,
+      totalAmount: 799,
       status: OrderStatus.inProgress,
       pickupOtp: "5646",
       deliveryOtp: "7890",
@@ -53,33 +138,24 @@ class OrderService {
     );
   }
 
-  // Get order tracking
+  /// Order Tracking
   Future<TrackingModel?> getOrderTracking(String orderId) async {
-    // TODO: Implement get order tracking logic
     return null;
   }
 
-  // Verify pickup OTP
   Future<bool> verifyPickupOtp(String orderId, String otp) async {
-    // TODO: Implement verify pickup OTP logic
     return true;
   }
 
-  // Verify delivery OTP
   Future<bool> verifyDeliveryOtp(String orderId, String otp) async {
-    // TODO: Implement verify delivery OTP logic
     return true;
   }
 
-  // Cancel order
   Future<bool> cancelOrder(String orderId) async {
-    // TODO: Implement cancel order logic
     return true;
   }
 
-  // Rate order
   Future<bool> rateOrder(String orderId, int rating, String? review) async {
-    // TODO: Implement rate order logic
     return true;
   }
 }

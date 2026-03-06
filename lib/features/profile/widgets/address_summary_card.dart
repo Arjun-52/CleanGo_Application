@@ -1,28 +1,100 @@
 import 'package:flutter/material.dart';
+import 'package:clean_go/core/constants/colors.dart';
 
 class AddressSummaryCard extends StatelessWidget {
-  const AddressSummaryCard({super.key});
+  final String label;
+  final String address;
+  final bool isDefault;
+  final Function(String)? onMenuSelected;
+
+  const AddressSummaryCard({
+    super.key,
+    required this.label,
+    required this.address,
+    required this.isDefault,
+    this.onMenuSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xff0B3C5D).withOpacity(0.05),
-        borderRadius: BorderRadius.circular(8),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Plot no.209, Kavuri Hills, Madhapur, Telangana 500033",
-            style: TextStyle(fontSize: 14, color: Color(0xff1F2A44)),
+          Row(
+            children: [
+              /// Address label
+              Text(
+                label,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+              ),
+
+              const SizedBox(width: 8),
+
+              /// Default badge
+              if (isDefault)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff22B573).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: const Text(
+                    "Default",
+                    style: TextStyle(
+                      color: Color(0xff22B573),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+
+              const Spacer(),
+
+              /// Popup menu
+              PopupMenuButton<String>(
+                icon: const Icon(Icons.more_vert, color: Color(0xff64748B)),
+                onSelected: onMenuSelected,
+                itemBuilder: (context) => const [
+                  PopupMenuItem(
+                    value: 'set_default',
+                    child: Text("Set Default"),
+                  ),
+                  PopupMenuItem(value: 'edit', child: Text("Edit")),
+                  PopupMenuItem(value: 'delete', child: Text("Delete")),
+                ],
+              ),
+            ],
           ),
-          SizedBox(height: 4),
+
+          const SizedBox(height: 8),
+
+          /// Address text
           Text(
-            "Ph: +91234567890",
-            style: TextStyle(fontSize: 12, color: Color(0xff64748B)),
+            address,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xff64748B),
+              height: 1.4,
+            ),
           ),
         ],
       ),
