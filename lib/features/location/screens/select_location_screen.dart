@@ -1,8 +1,48 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
-class SelectLocationScreen extends StatelessWidget {
+class SelectLocationScreen extends StatefulWidget {
   const SelectLocationScreen({super.key});
+
+  @override
+  State<SelectLocationScreen> createState() => _SelectLocationScreenState();
+}
+
+class _SelectLocationScreenState extends State<SelectLocationScreen> {
+  final TextEditingController _searchController = TextEditingController();
+
+  final List<String> allLocations = [
+    "Madhapur, Hyderabad",
+    "Gachibowli, Hyderabad",
+    "Kukatpally, Hyderabad",
+    "Hitech City, Hyderabad",
+    "Banjara Hills, Hyderabad",
+    "Jubilee Hills, Hyderabad",
+  ];
+
+  List<String> filteredLocations = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredLocations = allLocations;
+  }
+
+  void _filterLocations(String query) {
+    setState(() {
+      filteredLocations = allLocations
+          .where(
+            (location) => location.toLowerCase().contains(query.toLowerCase()),
+          )
+          .toList();
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +56,9 @@ class SelectLocationScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// HEADER
               const SizedBox(height: 10),
+
+              /// HEADER
               Row(
                 children: [
                   IconButton(
@@ -36,36 +77,35 @@ class SelectLocationScreen extends StatelessWidget {
               /// SEARCH FIELD
               Container(
                 height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
-                  children: const [
-                    Icon(Icons.search, color: Colors.grey),
-                    SizedBox(width: 10),
-                    Text(
-                      "Search your location",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: _filterLocations,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search, color: Colors.grey),
+                    hintText: "Search your location",
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(vertical: 14),
+                  ),
                 ),
               ),
 
               const SizedBox(height: 20),
 
-              /// CURRENT LOCATION (Clickable)
+              /// CURRENT LOCATION
               InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, '/confirm-location');
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Icon(Icons.my_location, color: primaryColor, size: 20),
-                    const SizedBox(width: 10),
-                    const Expanded(
+                    SizedBox(width: 10),
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -73,12 +113,12 @@ class SelectLocationScreen extends StatelessWidget {
                             "Use Current Location",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              color: Color(0xff0B3C5D),
+                              color: primaryColor,
                             ),
                           ),
                           SizedBox(height: 4),
                           Text(
-                            "Rd No.60, Madhapur, Hyderabad,\n500033",
+                            "Detect automatically using GPS",
                             style: TextStyle(
                               color: AppColors.grey,
                               height: 1.4,
@@ -93,33 +133,31 @@ class SelectLocationScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              /// DIVIDER
               Divider(color: Colors.grey.shade300),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 20),
 
-              /// MANUAL LOCATION BUTTON
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: primaryColor, width: 1.5),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/confirm-location');
-                  },
-                  child: const Text(
-                    "Enter location manually",
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
+              /// SEARCH RESULTS
+              Expanded(
+                child: filteredLocations.isEmpty
+                    ? const Center(child: Text("No locations found"))
+                    : ListView.builder(
+                        itemCount: filteredLocations.length,
+                        itemBuilder: (context, index) {
+                          final location = filteredLocations[index];
+                          return ListTile(
+                            leading: const Icon(Icons.location_on_outlined),
+                            title: Text(location),
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/confirm-location',
+                                arguments: location,
+                              );
+                            },
+                          );
+                        },
+                      ),
               ),
             ],
           ),

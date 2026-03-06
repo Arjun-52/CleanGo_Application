@@ -1,70 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:clean_go/features/home/models/notification_model.dart';
+import 'package:clean_go/features/home/providers/notification_provider.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
-
-  // Dummy Data (All Categories Included)
-  List<AppNotification> get notifications => [
-    // ORDER
-    AppNotification(
-      id: "1",
-      title: "Order Confirmed",
-      message: "Your laundry order #1234 has been confirmed.",
-      dateTime: DateTime.now().subtract(const Duration(minutes: 30)),
-      isRead: false,
-      type: NotificationType.order,
-    ),
-
-    AppNotification(
-      id: "2",
-      title: "Out for Delivery",
-      message: "Your clothes are out for delivery.",
-      dateTime: DateTime.now().subtract(const Duration(hours: 2)),
-      isRead: false,
-      type: NotificationType.order,
-    ),
-
-    // PAYMENT
-    AppNotification(
-      id: "3",
-      title: "Payment Successful",
-      message: "₹499 payment completed successfully.",
-      dateTime: DateTime.now().subtract(const Duration(days: 1)),
-      isRead: true,
-      type: NotificationType.payment,
-    ),
-
-    // OFFER
-    AppNotification(
-      id: "4",
-      title: "20% Off Dry Cleaning",
-      message: "Limited time offer on premium dry cleaning.",
-      dateTime: DateTime.now().subtract(const Duration(days: 2)),
-      isRead: true,
-      type: NotificationType.offer,
-    ),
-
-    // REMINDER
-    AppNotification(
-      id: "5",
-      title: "Laundry Reminder",
-      message: "It's been 2 weeks since your last wash.",
-      dateTime: DateTime.now().subtract(const Duration(days: 3)),
-      isRead: true,
-      type: NotificationType.reminder,
-    ),
-
-    // SYSTEM
-    AppNotification(
-      id: "6",
-      title: "Password Changed",
-      message: "Your account password was updated successfully.",
-      dateTime: DateTime.now().subtract(const Duration(days: 5)),
-      isRead: true,
-      type: NotificationType.system,
-    ),
-  ];
 
   IconData _getIcon(NotificationType type) {
     switch (type) {
@@ -98,32 +38,11 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final today = DateTime.now();
+    final provider = Provider.of<NotificationProvider>(context);
 
-    List<AppNotification> todayList = notifications
-        .where(
-          (n) =>
-              n.dateTime.day == today.day &&
-              n.dateTime.month == today.month &&
-              n.dateTime.year == today.year,
-        )
-        .toList();
-
-    List<AppNotification> yesterdayList = notifications
-        .where(
-          (n) =>
-              n.dateTime.day == today.subtract(const Duration(days: 1)).day &&
-              n.dateTime.month ==
-                  today.subtract(const Duration(days: 1)).month &&
-              n.dateTime.year == today.subtract(const Duration(days: 1)).year,
-        )
-        .toList();
-
-    List<AppNotification> olderList = notifications
-        .where(
-          (n) => n.dateTime.isBefore(today.subtract(const Duration(days: 1))),
-        )
-        .toList();
+    final todayList = provider.todayNotifications;
+    final yesterdayList = provider.yesterdayNotifications;
+    final olderList = provider.olderNotifications;
 
     return Scaffold(
       appBar: AppBar(title: const Text("Notifications"), centerTitle: true),

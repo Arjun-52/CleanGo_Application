@@ -1,5 +1,7 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/features/home/widgets/service_tile.dart';
+import 'package:clean_go/features/orders/order_constans/order_constans.dart';
+import 'package:clean_go/features/orders/order_pricing/order_pricing.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_go/features/orders/models/item_model.dart';
 import 'package:clean_go/features/orders/models/addon_model.dart';
@@ -10,7 +12,14 @@ import 'package:clean_go/features/orders/models/addon_row.dart';
 import 'package:clean_go/features/orders/screens/select_pickup_slot_screen.dart';
 
 class NewOrderScreen extends StatefulWidget {
-  const NewOrderScreen({super.key});
+  final bool isFastTrack;
+  const NewOrderScreen({
+    super.key,
+    required this.serviceName,
+    required this.isFastTrack,
+  });
+
+  final String serviceName;
 
   @override
   State<NewOrderScreen> createState() => _NewOrderScreenState();
@@ -20,105 +29,32 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   bool get canSelectItems => selectedMode != -1 && selectedService != -1;
   int selectedMode = -1;
   int selectedService = -1;
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isFastTrack) {
+      selectedMode = 0; // Select Fast Track mode
+      selectedAddons.add("Express Processing");
+    }
+  }
 
   Map<String, int> cart = {};
   Set<String> selectedAddons = {};
 
   int selectedFilter = 0;
-  final Map<int, List<ItemModel>> categorizedItems = {
-    0: [
-      ItemModel(name: "Shirt", price: 30),
-      ItemModel(name: "T-Shirt", price: 25),
-      ItemModel(name: "Trousers", price: 40),
-      ItemModel(name: "Jeans", price: 50),
-      ItemModel(name: "Saree", price: 70),
-      ItemModel(name: "Dress", price: 80),
-      ItemModel(name: "Suit(2pc)", price: 200),
-      ItemModel(name: "Kurta", price: 45),
-    ],
-    1: [
-      ItemModel(name: "Bedsheet", price: 60),
-      ItemModel(name: "Curtains", price: 80),
-      ItemModel(name: "Blanket", price: 100),
-    ],
-    2: [
-      ItemModel(name: "Blazer", price: 120),
-      ItemModel(name: "Suit", price: 200),
-      ItemModel(name: "Lehenga", price: 250),
-    ],
-  };
 
-  final List<AddonModel> addons = [
-    AddonModel(
-      name: "Fabric Softener",
-      price: 25,
-      desc: "Premium fabric softener",
-    ),
-    AddonModel(
-      name: "Stain Treatment",
-      price: 50,
-      desc: "Specialized stain removal",
-    ),
-    AddonModel(
-      name: "Fragrance Boost",
-      price: 25,
-      desc: "Long-lasting fresh fragrance",
-    ),
-    AddonModel(
-      name: "Express Processing",
-      price: 100,
-      desc: "Priority processing queue",
-    ),
-  ];
+  final categorizedItems = OrderConstants.categorizedItems;
+  final addons = OrderConstants.addons;
+  final services = OrderConstants.services;
 
-  final List<Map<String, dynamic>> services = [
-    {
-      "title": "Wash & Iron",
-      "subtitle": "Complete care",
-      "icon": Icons.local_laundry_service,
-      "color": Colors.green,
-    },
-    {
-      "title": "Iron Only",
-      "subtitle": "Crisp finish",
-      "icon": Icons.iron,
-      "color": Colors.orange,
-    },
-    {
-      "title": "Dry Clean",
-      "subtitle": "Premium care",
-      "icon": Icons.dry_cleaning,
-      "color": Colors.blue,
-    },
-    {
-      "title": "Wash & Fold",
-      "subtitle": "Quick service",
-      "icon": Icons.checkroom,
-      "color": Colors.indigo,
-    },
-  ];
-
-  double get totalPrice {
-    // Get ALL items from all categories
-    final allItems = categorizedItems.values.expand((list) => list).toList();
-
-    double itemTotal = cart.entries.fold(0.0, (sum, e) {
-      final item = allItems.firstWhere(
-        (i) => i.name == e.key,
-        orElse: () => ItemModel(name: '', price: 0),
-      );
-
-      return sum + (e.value * item.price);
-    });
-
-    double addonTotal = addons
-        .where((a) => selectedAddons.contains(a.name))
-        .fold(0.0, (sum, a) => sum + a.price);
-
-    double fastTrackFee = selectedMode == 0 ? 40 : 0;
-
-    return itemTotal + addonTotal + fastTrackFee;
-  }
+  double get totalPrice => OrderPricing.calculateTotal(
+    cart: cart,
+    categorizedItems: categorizedItems,
+    addons: addons,
+    selectedAddons: selectedAddons,
+    selectedMode: selectedMode,
+  );
 
   Widget _buildFilterButton(String title, int index) {
     final bool isSelected = selectedFilter == index;
@@ -196,7 +132,6 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 30),
 
                 /// SERVICE TYPE
@@ -212,9 +147,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   itemCount: services.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 1,
+                    crossAxisSpacing: 29,
+                    mainAxisSpacing: 29,
+                    childAspectRatio: 1.05,
                   ),
                   itemBuilder: (context, index) {
                     final service = services[index];
@@ -237,8 +172,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
 
                         if (isSelected)
                           Positioned(
-                            top: 8,
-                            right: 8,
+                            top: 2,
+                            right: 2,
                             child: Container(
                               decoration: const BoxDecoration(
                                 color: Color(0xff0D47A1),

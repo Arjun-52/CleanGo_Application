@@ -1,11 +1,10 @@
-import 'dart:async';
-
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/routes/app_routes.dart';
 import 'package:clean_go/features/auth/widgets/otp_input_field.dart';
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
 
 class OtpScreen extends StatefulWidget {
   final String verificationId;
@@ -17,87 +16,37 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  int _secondsRemaining = 30;
-  bool _canResend = false;
-  Timer? _timer;
-  final List<TextEditingController> controllers = List.generate(
-    6,
-    (_) => TextEditingController(),
-  );
-
-  final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
-
-  bool isLoading = false;
   @override
   void initState() {
     super.initState();
-    _startTimer();
-  }
-
-  void _startTimer() {
-    _secondsRemaining = 30;
-    _canResend = false;
-
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_secondsRemaining > 0) {
-        setState(() {
-          _secondsRemaining--;
-        });
-      } else {
-        timer.cancel();
-        setState(() {
-          _canResend = true;
-        });
-      }
+    // Start OTP timer when screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AuthProvider>(context, listen: false).startOtpTimer();
     });
   }
 
-  @override
-  void dispose() {
-    for (var c in controllers) {
-      c.dispose();
-    }
-    for (var f in focusNodes) {
-      f.dispose();
-    }
-    super.dispose();
-    _timer?.cancel();
-  }
+  /// Verify OTP using Provider
+  Future<void> _verifyOtp() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-  void moveNext(int index, String value) {
-    if (value.isNotEmpty && index < 5) {
-      focusNodes[index + 1].requestFocus();
-    }
+    String otp = authProvider.getOtp();
+    bool success = await authProvider.verifyOtp(widget.verificationId, otp);
 
-    if (value.isEmpty && index > 0) {
-      focusNodes[index - 1].requestFocus();
+    if (success && mounted) {
+      Navigator.pushReplacementNamed(context, AppRoutes.selectLocation);
+    } else if (authProvider.error != null && mounted) {
+      _showError(authProvider.error!);
     }
   }
 
-  String getOtp() => controllers.map((c) => c.text).join();
-
-  Future<void> verifyOtp() async {
-    String otp = getOtp();
-
-    if (otp.length != 6) {
-      showError("Enter 6 digit OTP");
-      return;
-    }
-
-    setState(() => isLoading = true);
-
-    // Simulate network delay
-    await Future.delayed(const Duration(seconds: 1));
-
-    if (!mounted) return;
-
-    setState(() => isLoading = false);
-
-    // Navigate regardless of OTP
-    Navigator.pushReplacementNamed(context, AppRoutes.selectLocation);
+  /// Handle OTP resend
+  void _resendOtp() {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    authProvider.startOtpTimer();
   }
 
-  void showError(String msg) {
+  /// Show error message
+  void _showError(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
@@ -150,67 +99,79 @@ class _OtpScreenState extends State<OtpScreen> {
               const SizedBox(height: 30),
 
               /// OTP Input Field
-              OtpInputField(
-                controllers: controllers,
-                focusNodes: focusNodes,
-                onChanged: moveNext,
+              Consumer<AuthProvider>(
+                builder: (context, authProvider, child) {
+                  return OtpInputField(
+                    controllers: authProvider.otpControllers,
+                    focusNodes: authProvider.otpFocusNodes,
+                    onChanged: authProvider.moveNext,
+                  );
+                },
               ),
 
               const SizedBox(height: 40),
 
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-                  onPressed: isLoading ? null : verifyOtp,
-                  child: isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text(
-                          "Continue",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
+              /// Continue Button
+              Consumer<AuthProvider>(
+                builder: (context, authProvider, child) {
+                  return SizedBox(
+                    width: double.infinity,
+                    height: 55,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
                         ),
-                ),
+                      ),
+                      onPressed: authProvider.isLoading ? null : _verifyOtp,
+                      child: authProvider.isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                              "Continue",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                    ),
+                  );
+                },
               ),
 
               const SizedBox(height: 25),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Didn’t receive the OTP? ",
-                    style: TextStyle(
-                      color: Color(0xFF5B5B5E),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: _canResend
-                        ? () {
-                            _startTimer();
-                          }
-                        : null,
-                    child: Text(
-                      _canResend
-                          ? "Resend OTP"
-                          : "Resend in ${_secondsRemaining}s",
-                      style: TextStyle(
-                        color: _canResend ? Colors.orange : Colors.grey,
-                        fontWeight: FontWeight.w600,
+              /// Resend OTP Section
+              Consumer<AuthProvider>(
+                builder: (context, authProvider, child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Didn't receive the OTP? ",
+                        style: TextStyle(
+                          color: Color(0xFF5B5B5E),
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ),
-                ],
+                      GestureDetector(
+                        onTap: authProvider.canResend ? _resendOtp : null,
+                        child: Text(
+                          authProvider.canResend
+                              ? "Resend OTP"
+                              : "Resend in ${authProvider.secondsRemaining}s",
+                          style: TextStyle(
+                            color: authProvider.canResend
+                                ? Colors.orange
+                                : Colors.grey,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),

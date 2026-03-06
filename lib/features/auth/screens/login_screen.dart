@@ -1,12 +1,11 @@
 import 'package:clean_go/routes/app_routes.dart' show AppRoutes;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/common_widgets/custom_button.dart';
-// ignore: unused_import
-import 'otp_screen.dart';
+import '../providers/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,10 +16,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _phoneController = TextEditingController();
-  // ignore: unused_field
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -28,98 +23,24 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  /// Validate phone number
-  bool _isValidPhoneNumber(String phoneNumber) {
-    phoneNumber = phoneNumber.replaceAll(' ', '');
-
-    if (phoneNumber.length != 10) return false;
-    if (!RegExp(r'^[6-9]').hasMatch(phoneNumber)) return false;
-    if (!RegExp(r'^\d+$').hasMatch(phoneNumber)) return false;
-
-    return true;
-  }
-
-  /// Send OTP using Firebase
+  /// Send OTP using Provider
   void _sendOtp() async {
-    if (_isLoading) return;
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     String phoneNumber = _phoneController.text.trim();
-    print("DEBUG: Phone number entered: $phoneNumber");
 
-    if (!_isValidPhoneNumber(phoneNumber)) {
-      print("DEBUG: Invalid phone number");
+    String? verificationId = await authProvider.sendOtp(phoneNumber);
+
+    if (verificationId != null && mounted) {
+      Navigator.pushNamed(context, AppRoutes.otp, arguments: verificationId);
+    } else if (authProvider.error != null && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Enter valid number'),
+        SnackBar(
+          content: Text(authProvider.error!),
           backgroundColor: Colors.red,
         ),
       );
-      return;
     }
-
-    print("DEBUG: Starting OTP verification for +91$phoneNumber");
-    setState(() => _isLoading = true);
-
-    /// TEMPORARY BYPASS FOR TESTING - Remove this when Firebase is configured
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        setState(() => _isLoading = false);
-        print("DEBUG: Bypass - Navigating to OTP screen");
-        Navigator.pushNamed(
-          context,
-          AppRoutes.otp,
-          arguments: "test-verification-id",
-        );
-      }
-    });
-
-    /// COMMENTED OUT UNTIL FIREBASE IS CONFIGURED
-    /*
-    try {
-      await _auth.verifyPhoneNumber(
-        phoneNumber: "+91$phoneNumber",
-        timeout: const Duration(seconds: 60),
-
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          print("DEBUG: Auto-verification completed");
-          setState(() => _isLoading = false);
-          await _auth.signInWithCredential(credential);
-        },
-
-        verificationFailed: (FirebaseAuthException e) {
-          print("OTP ERROR: ${e.code} - ${e.message}");
-          setState(() => _isLoading = false);
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("OTP Failed: ${e.message ?? "Unknown error"}")),
-          );
-        },
-
-        codeSent: (String verificationId, int? resendToken) {
-          print("DEBUG: Code sent successfully. Verification ID: $verificationId");
-          setState(() => _isLoading = false);
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => OtpScreen(verificationId: verificationId),
-            ),
-          );
-        },
-
-        codeAutoRetrievalTimeout: (verificationId) {
-          print("DEBUG: Auto retrieval timeout");
-          setState(() => _isLoading = false);
-        },
-      );
-    } catch (e) {
-      print("DEBUG: Exception in verifyPhoneNumber: $e");
-      setState(() => _isLoading = false);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Error: $e")));
-    }
-    */
   }
 
   @override
@@ -243,9 +164,15 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 24),
 
               /// Continue Button
-              CustomButton(
-                text: _isLoading ? "Sending OTP..." : 'Continue',
-                onPressed: _sendOtp,
+              Consumer<AuthProvider>(
+                builder: (context, authProvider, child) {
+                  return CustomButton(
+                    text: authProvider.isLoading
+                        ? "Sending OTP..."
+                        : 'Continue',
+                    onPressed: authProvider.isLoading ? () {} : _sendOtp,
+                  );
+                },
               ),
 
               const Spacer(flex: 3),

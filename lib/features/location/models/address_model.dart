@@ -21,8 +21,6 @@ class AddressModel {
     this.latitude,
     this.longitude,
     this.isDefault = false,
-    required String addressLine,
-    required String title,
   });
 
   factory AddressModel.fromJson(Map<String, dynamic> json) {
@@ -37,8 +35,6 @@ class AddressModel {
       latitude: json['latitude']?.toDouble(),
       longitude: json['longitude']?.toDouble(),
       isDefault: json['is_default'] ?? false,
-      addressLine: '',
-      title: '',
     );
   }
 
@@ -80,8 +76,6 @@ class AddressModel {
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
       isDefault: isDefault ?? this.isDefault,
-      addressLine: '',
-      title: '',
     );
   }
 }

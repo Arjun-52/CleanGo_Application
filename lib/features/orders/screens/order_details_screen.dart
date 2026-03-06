@@ -210,11 +210,7 @@ Widget QrOtpCard() {
 
         const SizedBox(height: 20),
 
-        Image.asset(
-          "assets/images/ffcdb9513a78678ba246a95018506475.jpg",
-          height: 120,
-          width: 120,
-        ),
+        Image.asset("assets/images/qr.jpg", height: 120, width: 120),
 
         const SizedBox(height: 12),
 

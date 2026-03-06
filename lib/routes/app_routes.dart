@@ -94,7 +94,10 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const NewOrderScreen(), // Orders tab
+    const NewOrderScreen(
+      serviceName: 'wash and iron',
+      isFastTrack: false,
+    ), // Orders tab
     const OrderTrackingScreen(), // Track tab
     const WalletScreen(),
     const ProfileScreen(),

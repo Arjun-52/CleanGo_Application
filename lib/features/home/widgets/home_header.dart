@@ -1,24 +1,16 @@
-import 'package:clean_go/features/home/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HomeHeader extends StatefulWidget {
+import 'package:clean_go/features/home/screens/notification_screen.dart';
+import 'package:clean_go/features/location/providers/location_provider.dart';
+import 'package:clean_go/features/location/models/address_model.dart';
+
+class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
 
-  @override
-  State<HomeHeader> createState() => _HomeHeaderState();
-}
+  void _showAddressSelector(BuildContext context) {
+    final locationProvider = context.read<LocationProvider>();
 
-class _HomeHeaderState extends State<HomeHeader> {
-  String selectedAddress = "Madhapur, Hyderabad";
-
-  final List<String> addresses = [
-    "Madhapur, Hyderabad",
-    "Gachibowli, Hyderabad",
-    "Kukatpally, Hyderabad",
-    "Hitech City, Hyderabad",
-  ];
-
-  void _showAddressSelector() {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -27,31 +19,45 @@ class _HomeHeaderState extends State<HomeHeader> {
       builder: (context) {
         return Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Select Address",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 20),
-              ...addresses.map(
-                (address) => ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(address),
-                  trailing: address == selectedAddress
-                      ? const Icon(Icons.check, color: Colors.green)
-                      : null,
-                  onTap: () {
-                    setState(() {
-                      selectedAddress = address;
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
+          child: Consumer<LocationProvider>(
+            builder: (context, provider, child) {
+              if (provider.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (provider.addresses.isEmpty) {
+                return const Center(child: Text("No saved addresses"));
+              }
+
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Select Address",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 20),
+
+                  ...provider.addresses.map((AddressModel address) {
+                    final isSelected =
+                        provider.selectedAddress?.id == address.id;
+
+                    return ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(address.fullAddress ?? "Unknown address"),
+                      trailing: isSelected
+                          ? const Icon(Icons.check, color: Colors.green)
+                          : null,
+                      onTap: () {
+                        locationProvider.selectAddress(address);
+                        Navigator.pop(context);
+                      },
+                    );
+                  }).toList(),
+                ],
+              );
+            },
           ),
         );
       },
@@ -60,12 +66,18 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   @override
   Widget build(BuildContext context) {
+    final locationProvider = context.watch<LocationProvider>();
+
+    final selectedAddress =
+        locationProvider.selectedAddress?.fullAddress ?? "Select Address";
+
     return Container(
       height: 69,
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 7),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          /// Address Section
           Row(
             children: [
               const Icon(Icons.home_outlined),
@@ -74,9 +86,9 @@ class _HomeHeaderState extends State<HomeHeader> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    onTap: _showAddressSelector,
-                    child: Row(
-                      children: const [
+                    onTap: () => _showAddressSelector(context),
+                    child: const Row(
+                      children: [
                         Text(
                           "Home",
                           style: TextStyle(fontWeight: FontWeight.w600),
@@ -95,6 +107,8 @@ class _HomeHeaderState extends State<HomeHeader> {
               ),
             ],
           ),
+
+          /// Notification Icon
           InkWell(
             borderRadius: BorderRadius.circular(30),
             onTap: () {
