@@ -1,5 +1,5 @@
-import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:clean_go/core/constants/colors.dart';
 
 class WalletCard extends StatelessWidget {
   final String balance;
@@ -12,7 +12,7 @@ class WalletCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xff013E6D), width: 1.5),
         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
       ),
@@ -41,8 +41,8 @@ class WalletCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "Balance ₹$balance",
-                  style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  "Balance : ₹$balance",
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
             ),
