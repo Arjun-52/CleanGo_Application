@@ -6,7 +6,7 @@ enum OrderStatus {
   outForDelivery,
   delivered,
   cancelled,
-  processing,
+  processing, completed,
 }
 
 class OrderModel {
