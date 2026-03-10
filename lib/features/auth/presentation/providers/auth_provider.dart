@@ -20,11 +20,6 @@ class AuthProvider with ChangeNotifier {
   int _secondsRemaining = 30;
   bool _canResend = false;
   Timer? _timer;
-  final List<TextEditingController> _otpControllers = List.generate(
-    6,
-    (_) => TextEditingController(),
-  );
-  final List<FocusNode> _otpFocusNodes = List.generate(6, (_) => FocusNode());
 
   UserModel? get user => _user;
   bool get isLoading => _isLoading;
@@ -34,8 +29,6 @@ class AuthProvider with ChangeNotifier {
   // OTP getters
   int get secondsRemaining => _secondsRemaining;
   bool get canResend => _canResend;
-  List<TextEditingController> get otpControllers => _otpControllers;
-  List<FocusNode> get otpFocusNodes => _otpFocusNodes;
 
   /// Send OTP and return verification ID
   Future<String?> sendOtp(String phoneNumber) async {
@@ -115,20 +108,6 @@ class AuthProvider with ChangeNotifier {
     });
   }
 
-  /// Handle OTP input navigation
-  void moveNext(int index, String value) {
-    if (value.isNotEmpty && index < 5) {
-      _otpFocusNodes[index + 1].requestFocus();
-    }
-
-    if (value.isEmpty && index > 0) {
-      _otpFocusNodes[index - 1].requestFocus();
-    }
-  }
-
-  /// Get complete OTP string
-  String getOtp() => _otpControllers.map((c) => c.text).join();
-
   /// Clear error message
   void clearError() {
     _error = null;
@@ -138,12 +117,6 @@ class AuthProvider with ChangeNotifier {
   /// Dispose resources
   @override
   void dispose() {
-    for (var c in _otpControllers) {
-      c.dispose();
-    }
-    for (var f in _otpFocusNodes) {
-      f.dispose();
-    }
     _timer?.cancel();
     super.dispose();
   }

@@ -16,20 +16,46 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+
+  late List<TextEditingController> _otpControllers;
+  late List<FocusNode> _otpFocusNodes;
+
   @override
   void initState() {
     super.initState();
+    _otpControllers = List.generate(6, (_) => TextEditingController());
+    _otpFocusNodes = List.generate(6, (_) => FocusNode());
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<AuthProvider>(context, listen: false).startOtpTimer();
     });
   }
 
+  @override
+  void dispose() {
+    for (var c in _otpControllers) {
+      c.dispose();
+    }
+    for (var f in _otpFocusNodes) {
+      f.dispose();
+    }
+    super.dispose();
+  }
+
+  void _moveNext(int index, String value) {
+    if (value.isNotEmpty && index < 5) {
+      _otpFocusNodes[index + 1].requestFocus();
+    }
+    if (value.isEmpty && index > 0) {
+      _otpFocusNodes[index - 1].requestFocus();
+    }
+  }
+
   /// Verify OTP using Provider
   Future<void> _verifyOtp() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-    String otp = authProvider.getOtp();
+    String otp = _otpControllers.map((c) => c.text).join();
     bool success = await authProvider.verifyOtp(widget.verificationId, otp);
 
     if (success && mounted) {
@@ -98,15 +124,13 @@ class _OtpScreenState extends State<OtpScreen> {
               const SizedBox(height: 30),
 
               /// OTP Input Field
-              Consumer<AuthProvider>(
-                builder: (context, authProvider, child) {
-                  return OtpInputField(
-                    controllers: authProvider.otpControllers,
-                    focusNodes: authProvider.otpFocusNodes,
-                    onChanged: authProvider.moveNext,
-                  );
-                },
+
+              OtpInputField(
+                controllers: _otpControllers,
+                focusNodes: _otpFocusNodes,
+                onChanged: _moveNext,
               ),
+
 
               const SizedBox(height: 40),
 
