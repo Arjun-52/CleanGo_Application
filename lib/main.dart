@@ -1,16 +1,16 @@
-import 'package:clean_go/features/location/providers/location_provider.dart';
-import 'package:clean_go/features/orders/providers/new_order_provider.dart';
+import 'package:clean_go/features/location/presentation/providers/location_provider.dart';
+import 'package:clean_go/features/orders/presentation/providers/new_order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-import 'routes/app_routes.dart';
+import './routes/app_routes.dart';
 
 // Providers
-import 'features/auth/providers/auth_provider.dart';
-import 'features/booking/providers/booking_provider.dart';
-import 'features/orders/providers/order_provider.dart';
-import 'features/home/providers/notification_provider.dart';
+import './features/auth/presentation/providers/auth_provider.dart';
+import './features/booking/presentation/providers/booking_provider.dart';
+import './features/orders/presentation/providers/order_provider.dart';
+import './features/home/presentation/providers/notification_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

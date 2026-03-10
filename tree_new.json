@@ -1,0 +1,259 @@
+{
+  "lib/features": [],
+  "lib/features\\auth": [],
+  "lib/features\\auth\\data": [],
+  "lib/features\\auth\\data\\datasources": [
+    "auth_service.dart"
+  ],
+  "lib/features\\auth\\data\\models": [],
+  "lib/features\\auth\\data\\repositories": [],
+  "lib/features\\auth\\domain": [],
+  "lib/features\\auth\\domain\\entities": [],
+  "lib/features\\auth\\domain\\repositories": [],
+  "lib/features\\auth\\domain\\usecases": [],
+  "lib/features\\auth\\presentation": [],
+  "lib/features\\auth\\presentation\\providers": [
+    "auth_provider.dart"
+  ],
+  "lib/features\\auth\\presentation\\screens": [
+    "login_screen.dart",
+    "otp_screen.dart"
+  ],
+  "lib/features\\auth\\presentation\\widgets": [
+    "otp_input_field.dart"
+  ],
+  "lib/features\\booking": [],
+  "lib/features\\booking\\data": [],
+  "lib/features\\booking\\data\\datasources": [
+    "booking_service.dart"
+  ],
+  "lib/features\\booking\\data\\models": [
+    "booking_model.dart"
+  ],
+  "lib/features\\booking\\data\\repositories": [],
+  "lib/features\\booking\\domain": [],
+  "lib/features\\booking\\domain\\entities": [],
+  "lib/features\\booking\\domain\\repositories": [],
+  "lib/features\\booking\\domain\\usecases": [],
+  "lib/features\\booking\\presentation": [],
+  "lib/features\\booking\\presentation\\providers": [
+    "booking_provider.dart"
+  ],
+  "lib/features\\booking\\presentation\\screens": [
+    "booking_summary_screen.dart",
+    "cart_screen.dart"
+  ],
+  "lib/features\\booking\\presentation\\widgets": [],
+  "lib/features\\home": [],
+  "lib/features\\home\\data": [],
+  "lib/features\\home\\data\\datasources": [],
+  "lib/features\\home\\data\\models": [
+    "notification_model.dart"
+  ],
+  "lib/features\\home\\data\\repositories": [],
+  "lib/features\\home\\domain": [],
+  "lib/features\\home\\domain\\entities": [],
+  "lib/features\\home\\domain\\repositories": [],
+  "lib/features\\home\\domain\\usecases": [],
+  "lib/features\\home\\presentation": [],
+  "lib/features\\home\\presentation\\providers": [
+    "notification_provider.dart"
+  ],
+  "lib/features\\home\\presentation\\screens": [
+    "home_screen.dart",
+    "notification_screen.dart"
+  ],
+  "lib/features\\home\\presentation\\widgets": [
+    "active_order_card.dart",
+    "fast_track_banner.dart",
+    "home_content.dart",
+    "home_header.dart",
+    "service_tile.dart"
+  ],
+  "lib/features\\location": [],
+  "lib/features\\location\\data": [],
+  "lib/features\\location\\data\\datasources": [
+    "location_service.dart"
+  ],
+  "lib/features\\location\\data\\models": [
+    "address_model.dart"
+  ],
+  "lib/features\\location\\data\\repositories": [],
+  "lib/features\\location\\domain": [],
+  "lib/features\\location\\domain\\entities": [],
+  "lib/features\\location\\domain\\repositories": [],
+  "lib/features\\location\\domain\\usecases": [],
+  "lib/features\\location\\presentation": [],
+  "lib/features\\location\\presentation\\providers": [
+    "location_provider.dart"
+  ],
+  "lib/features\\location\\presentation\\screens": [
+    "address_form_screen.dart",
+    "confirm_location_screen.dart",
+    "select_location_screen.dart"
+  ],
+  "lib/features\\location\\presentation\\widgets": [
+    "location_card.dart"
+  ],
+  "lib/features\\orders": [],
+  "lib/features\\orders\\data": [],
+  "lib/features\\orders\\data\\datasources": [
+    "order_calculator.dart",
+    "order_data.dart",
+    "order_service.dart"
+  ],
+  "lib/features\\orders\\data\\models": [
+    "addon_model.dart",
+    "addon_row.dart",
+    "item_model.dart",
+    "item_row.dart",
+    "order_model.dart",
+    "tracking_model.dart",
+    "user_model.dart"
+  ],
+  "lib/features\\orders\\data\\repositories": [],
+  "lib/features\\orders\\domain": [],
+  "lib/features\\orders\\domain\\entities": [],
+  "lib/features\\orders\\domain\\order_constans": [
+    "order_constans.dart"
+  ],
+  "lib/features\\orders\\domain\\repositories": [],
+  "lib/features\\orders\\domain\\usecases": [
+    "order_pricing.dart"
+  ],
+  "lib/features\\orders\\presentation": [],
+  "lib/features\\orders\\presentation\\providers": [
+    "new_order_provider.dart",
+    "order_provider.dart"
+  ],
+  "lib/features\\orders\\presentation\\screens": [
+    "new_order_screen.dart",
+    "order_details_screen.dart",
+    "order_history_screen.dart",
+    "order_placed_screen.dart",
+    "order_review_screen.dart",
+    "order_tracking_screen.dart",
+    "select_pickup_slot_screen.dart"
+  ],
+  "lib/features\\orders\\presentation\\utils": [
+    "order_formatters.dart"
+  ],
+  "lib/features\\orders\\presentation\\widgets": [
+    "addon_row.dart",
+    "filter_button.dart",
+    "item_row.dart",
+    "mode_card.dart",
+    "order_addon_row.dart",
+    "order_address_delivery_card.dart",
+    "order_card.dart",
+    "order_info_card.dart",
+    "order_items_card.dart",
+    "order_item_row.dart",
+    "order_price_row.dart",
+    "order_section_card.dart",
+    "order_success_icon.dart",
+    "order_summary_card.dart",
+    "order_timeline.dart",
+    "pickup_date_card.dart",
+    "pickup_delivery_card.dart",
+    "pickup_otp_info_box.dart",
+    "pickup_slot_bottom_bar.dart",
+    "pickup_slot_card.dart",
+    "qr_otp_card.dart",
+    "reusable_card.dart",
+    "service_chip.dart",
+    "timeline_item.dart",
+    "tracking_timeline.dart"
+  ],
+  "lib/features\\payment": [],
+  "lib/features\\payment\\data": [],
+  "lib/features\\payment\\data\\datasources": [],
+  "lib/features\\payment\\data\\models": [],
+  "lib/features\\payment\\data\\repositories": [],
+  "lib/features\\payment\\domain": [],
+  "lib/features\\payment\\domain\\entities": [],
+  "lib/features\\payment\\domain\\repositories": [],
+  "lib/features\\payment\\domain\\usecases": [],
+  "lib/features\\payment\\presentation": [],
+  "lib/features\\payment\\presentation\\providers": [],
+  "lib/features\\payment\\presentation\\screens": [
+    "booking_payment_screen.dart",
+    "payment_screen.dart"
+  ],
+  "lib/features\\payment\\presentation\\widgets": [
+    "add_upi_row.dart",
+    "upi_option_tile.dart"
+  ],
+  "lib/features\\profile": [],
+  "lib/features\\profile\\data": [],
+  "lib/features\\profile\\data\\datasources": [],
+  "lib/features\\profile\\data\\models": [],
+  "lib/features\\profile\\data\\repositories": [],
+  "lib/features\\profile\\domain": [],
+  "lib/features\\profile\\domain\\entities": [],
+  "lib/features\\profile\\domain\\repositories": [],
+  "lib/features\\profile\\domain\\usecases": [],
+  "lib/features\\profile\\presentation": [],
+  "lib/features\\profile\\presentation\\providers": [],
+  "lib/features\\profile\\presentation\\screens": [
+    "add_address_sheet.dart",
+    "edit_profile_screen.dart",
+    "profile_screen.dart",
+    "saved_addresses_screen.dart"
+  ],
+  "lib/features\\profile\\presentation\\widgets": [
+    "address_map_preview.dart",
+    "address_summary_card.dart",
+    "address_type_selector.dart",
+    "bottom_primary_button.dart",
+    "custom_text_field_box.dart",
+    "logout_button.dart",
+    "profile_header_card.dart",
+    "profile_menu_card.dart",
+    "sheet_handle_bar.dart"
+  ],
+  "lib/features\\services": [],
+  "lib/features\\services\\data": [],
+  "lib/features\\services\\data\\datasources": [],
+  "lib/features\\services\\data\\models": [
+    "service_model.dart"
+  ],
+  "lib/features\\services\\data\\repositories": [],
+  "lib/features\\services\\domain": [],
+  "lib/features\\services\\domain\\entities": [],
+  "lib/features\\services\\domain\\repositories": [],
+  "lib/features\\services\\domain\\usecases": [],
+  "lib/features\\services\\presentation": [],
+  "lib/features\\services\\presentation\\providers": [],
+  "lib/features\\services\\presentation\\screens": [
+    "service_detail_screen.dart",
+    "service_list_screen.dart"
+  ],
+  "lib/features\\services\\presentation\\widgets": [
+    "service_card.dart",
+    "service_header_card.dart",
+    "service_item_card.dart",
+    "service_item_list.dart"
+  ],
+  "lib/features\\wallet": [],
+  "lib/features\\wallet\\data": [],
+  "lib/features\\wallet\\data\\datasources": [],
+  "lib/features\\wallet\\data\\models": [],
+  "lib/features\\wallet\\data\\repositories": [],
+  "lib/features\\wallet\\domain": [],
+  "lib/features\\wallet\\domain\\entities": [],
+  "lib/features\\wallet\\domain\\repositories": [],
+  "lib/features\\wallet\\domain\\usecases": [],
+  "lib/features\\wallet\\presentation": [],
+  "lib/features\\wallet\\presentation\\providers": [
+    "wallet_provider.dart"
+  ],
+  "lib/features\\wallet\\presentation\\screens": [
+    "wallet_screen.dart"
+  ],
+  "lib/features\\wallet\\presentation\\widgets": [
+    "transaction_item.dart",
+    "wallet_balance_header.dart",
+    "wallet_card.dart"
+  ]
+}

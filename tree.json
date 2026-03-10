@@ -1,0 +1,189 @@
+{
+  "lib/features": [],
+  "lib/features\\auth": [],
+  "lib/features\\auth\\providers": [
+    "auth_provider.dart"
+  ],
+  "lib/features\\auth\\screens": [
+    "login_screen.dart",
+    "otp_screen.dart"
+  ],
+  "lib/features\\auth\\services": [
+    "auth_service.dart"
+  ],
+  "lib/features\\auth\\widgets": [
+    "otp_input_field.dart"
+  ],
+  "lib/features\\booking": [],
+  "lib/features\\booking\\models": [
+    "booking_model.dart"
+  ],
+  "lib/features\\booking\\providers": [
+    "booking_provider.dart"
+  ],
+  "lib/features\\booking\\screens": [
+    "booking_summary_screen.dart",
+    "cart_screen.dart"
+  ],
+  "lib/features\\booking\\services": [
+    "booking_service.dart"
+  ],
+  "lib/features\\home": [],
+  "lib/features\\home\\models": [
+    "notification_model.dart"
+  ],
+  "lib/features\\home\\providers": [
+    "notification_provider.dart"
+  ],
+  "lib/features\\home\\screens": [
+    "home_screen.dart",
+    "notification_screen.dart"
+  ],
+  "lib/features\\home\\services": [],
+  "lib/features\\home\\widgets": [
+    "active_order_card.dart",
+    "fast_track_banner.dart",
+    "home_content.dart",
+    "home_header.dart",
+    "service_tile.dart"
+  ],
+  "lib/features\\location": [],
+  "lib/features\\location\\models": [
+    "address_model.dart"
+  ],
+  "lib/features\\location\\providers": [
+    "location_provider.dart"
+  ],
+  "lib/features\\location\\screens": [
+    "address_form_screen.dart",
+    "confirm_location_screen.dart",
+    "select_location_screen.dart"
+  ],
+  "lib/features\\location\\services": [
+    "location_service.dart"
+  ],
+  "lib/features\\location\\widgets": [
+    "location_card.dart"
+  ],
+  "lib/features\\orders": [],
+  "lib/features\\orders\\data": [
+    "order_data.dart"
+  ],
+  "lib/features\\orders\\models": [
+    "addon_model.dart",
+    "addon_row.dart",
+    "item_model.dart",
+    "item_row.dart",
+    "order_model.dart",
+    "tracking_model.dart",
+    "user_model.dart"
+  ],
+  "lib/features\\orders\\order_constans": [
+    "order_constans.dart"
+  ],
+  "lib/features\\orders\\order_pricing": [
+    "order_pricing.dart"
+  ],
+  "lib/features\\orders\\providers": [
+    "new_order_provider.dart",
+    "order_provider.dart"
+  ],
+  "lib/features\\orders\\screens": [
+    "new_order_screen.dart",
+    "order_details_screen.dart",
+    "order_history_screen.dart",
+    "order_placed_screen.dart",
+    "order_review_screen.dart",
+    "order_tracking_screen.dart",
+    "select_pickup_slot_screen.dart"
+  ],
+  "lib/features\\orders\\services": [
+    "order_calculator.dart",
+    "order_service.dart"
+  ],
+  "lib/features\\orders\\utils": [
+    "order_formatters.dart"
+  ],
+  "lib/features\\orders\\widgets": [
+    "addon_row.dart",
+    "filter_button.dart",
+    "item_row.dart",
+    "mode_card.dart",
+    "order_addon_row.dart",
+    "order_address_delivery_card.dart",
+    "order_card.dart",
+    "order_info_card.dart",
+    "order_items_card.dart",
+    "order_item_row.dart",
+    "order_price_row.dart",
+    "order_section_card.dart",
+    "order_success_icon.dart",
+    "order_summary_card.dart",
+    "order_timeline.dart",
+    "pickup_date_card.dart",
+    "pickup_delivery_card.dart",
+    "pickup_otp_info_box.dart",
+    "pickup_slot_bottom_bar.dart",
+    "pickup_slot_card.dart",
+    "qr_otp_card.dart",
+    "reusable_card.dart",
+    "service_chip.dart",
+    "timeline_item.dart",
+    "tracking_timeline.dart"
+  ],
+  "lib/features\\payment": [],
+  "lib/features\\payment\\screens": [
+    "booking_payment_screen.dart",
+    "payment_screen.dart"
+  ],
+  "lib/features\\payment\\widgets": [
+    "add_upi_row.dart",
+    "upi_option_tile.dart"
+  ],
+  "lib/features\\profile": [],
+  "lib/features\\profile\\screens": [
+    "add_address_sheet.dart",
+    "edit_profile_screen.dart",
+    "profile_screen.dart",
+    "saved_addresses_screen.dart"
+  ],
+  "lib/features\\profile\\widgets": [
+    "address_map_preview.dart",
+    "address_summary_card.dart",
+    "address_type_selector.dart",
+    "bottom_primary_button.dart",
+    "custom_text_field_box.dart",
+    "logout_button.dart",
+    "profile_header_card.dart",
+    "profile_menu_card.dart",
+    "sheet_handle_bar.dart"
+  ],
+  "lib/features\\services": [],
+  "lib/features\\services\\models": [
+    "service_model.dart"
+  ],
+  "lib/features\\services\\providers": [],
+  "lib/features\\services\\screens": [
+    "service_detail_screen.dart",
+    "service_list_screen.dart"
+  ],
+  "lib/features\\services\\services": [],
+  "lib/features\\services\\widgets": [
+    "service_card.dart",
+    "service_header_card.dart",
+    "service_item_card.dart",
+    "service_item_list.dart"
+  ],
+  "lib/features\\wallet": [],
+  "lib/features\\wallet\\providers": [
+    "wallet_provider.dart"
+  ],
+  "lib/features\\wallet\\screens": [
+    "wallet_screen.dart"
+  ],
+  "lib/features\\wallet\\widgets": [
+    "transaction_item.dart",
+    "wallet_balance_header.dart",
+    "wallet_card.dart"
+  ]
+}

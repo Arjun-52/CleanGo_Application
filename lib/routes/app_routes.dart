@@ -2,35 +2,35 @@ import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 //  Auth
-import '../features/auth/screens/login_screen.dart';
-import '../features/auth/screens/otp_screen.dart';
+import '../features/auth/presentation/screens/login_screen.dart';
+import '../features/auth/presentation/screens/otp_screen.dart';
 
 /// Location
-import '../features/location/screens/select_location_screen.dart';
-import '../features/location/screens/confirm_location_screen.dart';
-import '../features/location/screens/address_form_screen.dart';
+import '../features/location/presentation/screens/select_location_screen.dart';
+import '../features/location/presentation/screens/confirm_location_screen.dart';
+import '../features/location/presentation/screens/address_form_screen.dart';
 
 /// Core Screens
-import '../features/home/screens/home_screen.dart';
+import '../features/home/presentation/screens/home_screen.dart';
 
 /// Orders
-import '../features/orders/screens/new_order_screen.dart';
-import '../features/orders/screens/order_tracking_screen.dart';
+import '../features/orders/presentation/screens/new_order_screen.dart';
+import '../features/orders/presentation/screens/order_tracking_screen.dart';
 
 /// Services
-import '../features/services/screens/service_list_screen.dart';
-import '../features/services/screens/service_detail_screen.dart';
+import '../features/services/presentation/screens/service_list_screen.dart';
+import '../features/services/presentation/screens/service_detail_screen.dart';
 
 /// Booking
-import '../features/booking/screens/cart_screen.dart';
-import '../features/booking/screens/booking_summary_screen.dart';
-import '../features/payment/screens/booking_payment_screen.dart';
+import '../features/booking/presentation/screens/cart_screen.dart';
+import '../features/booking/presentation/screens/booking_summary_screen.dart';
+import '../features/payment/presentation/screens/booking_payment_screen.dart';
 
 /// Wallet & Profile
-import '../features/wallet/screens/wallet_screen.dart';
-import '../features/profile/screens/profile_screen.dart';
-import '../features/profile/screens/edit_profile_screen.dart';
-import '../features/profile/screens/saved_addresses_screen.dart';
+import '../features/wallet/presentation/screens/wallet_screen.dart';
+import '../features/profile/presentation/screens/profile_screen.dart';
+import '../features/profile/presentation/screens/edit_profile_screen.dart';
+import '../features/profile/presentation/screens/saved_addresses_screen.dart';
 
 class AppRoutes {
   static const String login = '/login';
