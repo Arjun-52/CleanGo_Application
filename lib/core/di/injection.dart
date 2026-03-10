@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:clean_go/core/network/api_client.dart';
 
 import 'package:clean_go/features/auth/data/datasources/auth_service.dart';
 import 'package:clean_go/features/auth/data/repositories/auth_repository_impl.dart';
@@ -34,17 +35,18 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // --------------------------------------------------------------------------
-  // Core Services
+  // Core Network & Services
   // --------------------------------------------------------------------------
+  sl.registerLazySingleton<ApiClient>(() => ApiClient());
   sl.registerLazySingleton<PaymentService>(() => PaymentService());
 
   // --------------------------------------------------------------------------
   // Data Sources
   // --------------------------------------------------------------------------
-  sl.registerLazySingleton<AuthService>(() => AuthService());
-  sl.registerLazySingleton<BookingService>(() => BookingService());
-  sl.registerLazySingleton<LocationService>(() => LocationService());
-  sl.registerLazySingleton<OrderService>(() => OrderService());
+  sl.registerLazySingleton<AuthService>(() => AuthService(sl()));
+  sl.registerLazySingleton<BookingService>(() => BookingService(sl()));
+  sl.registerLazySingleton<LocationService>(() => LocationService(sl()));
+  sl.registerLazySingleton<OrderService>(() => OrderService(sl()));
 
   // --------------------------------------------------------------------------
   // Repositories

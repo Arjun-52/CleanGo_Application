@@ -1,7 +1,11 @@
 import 'package:clean_go/features/orders/data/models/tracking_model.dart';
 import '../models/order_model.dart';
+import '../../../../core/network/api_client.dart';
 
 class OrderService {
+  final ApiClient apiClient;
+
+  OrderService(this.apiClient);
   /// Get all orders
   Future<List<OrderModel>> getOrders() async {
     await Future.delayed(const Duration(milliseconds: 500));

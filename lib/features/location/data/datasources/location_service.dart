@@ -1,6 +1,10 @@
 import '../models/address_model.dart';
+import '../../../../core/network/api_client.dart';
 
 class LocationService {
+  final ApiClient apiClient;
+
+  LocationService(this.apiClient);
   // Get current location
   Future<Map<String, double>?> getCurrentLocation() async {
     // TODO: Implement get current location logic

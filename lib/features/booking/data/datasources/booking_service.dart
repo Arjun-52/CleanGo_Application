@@ -1,7 +1,11 @@
 import '../models/booking_model.dart';
 import '../../../services/data/models/service_model.dart';
+import '../../../../core/network/api_client.dart';
 
 class BookingService {
+  final ApiClient apiClient;
+
+  BookingService(this.apiClient);
   /// Get all services
   Future<List<ServiceModel>> getServices() async {
     await Future.delayed(const Duration(seconds: 1));

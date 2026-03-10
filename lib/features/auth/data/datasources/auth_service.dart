@@ -2,8 +2,12 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../orders/data/models/user_model.dart';
+import '../../../../core/network/api_client.dart';
 
 class AuthService {
+  final ApiClient apiClient;
+
+  AuthService(this.apiClient);
   static const String tokenKey = "auth_token";
   static const String userKey = "user_data";
 

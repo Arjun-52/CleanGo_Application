@@ -70,26 +70,14 @@ class AppRoutes {
       return OtpScreen(verificationId: verificationId);
     },
 
-    selectLocation: (context) => ChangeNotifierProvider(
-      create: (_) => di.sl<LocationProvider>(),
-      child: const SelectLocationScreen(),
-    ),
-    confirmLocation: (context) => ChangeNotifierProvider(
-      create: (_) => di.sl<LocationProvider>(),
-      child: const ConfirmLocationScreen(),
-    ),
-    addressForm: (context) => ChangeNotifierProvider(
-      create: (_) => di.sl<LocationProvider>(),
-      child: const AddressFormSheet(),
-    ),
+    selectLocation: (context) => const SelectLocationScreen(),
+    confirmLocation: (context) => const ConfirmLocationScreen(),
+    addressForm: (context) => const AddressFormSheet(),
 
     /// Main app with bottom navigation
     main: (context) => MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => di.sl<BookingProvider>()),
-        ChangeNotifierProvider(create: (_) => di.sl<OrderProvider>()),
-        ChangeNotifierProvider(create: (_) => di.sl<NotificationProvider>()),
-        ChangeNotifierProvider(create: (_) => di.sl<LocationProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<NewOrderProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<WalletProvider>()),
       ],

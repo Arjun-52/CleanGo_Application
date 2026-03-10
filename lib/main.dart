@@ -28,7 +28,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => di.sl<AuthProvider>())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => di.sl<AuthProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<LocationProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<NotificationProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<OrderProvider>()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.login,
