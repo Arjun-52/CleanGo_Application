@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import '../../../orders/data/models/user_model.dart';
 import '../../data/datasources/auth_service.dart';
 
+import 'package:clean_go/features/auth/domain/usecases/auth_usecases.dart';
+import 'package:clean_go/features/auth/data/repositories/auth_repository_impl.dart';
+
 class AuthProvider with ChangeNotifier {
-  final AuthService _authService = AuthService();
+  final AuthUseCases _authUseCases = AuthUseCases(AuthRepositoryImpl(AuthService()));
 
   UserModel? _user;
   bool _isLoading = false;
@@ -39,7 +42,7 @@ class AuthProvider with ChangeNotifier {
     print("DEBUG: Phone number entered: $phoneNumber");
 
     // Validate phone number
-    if (!_authService.isValidPhoneNumber(phoneNumber)) {
+    if (!_authUseCases.isValidPhoneNumber(phoneNumber)) {
       print("DEBUG: Invalid phone number");
       _error = 'Enter valid number';
       notifyListeners();
@@ -51,7 +54,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      String verificationId = await _authService.sendOtp(phoneNumber);
+      String verificationId = await _authUseCases.sendOtp(phoneNumber);
       print("DEBUG: OTP sent successfully");
       return verificationId;
     } catch (e) {
@@ -78,7 +81,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      bool result = await _authService.verifyOtp(verificationId, otp);
+      bool result = await _authUseCases.verifyOtp(verificationId, otp);
       print("DEBUG: OTP verification successful");
       return result;
     } catch (e) {
@@ -144,7 +147,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> logout() async {
-    await _authService.logout();
+    await _authUseCases.logout();
     _user = null;
     notifyListeners();
   }

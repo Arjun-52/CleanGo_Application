@@ -2,8 +2,11 @@ import 'package:flutter/foundation.dart';
 import '../../data/models/address_model.dart';
 import '../../data/datasources/location_service.dart';
 
+import 'package:clean_go/features/location/domain/usecases/location_usecases.dart';
+import 'package:clean_go/features/location/data/repositories/location_repository_impl.dart';
+
 class LocationProvider with ChangeNotifier {
-  final LocationService _locationService = LocationService();
+  final LocationUseCases _locationUseCases = LocationUseCases(LocationRepositoryImpl(LocationService()));
   
   List<AddressModel> _addresses = [];
   AddressModel? _selectedAddress;
@@ -20,7 +23,7 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      _addresses = await _locationService.getSavedAddresses();
+      _addresses = await _locationUseCases.getSavedAddresses();
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -35,7 +38,7 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      final result = await _locationService.saveAddress(address);
+      final result = await _locationUseCases.saveAddress(address);
       if (result) await loadAddresses();
       _isLoading = false;
       notifyListeners();

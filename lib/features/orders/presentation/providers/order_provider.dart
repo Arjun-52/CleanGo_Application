@@ -4,8 +4,11 @@ import '../../data/models/order_model.dart';
 
 import '../../data/datasources/order_service.dart';
 
+import 'package:clean_go/features/orders/domain/usecases/order_usecases.dart';
+import 'package:clean_go/features/orders/data/repositories/order_repository_impl.dart';
+
 class OrderProvider with ChangeNotifier {
-  final OrderService _orderService = OrderService();
+  final OrderUseCases _orderUseCases = OrderUseCases(OrderRepositoryImpl(OrderService()));
 
   List<OrderModel> _activeOrders = [];
   List<OrderModel> _pastOrders = [];
@@ -26,7 +29,7 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      _activeOrders = await _orderService.getActiveOrders();
+      _activeOrders = await _orderUseCases.getActiveOrders();
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -41,7 +44,7 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      _pastOrders = await _orderService.getPastOrders();
+      _pastOrders = await _orderUseCases.getPastOrders();
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -56,8 +59,8 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      _currentOrder = await _orderService.getOrderById(orderId);
-      _currentTracking = await _orderService.getOrderTracking(orderId);
+      _currentOrder = await _orderUseCases.getOrderById(orderId);
+      _currentTracking = await _orderUseCases.getOrderTracking(orderId);
       _isLoading = false;
       notifyListeners();
     } catch (e) {

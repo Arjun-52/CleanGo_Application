@@ -3,8 +3,11 @@ import '../../data/models/booking_model.dart';
 import '../../../services/data/models/service_model.dart';
 import '../../data/datasources/booking_service.dart';
 
+import 'package:clean_go/features/booking/domain/usecases/booking_usecases.dart';
+import 'package:clean_go/features/booking/data/repositories/booking_repository_impl.dart';
+
 class BookingProvider with ChangeNotifier {
-  final BookingService _bookingService = BookingService();
+  final BookingUseCases _bookingUseCases = BookingUseCases(BookingRepositoryImpl(BookingService()));
 
   List<ServiceModel> _services = [];
   final List<BookingItem> _cartItems = [];
@@ -26,7 +29,7 @@ class BookingProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      _services = await _bookingService.getServices();
+      _services = await _bookingUseCases.getServices();
       _isLoading = false;
       notifyListeners();
     } catch (e) {

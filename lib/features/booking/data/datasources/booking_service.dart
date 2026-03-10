@@ -4,7 +4,7 @@ import '../../../services/data/models/service_model.dart';
 class BookingService {
   /// Get all services
   Future<List<ServiceModel>> getServices() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));    
 
     // Dummy data 
     return [
@@ -61,7 +61,7 @@ class BookingService {
     await Future.delayed(const Duration(seconds: 1));
 
     if (couponCode == "SAVE10") {
-      return amount * 0.9; // 10% discount
+      return amount * 0.9; 
     }
 
     return null;
