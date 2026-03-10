@@ -16,8 +16,8 @@ class TrackingModel {
       orderId: json['order_id'],
       steps: json['steps'] != null
           ? (json['steps'] as List)
-              .map((e) => TrackingStep.fromJson(e))
-              .toList()
+                .map((e) => TrackingStep.fromJson(e))
+                .toList()
           : null,
       currentStatus: json['current_status'],
       estimatedDelivery: json['estimated_delivery'] != null

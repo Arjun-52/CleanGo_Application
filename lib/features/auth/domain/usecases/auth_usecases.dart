@@ -40,5 +40,4 @@ class AuthUseCases {
   Future<bool> isLoggedIn() {
     return repository.isLoggedIn();
   }
-
 }

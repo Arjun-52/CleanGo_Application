@@ -8,7 +8,9 @@ import 'package:clean_go/features/auth/domain/usecases/auth_usecases.dart';
 import 'package:clean_go/features/auth/data/repositories/auth_repository_impl.dart';
 
 class AuthProvider with ChangeNotifier {
-  final AuthUseCases _authUseCases = AuthUseCases(AuthRepositoryImpl(AuthService()));
+  final AuthUseCases _authUseCases;
+
+  AuthProvider(this._authUseCases);
 
   UserModel? _user;
   bool _isLoading = false;

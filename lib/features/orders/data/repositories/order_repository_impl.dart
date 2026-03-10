@@ -52,5 +52,4 @@ class OrderRepositoryImpl implements IOrderRepository {
   Future<bool> rateOrder(String orderId, int rating, String? review) {
     return remoteDataSource.rateOrder(orderId, rating, review);
   }
-
 }

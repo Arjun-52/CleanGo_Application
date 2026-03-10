@@ -108,7 +108,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 18),
 
-              
               const SizedBox(height: 18),
 
               /// Phone Input

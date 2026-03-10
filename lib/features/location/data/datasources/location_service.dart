@@ -9,7 +9,9 @@ class LocationService {
 
   // Get address from coordinates
   Future<String?> getAddressFromCoordinates(
-      double latitude, double longitude) async {
+    double latitude,
+    double longitude,
+  ) async {
     // TODO: Implement reverse geocoding logic
     return null;
   }

@@ -6,11 +6,28 @@ class TrackingTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final steps = [
-      {'title': 'Order Placed', 'subtitle': '5 Feb, 10:00 AM', 'isCompleted': true},
-      {'title': 'Order Confirmed', 'subtitle': '5 Feb, 10:05 AM', 'isCompleted': true},
+      {
+        'title': 'Order Placed',
+        'subtitle': '5 Feb, 10:00 AM',
+        'isCompleted': true,
+      },
+      {
+        'title': 'Order Confirmed',
+        'subtitle': '5 Feb, 10:05 AM',
+        'isCompleted': true,
+      },
       {'title': 'Picked Up', 'subtitle': '5 Feb, 2:00 PM', 'isCompleted': true},
-      {'title': 'In Progress', 'subtitle': 'Processing your clothes', 'isCompleted': false, 'isCurrent': true},
-      {'title': 'Out for Delivery', 'subtitle': 'Pending', 'isCompleted': false},
+      {
+        'title': 'In Progress',
+        'subtitle': 'Processing your clothes',
+        'isCompleted': false,
+        'isCurrent': true,
+      },
+      {
+        'title': 'Out for Delivery',
+        'subtitle': 'Pending',
+        'isCompleted': false,
+      },
       {'title': 'Delivered', 'subtitle': 'Pending', 'isCompleted': false},
     ];
 
@@ -31,11 +48,19 @@ class TrackingTimeline extends StatelessWidget {
                   height: 24,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: isCompleted ? Colors.green : (isCurrent ? Colors.blue : Colors.grey[300]),
+                    color: isCompleted
+                        ? Colors.green
+                        : (isCurrent ? Colors.blue : Colors.grey[300]),
                   ),
                   child: isCompleted
                       ? const Icon(Icons.check, size: 16, color: Colors.white)
-                      : (isCurrent ? const Icon(Icons.radio_button_checked, size: 16, color: Colors.white) : null),
+                      : (isCurrent
+                            ? const Icon(
+                                Icons.radio_button_checked,
+                                size: 16,
+                                color: Colors.white,
+                              )
+                            : null),
                 ),
                 if (!isLast)
                   Container(
@@ -55,8 +80,12 @@ class TrackingTimeline extends StatelessWidget {
                     Text(
                       step['title'] as String,
                       style: TextStyle(
-                        fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
-                        color: isCompleted || isCurrent ? Colors.black : Colors.grey,
+                        fontWeight: isCurrent
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                        color: isCompleted || isCurrent
+                            ? Colors.black
+                            : Colors.grey,
                       ),
                     ),
                     Text(

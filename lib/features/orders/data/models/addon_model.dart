@@ -3,9 +3,5 @@ class AddonModel {
   final double price;
   final String desc;
 
-  AddonModel({
-    required this.name,
-    required this.price,
-    required this.desc,
-  });
+  AddonModel({required this.name, required this.price, required this.desc});
 }

@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import '../../../../core/services/payment_service.dart';
 
 class WalletProvider with ChangeNotifier {
-  final PaymentService _paymentService = PaymentService();
+  final PaymentService _paymentService;
+
+  WalletProvider(this._paymentService);
 
   double _balance = 0.0;
   List<Map<String, dynamic>> _transactions = [];

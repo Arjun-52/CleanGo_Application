@@ -37,5 +37,4 @@ class BookingRepositoryImpl implements IBookingRepository {
   Future<double?> applyCoupon(String couponCode, double amount) {
     return remoteDataSource.applyCoupon(couponCode, amount);
   }
-
 }

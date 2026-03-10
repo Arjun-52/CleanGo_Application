@@ -49,5 +49,4 @@ class AuthRepositoryImpl implements IAuthRepository {
   Future<bool> isLoggedIn() {
     return remoteDataSource.isLoggedIn();
   }
-
 }

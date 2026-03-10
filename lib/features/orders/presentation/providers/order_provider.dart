@@ -8,7 +8,9 @@ import 'package:clean_go/features/orders/domain/usecases/order_usecases.dart';
 import 'package:clean_go/features/orders/data/repositories/order_repository_impl.dart';
 
 class OrderProvider with ChangeNotifier {
-  final OrderUseCases _orderUseCases = OrderUseCases(OrderRepositoryImpl(OrderService()));
+  final OrderUseCases _orderUseCases;
+
+  OrderProvider(this._orderUseCases);
 
   List<OrderModel> _activeOrders = [];
   List<OrderModel> _pastOrders = [];

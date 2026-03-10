@@ -33,5 +33,4 @@ class LocationUseCases {
   Future<bool> setDefaultAddress(String addressId) {
     return repository.setDefaultAddress(addressId);
   }
-
 }

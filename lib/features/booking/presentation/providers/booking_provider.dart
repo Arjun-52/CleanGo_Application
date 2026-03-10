@@ -7,7 +7,9 @@ import 'package:clean_go/features/booking/domain/usecases/booking_usecases.dart'
 import 'package:clean_go/features/booking/data/repositories/booking_repository_impl.dart';
 
 class BookingProvider with ChangeNotifier {
-  final BookingUseCases _bookingUseCases = BookingUseCases(BookingRepositoryImpl(BookingService()));
+  final BookingUseCases _bookingUseCases;
+
+  BookingProvider(this._bookingUseCases);
 
   List<ServiceModel> _services = [];
   final List<BookingItem> _cartItems = [];

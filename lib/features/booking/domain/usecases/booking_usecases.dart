@@ -30,5 +30,4 @@ class BookingUseCases {
   Future<double?> applyCoupon(String couponCode, double amount) {
     return repository.applyCoupon(couponCode, amount);
   }
-
 }

@@ -41,5 +41,4 @@ class LocationRepositoryImpl implements ILocationRepository {
   Future<bool> setDefaultAddress(String addressId) {
     return remoteDataSource.setDefaultAddress(addressId);
   }
-
 }

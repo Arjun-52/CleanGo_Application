@@ -42,5 +42,4 @@ class OrderUseCases {
   Future<bool> rateOrder(String orderId, int rating, String? review) {
     return repository.rateOrder(orderId, rating, review);
   }
-
 }

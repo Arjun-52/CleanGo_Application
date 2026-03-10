@@ -19,7 +19,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<AuthProvider>(context, listen: false).startOtpTimer();
     });
@@ -45,7 +45,6 @@ class _OtpScreenState extends State<OtpScreen> {
     authProvider.startOtpTimer();
   }
 
-  
   void _showError(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }

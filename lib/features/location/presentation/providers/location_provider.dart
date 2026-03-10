@@ -6,8 +6,10 @@ import 'package:clean_go/features/location/domain/usecases/location_usecases.dar
 import 'package:clean_go/features/location/data/repositories/location_repository_impl.dart';
 
 class LocationProvider with ChangeNotifier {
-  final LocationUseCases _locationUseCases = LocationUseCases(LocationRepositoryImpl(LocationService()));
-  
+  final LocationUseCases _locationUseCases;
+
+  LocationProvider(this._locationUseCases);
+
   List<AddressModel> _addresses = [];
   AddressModel? _selectedAddress;
   bool _isLoading = false;
