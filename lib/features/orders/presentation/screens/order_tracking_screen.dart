@@ -1,4 +1,4 @@
-import 'package:clean_go/features/orders/data/models/order_model.dart';
+import 'package:clean_go/features/orders/domain/entities/order_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_go/core/constants/colors.dart';
 
@@ -9,12 +9,14 @@ import 'package:clean_go/features/orders/presentation/widgets/qr_otp_card.dart';
 class OrderTrackingScreen extends StatelessWidget {
   OrderTrackingScreen({super.key});
 
-  final OrderModel order = OrderModel(
+  final OrderEntity order = OrderEntity(
     id: "CLN-2026-001",
     pickupOtp: "5646",
     totalAmount: 450,
     status: OrderStatus.inProgress,
-    items: [OrderItem(serviceName: "Dry Cleaning", quantity: 3, price: 150)],
+    items: const [
+      OrderItemEntity(serviceName: "Dry Cleaning", quantity: 3, price: 150),
+    ],
   );
 
   @override

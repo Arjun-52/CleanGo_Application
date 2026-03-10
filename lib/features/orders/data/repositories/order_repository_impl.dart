@@ -1,7 +1,7 @@
-import 'package:clean_go/features/orders/data/models/order_model.dart';
-import 'package:clean_go/features/orders/data/models/tracking_model.dart';
-import 'package:clean_go/features/orders/domain/repositories/i_order_repository.dart';
-import 'package:clean_go/features/orders/data/datasources/order_service.dart';
+import '../models/tracking_model.dart';
+import '../../domain/entities/order_entity.dart';
+import '../../domain/repositories/i_order_repository.dart';
+import '../datasources/order_service.dart';
 
 class OrderRepositoryImpl implements IOrderRepository {
   final OrderService remoteDataSource;
@@ -9,23 +9,27 @@ class OrderRepositoryImpl implements IOrderRepository {
   OrderRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<OrderModel>> getOrders() {
-    return remoteDataSource.getOrders();
+  Future<List<OrderEntity>> getOrders() async {
+    final orders = await remoteDataSource.getOrders();
+    return orders.map((order) => order.toEntity()).toList();
   }
 
   @override
-  Future<List<OrderModel>> getActiveOrders() {
-    return remoteDataSource.getActiveOrders();
+  Future<List<OrderEntity>> getActiveOrders() async {
+    final orders = await remoteDataSource.getActiveOrders();
+    return orders.map((order) => order.toEntity()).toList();
   }
 
   @override
-  Future<List<OrderModel>> getPastOrders() {
-    return remoteDataSource.getPastOrders();
+  Future<List<OrderEntity>> getPastOrders() async {
+    final orders = await remoteDataSource.getPastOrders();
+    return orders.map((order) => order.toEntity()).toList();
   }
 
   @override
-  Future<OrderModel?> getOrderById(String orderId) {
-    return remoteDataSource.getOrderById(orderId);
+  Future<OrderEntity?> getOrderById(String orderId) async {
+    final order = await remoteDataSource.getOrderById(orderId);
+    return order?.toEntity();
   }
 
   @override

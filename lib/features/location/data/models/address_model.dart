@@ -1,13 +1,29 @@
+import 'package:json_annotation/json_annotation.dart';
+import '../../domain/entities/address_entity.dart';
+
+part 'address_model.g.dart';
+
+@JsonSerializable()
 class AddressModel {
+  @JsonKey(name: 'id')
   final String? id;
+  @JsonKey(name: 'label')
   final String? label;
+  @JsonKey(name: 'full_address')
   final String? fullAddress;
+  @JsonKey(name: 'landmark')
   final String? landmark;
+  @JsonKey(name: 'city')
   final String? city;
+  @JsonKey(name: 'state')
   final String? state;
+  @JsonKey(name: 'pincode')
   final String? pincode;
+  @JsonKey(name: 'latitude')
   final double? latitude;
+  @JsonKey(name: 'longitude')
   final double? longitude;
+  @JsonKey(name: 'is_default')
   final bool isDefault;
 
   AddressModel({
@@ -23,34 +39,40 @@ class AddressModel {
     this.isDefault = false,
   });
 
-  factory AddressModel.fromJson(Map<String, dynamic> json) {
-    return AddressModel(
-      id: json['id'],
-      label: json['label'],
-      fullAddress: json['full_address'],
-      landmark: json['landmark'],
-      city: json['city'],
-      state: json['state'],
-      pincode: json['pincode'],
-      latitude: json['latitude']?.toDouble(),
-      longitude: json['longitude']?.toDouble(),
-      isDefault: json['is_default'] ?? false,
+  factory AddressModel.fromJson(Map<String, dynamic> json) =>
+      _$AddressModelFromJson(json);
+  Map<String, dynamic> toJson() => _$AddressModelToJson(this);
+
+  // Mapping to domain entity
+  AddressEntity toEntity() {
+    return AddressEntity(
+      id: id,
+      label: label,
+      fullAddress: fullAddress,
+      landmark: landmark,
+      city: city,
+      state: state,
+      pincode: pincode,
+      latitude: latitude,
+      longitude: longitude,
+      isDefault: isDefault,
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'label': label,
-      'full_address': fullAddress,
-      'landmark': landmark,
-      'city': city,
-      'state': state,
-      'pincode': pincode,
-      'latitude': latitude,
-      'longitude': longitude,
-      'is_default': isDefault,
-    };
+  // Mapping from domain entity
+  factory AddressModel.fromEntity(AddressEntity entity) {
+    return AddressModel(
+      id: entity.id,
+      label: entity.label,
+      fullAddress: entity.fullAddress,
+      landmark: entity.landmark,
+      city: entity.city,
+      state: entity.state,
+      pincode: entity.pincode,
+      latitude: entity.latitude,
+      longitude: entity.longitude,
+      isDefault: entity.isDefault,
+    );
   }
 
   AddressModel copyWith({

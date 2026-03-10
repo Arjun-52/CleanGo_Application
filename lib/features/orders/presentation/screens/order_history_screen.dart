@@ -4,7 +4,7 @@ import 'package:clean_go/features/orders/presentation/screens/order_details_scre
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/features/orders/presentation/providers/order_provider.dart';
 import 'package:clean_go/features/orders/presentation/widgets/order_card.dart';
-import 'package:clean_go/features/orders/data/models/order_model.dart';
+import 'package:clean_go/features/orders/domain/entities/order_entity.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});

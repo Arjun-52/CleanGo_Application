@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import '../../data/models/tracking_model.dart';
-import '../../data/models/order_model.dart';
+import '../../domain/entities/order_entity.dart';
 import '../../data/datasources/order_service.dart';
-import 'package:clean_go/features/orders/domain/usecases/order_usecases.dart';
-import 'package:clean_go/features/orders/data/repositories/order_repository_impl.dart';
+import '../../domain/usecases/order_usecases.dart';
 import 'states/order_state.dart';
 
 class OrderProvider with ChangeNotifier {
@@ -15,13 +14,13 @@ class OrderProvider with ChangeNotifier {
 
   OrderState get state => _state;
 
-  List<OrderModel> get activeOrders =>
+  List<OrderEntity> get activeOrders =>
       _state is OrderSuccess ? (_state as OrderSuccess).activeOrders : [];
 
-  List<OrderModel> get pastOrders =>
+  List<OrderEntity> get pastOrders =>
       _state is OrderSuccess ? (_state as OrderSuccess).pastOrders : [];
 
-  OrderModel? get currentOrder =>
+  OrderEntity? get currentOrder =>
       _state is OrderSuccess ? (_state as OrderSuccess).currentOrder : null;
 
   TrackingModel? get currentTracking =>

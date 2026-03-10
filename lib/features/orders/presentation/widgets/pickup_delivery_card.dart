@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:clean_go/features/orders/presentation/widgets/reusable_card.dart';
-import 'package:clean_go/features/orders/data/models/order_model.dart';
+import 'package:clean_go/features/orders/domain/entities/order_entity.dart';
 import 'package:clean_go/features/orders/presentation/utils/order_formatters.dart';
 
 class PickupDeliveryCard extends StatelessWidget {
-  final OrderModel order;
+  final OrderEntity order;
 
   const PickupDeliveryCard({super.key, required this.order});
 

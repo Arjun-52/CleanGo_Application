@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../../../data/models/order_model.dart';
+import '../../../domain/entities/order_entity.dart';
 import '../../../data/models/tracking_model.dart';
 
 abstract class OrderState {
@@ -15,9 +15,9 @@ class OrderLoading extends OrderState {
 }
 
 class OrderSuccess extends OrderState {
-  final List<OrderModel> activeOrders;
-  final List<OrderModel> pastOrders;
-  final OrderModel? currentOrder;
+  final List<OrderEntity> activeOrders;
+  final List<OrderEntity> pastOrders;
+  final OrderEntity? currentOrder;
   final TrackingModel? currentTracking;
 
   const OrderSuccess({

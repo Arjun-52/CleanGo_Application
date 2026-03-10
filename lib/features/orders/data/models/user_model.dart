@@ -1,9 +1,21 @@
+import 'package:json_annotation/json_annotation.dart';
+import '../../../auth/domain/entities/user_entity.dart';
+
+part 'user_model.g.dart';
+
+@JsonSerializable()
 class UserModel {
+  @JsonKey(name: 'id')
   final String? id;
+  @JsonKey(name: 'name')
   final String? name;
+  @JsonKey(name: 'phone')
   final String? phone;
+  @JsonKey(name: 'email')
   final String? email;
+  @JsonKey(name: 'profile_image')
   final String? profileImage;
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
 
   UserModel({
@@ -15,28 +27,32 @@ class UserModel {
     this.createdAt,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'],
-      name: json['name'],
-      phone: json['phone'],
-      email: json['email'],
-      profileImage: json['profile_image'],
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : null,
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
+  // Mapping to domain entity
+  UserEntity toEntity() {
+    return UserEntity(
+      id: id,
+      name: name,
+      phone: phone,
+      email: email,
+      profileImage: profileImage,
+      createdAt: createdAt,
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'phone': phone,
-      'email': email,
-      'profile_image': profileImage,
-      'created_at': createdAt?.toIso8601String(),
-    };
+  // Mapping from domain entity
+  factory UserModel.fromEntity(UserEntity entity) {
+    return UserModel(
+      id: entity.id,
+      name: entity.name,
+      phone: entity.phone,
+      email: entity.email,
+      profileImage: entity.profileImage,
+      createdAt: entity.createdAt,
+    );
   }
 
   UserModel copyWith({

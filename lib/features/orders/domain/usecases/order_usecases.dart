@@ -1,25 +1,25 @@
-import 'package:clean_go/features/orders/data/models/order_model.dart';
-import 'package:clean_go/features/orders/data/models/tracking_model.dart';
-import 'package:clean_go/features/orders/domain/repositories/i_order_repository.dart';
+import '../entities/order_entity.dart';
+import '../../data/models/tracking_model.dart';
+import '../repositories/i_order_repository.dart';
 
 class OrderUseCases {
   final IOrderRepository repository;
 
   OrderUseCases(this.repository);
 
-  Future<List<OrderModel>> getOrders() {
+  Future<List<OrderEntity>> getOrders() {
     return repository.getOrders();
   }
 
-  Future<List<OrderModel>> getActiveOrders() {
+  Future<List<OrderEntity>> getActiveOrders() {
     return repository.getActiveOrders();
   }
 
-  Future<List<OrderModel>> getPastOrders() {
+  Future<List<OrderEntity>> getPastOrders() {
     return repository.getPastOrders();
   }
 
-  Future<OrderModel?> getOrderById(String orderId) {
+  Future<OrderEntity?> getOrderById(String orderId) {
     return repository.getOrderById(orderId);
   }
 

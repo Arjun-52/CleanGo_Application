@@ -1,4 +1,4 @@
-import 'package:clean_go/features/orders/data/models/order_model.dart';
+import 'package:clean_go/features/orders/domain/entities/order_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -71,10 +71,10 @@ class HomeContent extends StatelessWidget {
             ActiveOrderCard(
               order: orderProvider.activeOrders.isNotEmpty
                   ? orderProvider.activeOrders.first
-                  : OrderModel(
+                  : OrderEntity(
                       id: "CLN-2026-001",
                       userId: "1",
-                      items: [],
+                      items: const [],
                       totalAmount: 0,
                       status: OrderStatus.processing,
                       deliveryTime: DateTime.now(),

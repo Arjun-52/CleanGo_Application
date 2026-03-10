@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import '../../../orders/data/models/user_model.dart';
-import 'package:clean_go/features/auth/domain/usecases/auth_usecases.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/usecases/auth_usecases.dart';
 import 'states/auth_state.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -16,7 +16,7 @@ class AuthProvider with ChangeNotifier {
   AuthState get authState => _authState;
   OtpState get otpState => _otpState;
 
-  UserModel? get user =>
+  UserEntity? get user =>
       _authState is AuthSuccess ? (_authState as AuthSuccess).user : null;
 
   bool get isLoading => _authState is AuthLoading;
@@ -81,7 +81,7 @@ class AuthProvider with ChangeNotifier {
       if (result) {
         _emitAuthState(
           AuthSuccess(
-            UserModel(id: "1", name: "Demo User", phone: "9347830977"),
+            UserEntity(id: "1", name: "Demo User", phone: "9347830977"),
           ),
         );
       } else {

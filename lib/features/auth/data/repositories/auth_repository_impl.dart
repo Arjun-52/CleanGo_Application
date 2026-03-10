@@ -1,9 +1,7 @@
-import 'dart:convert';
-import 'package:clean_go/features/orders/data/models/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:clean_go/features/auth/domain/repositories/i_auth_repository.dart';
-import 'package:clean_go/features/auth/data/datasources/auth_service.dart';
+import '../../../orders/data/models/user_model.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/repositories/i_auth_repository.dart';
+import '../datasources/auth_service.dart';
 
 class AuthRepositoryImpl implements IAuthRepository {
   final AuthService remoteDataSource;
@@ -31,13 +29,15 @@ class AuthRepositoryImpl implements IAuthRepository {
   }
 
   @override
-  Future<UserModel?> getCurrentUser() {
-    return remoteDataSource.getCurrentUser();
+  Future<UserEntity?> getCurrentUser() async {
+    final user = await remoteDataSource.getCurrentUser();
+    return user?.toEntity();
   }
 
   @override
-  Future<bool> updateProfile(UserModel user) {
-    return remoteDataSource.updateProfile(user);
+  Future<bool> updateProfile(UserEntity user) {
+    final userModel = UserModel.fromEntity(user);
+    return remoteDataSource.updateProfile(userModel);
   }
 
   @override

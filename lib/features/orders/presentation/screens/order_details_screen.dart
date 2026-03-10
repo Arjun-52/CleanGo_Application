@@ -11,7 +11,6 @@ import 'package:clean_go/features/orders/presentation/widgets/qr_otp_card.dart';
 import 'package:clean_go/features/orders/presentation/widgets/pickup_delivery_card.dart';
 
 import 'package:clean_go/features/orders/presentation/providers/order_provider.dart';
-import 'package:clean_go/features/orders/data/models/order_model.dart';
 
 import 'package:clean_go/features/orders/presentation/utils/order_formatters.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:clean_go/core/constants/colors.dart';
-import 'package:clean_go/features/orders/data/models/order_model.dart';
+import 'package:clean_go/features/orders/domain/entities/order_entity.dart';
 import './reusable_card.dart';
 
 class QrOtpCard extends StatelessWidget {
-  final OrderModel order;
+  final OrderEntity order;
 
   const QrOtpCard({super.key, required this.order});
 

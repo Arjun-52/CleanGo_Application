@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'package:clean_go/features/orders/data/models/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:clean_go/features/auth/domain/repositories/i_auth_repository.dart';
+import '../entities/user_entity.dart';
+import '../repositories/i_auth_repository.dart';
 
 class AuthUseCases {
   final IAuthRepository repository;
@@ -25,11 +22,11 @@ class AuthUseCases {
     return repository.verifyOtpLegacy(phoneNumber, otp);
   }
 
-  Future<UserModel?> getCurrentUser() {
+  Future<UserEntity?> getCurrentUser() {
     return repository.getCurrentUser();
   }
 
-  Future<bool> updateProfile(UserModel user) {
+  Future<bool> updateProfile(UserEntity user) {
     return repository.updateProfile(user);
   }
 

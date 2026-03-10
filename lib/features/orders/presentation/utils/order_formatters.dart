@@ -1,4 +1,4 @@
-import '../../data/models/order_model.dart';
+import '../../domain/entities/order_entity.dart';
 
 String getOrderStatusText(OrderStatus? status) {
   switch (status) {
@@ -16,6 +16,10 @@ String getOrderStatusText(OrderStatus? status) {
       return "Delivered";
     case OrderStatus.cancelled:
       return "Cancelled";
+    case OrderStatus.processing:
+      return "Processing";
+    case OrderStatus.completed:
+      return "Completed";
     default:
       return "Unknown";
   }

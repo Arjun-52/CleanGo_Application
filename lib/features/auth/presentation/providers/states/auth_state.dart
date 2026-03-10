@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:clean_go/features/orders/data/models/user_model.dart';
+import '../../../domain/entities/user_entity.dart';
 
 abstract class AuthState {
   const AuthState();
@@ -14,7 +14,7 @@ class AuthLoading extends AuthState {
 }
 
 class AuthSuccess extends AuthState {
-  final UserModel user;
+  final UserEntity user;
 
   const AuthSuccess(this.user);
 

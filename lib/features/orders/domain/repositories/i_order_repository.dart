@@ -1,11 +1,11 @@
-import 'package:clean_go/features/orders/data/models/order_model.dart';
-import 'package:clean_go/features/orders/data/models/tracking_model.dart';
+import '../entities/order_entity.dart';
+import '../../data/models/tracking_model.dart';
 
 abstract class IOrderRepository {
-  Future<List<OrderModel>> getOrders();
-  Future<List<OrderModel>> getActiveOrders();
-  Future<List<OrderModel>> getPastOrders();
-  Future<OrderModel?> getOrderById(String orderId);
+  Future<List<OrderEntity>> getOrders();
+  Future<List<OrderEntity>> getActiveOrders();
+  Future<List<OrderEntity>> getPastOrders();
+  Future<OrderEntity?> getOrderById(String orderId);
   Future<TrackingModel?> getOrderTracking(String orderId);
   Future<bool> verifyPickupOtp(String orderId, String otp);
   Future<bool> verifyDeliveryOtp(String orderId, String otp);
