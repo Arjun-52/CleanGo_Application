@@ -1,74 +1,96 @@
 import 'package:flutter/foundation.dart';
 import '../../data/models/tracking_model.dart';
 import '../../data/models/order_model.dart';
-
 import '../../data/datasources/order_service.dart';
-
 import 'package:clean_go/features/orders/domain/usecases/order_usecases.dart';
 import 'package:clean_go/features/orders/data/repositories/order_repository_impl.dart';
+import 'states/order_state.dart';
 
 class OrderProvider with ChangeNotifier {
   final OrderUseCases _orderUseCases;
 
+  OrderState _state = const OrderInitial();
+
   OrderProvider(this._orderUseCases);
 
-  List<OrderModel> _activeOrders = [];
-  List<OrderModel> _pastOrders = [];
-  OrderModel? _currentOrder;
-  TrackingModel? _currentTracking;
-  bool _isLoading = false;
-  String? _error;
+  OrderState get state => _state;
 
-  List<OrderModel> get activeOrders => _activeOrders;
-  List<OrderModel> get pastOrders => _pastOrders;
-  OrderModel? get currentOrder => _currentOrder;
-  TrackingModel? get currentTracking => _currentTracking;
-  bool get isLoading => _isLoading;
-  String? get error => _error;
+  List<OrderModel> get activeOrders =>
+      _state is OrderSuccess ? (_state as OrderSuccess).activeOrders : [];
+
+  List<OrderModel> get pastOrders =>
+      _state is OrderSuccess ? (_state as OrderSuccess).pastOrders : [];
+
+  OrderModel? get currentOrder =>
+      _state is OrderSuccess ? (_state as OrderSuccess).currentOrder : null;
+
+  TrackingModel? get currentTracking =>
+      _state is OrderSuccess ? (_state as OrderSuccess).currentTracking : null;
+
+  bool get isLoading => _state is OrderLoading;
+
+  String? get error =>
+      _state is OrderError ? (_state as OrderError).message : null;
+
+  void _emitState(OrderState newState) {
+    _state = newState;
+    notifyListeners();
+  }
 
   Future<void> loadActiveOrders() async {
-    _isLoading = true;
-    notifyListeners();
+    _emitState(const OrderLoading());
 
     try {
-      _activeOrders = await _orderUseCases.getActiveOrders();
-      _isLoading = false;
-      notifyListeners();
+      final orders = await _orderUseCases.getActiveOrders();
+      final currentPastOrders = pastOrders;
+      _emitState(
+        OrderSuccess(
+          activeOrders: orders,
+          pastOrders: currentPastOrders,
+          currentOrder: currentOrder,
+          currentTracking: currentTracking,
+        ),
+      );
     } catch (e) {
-      _error = e.toString();
-      _isLoading = false;
-      notifyListeners();
+      _emitState(OrderError(e.toString()));
     }
   }
 
   Future<void> loadPastOrders() async {
-    _isLoading = true;
-    notifyListeners();
+    _emitState(const OrderLoading());
 
     try {
-      _pastOrders = await _orderUseCases.getPastOrders();
-      _isLoading = false;
-      notifyListeners();
+      final orders = await _orderUseCases.getPastOrders();
+      final currentActiveOrders = activeOrders;
+      _emitState(
+        OrderSuccess(
+          activeOrders: currentActiveOrders,
+          pastOrders: orders,
+          currentOrder: currentOrder,
+          currentTracking: currentTracking,
+        ),
+      );
     } catch (e) {
-      _error = e.toString();
-      _isLoading = false;
-      notifyListeners();
+      _emitState(OrderError(e.toString()));
     }
   }
 
   Future<void> loadOrderDetails(String orderId) async {
-    _isLoading = true;
-    notifyListeners();
+    _emitState(const OrderLoading());
 
     try {
-      _currentOrder = await _orderUseCases.getOrderById(orderId);
-      _currentTracking = await _orderUseCases.getOrderTracking(orderId);
-      _isLoading = false;
-      notifyListeners();
+      final order = await _orderUseCases.getOrderById(orderId);
+      final tracking = await _orderUseCases.getOrderTracking(orderId);
+      _emitState(
+        OrderSuccess(
+          activeOrders: activeOrders,
+          pastOrders: pastOrders,
+          currentOrder: order,
+          currentTracking: tracking,
+        ),
+      );
     } catch (e) {
-      _error = e.toString();
-      _isLoading = false;
-      notifyListeners();
+      _emitState(OrderError(e.toString()));
     }
   }
 }

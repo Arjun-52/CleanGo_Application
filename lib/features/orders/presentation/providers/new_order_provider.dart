@@ -1,18 +1,36 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import '../../domain/order_constans/order_constans.dart';
 import '../../domain/usecases/order_pricing.dart';
+import 'states/new_order_state.dart';
 
 class NewOrderProvider with ChangeNotifier {
-  int selectedMode = -1;
-  int selectedService = -1;
-  int selectedFilter = 0;
-
-  Map<String, int> cart = {};
-  Set<String> selectedAddons = {};
+  NewOrderState _state = const NewOrderInitial();
 
   final categorizedItems = OrderConstants.categorizedItems;
   final addons = OrderConstants.addons;
   final services = OrderConstants.services;
+
+  NewOrderProvider();
+
+  NewOrderState get state => _state;
+
+  Map<String, int> get cart =>
+      _state is NewOrderSuccess ? (_state as NewOrderSuccess).cart : {};
+
+  Set<String> get selectedAddons => _state is NewOrderSuccess
+      ? (_state as NewOrderSuccess).selectedAddons
+      : {};
+
+  int get selectedMode =>
+      _state is NewOrderSuccess ? (_state as NewOrderSuccess).selectedMode : -1;
+
+  int get selectedService => _state is NewOrderSuccess
+      ? (_state as NewOrderSuccess).selectedService
+      : -1;
+
+  int get selectedFilter => _state is NewOrderSuccess
+      ? (_state as NewOrderSuccess).selectedFilter
+      : 0;
 
   bool get canSelectItems => selectedMode != -1 && selectedService != -1;
 
@@ -24,52 +42,153 @@ class NewOrderProvider with ChangeNotifier {
     selectedMode: selectedMode,
   );
 
-  void selectMode(int mode) {
-    selectedMode = mode;
+  void _emitState(NewOrderState newState) {
+    _state = newState;
     notifyListeners();
+  }
+
+  void selectMode(int mode) {
+    final currentCart = cart;
+    final currentAddons = selectedAddons;
+    final currentService = selectedService;
+    final currentFilter = selectedFilter;
+
+    _emitState(
+      NewOrderSuccess(
+        cart: currentCart,
+        selectedAddons: currentAddons,
+        selectedMode: mode,
+        selectedService: currentService,
+        selectedFilter: currentFilter,
+      ),
+    );
   }
 
   void selectService(int index) {
-    selectedService = index;
-    notifyListeners();
+    final currentCart = cart;
+    final currentAddons = selectedAddons;
+    final currentMode = selectedMode;
+    final currentFilter = selectedFilter;
+
+    _emitState(
+      NewOrderSuccess(
+        cart: currentCart,
+        selectedAddons: currentAddons,
+        selectedMode: currentMode,
+        selectedService: index,
+        selectedFilter: currentFilter,
+      ),
+    );
   }
 
   void changeFilter(int index) {
-    selectedFilter = index;
-    notifyListeners();
+    final currentCart = cart;
+    final currentAddons = selectedAddons;
+    final currentMode = selectedMode;
+    final currentService = selectedService;
+
+    _emitState(
+      NewOrderSuccess(
+        cart: currentCart,
+        selectedAddons: currentAddons,
+        selectedMode: currentMode,
+        selectedService: currentService,
+        selectedFilter: index,
+      ),
+    );
   }
 
   void addItem(String name) {
-    cart[name] = (cart[name] ?? 0) + 1;
-    notifyListeners();
+    final currentCart = Map<String, int>.from(cart);
+    currentCart[name] = (currentCart[name] ?? 0) + 1;
+
+    final currentAddons = selectedAddons;
+    final currentMode = selectedMode;
+    final currentService = selectedService;
+    final currentFilter = selectedFilter;
+
+    _emitState(
+      NewOrderSuccess(
+        cart: currentCart,
+        selectedAddons: currentAddons,
+        selectedMode: currentMode,
+        selectedService: currentService,
+        selectedFilter: currentFilter,
+      ),
+    );
   }
 
   void removeItem(String name) {
-    int qty = cart[name] ?? 0;
+    final currentCart = Map<String, int>.from(cart);
+    int qty = currentCart[name] ?? 0;
 
     if (qty <= 1) {
-      cart.remove(name);
+      currentCart.remove(name);
     } else {
-      cart[name] = qty - 1;
+      currentCart[name] = qty - 1;
     }
 
-    notifyListeners();
+    final currentAddons = selectedAddons;
+    final currentMode = selectedMode;
+    final currentService = selectedService;
+    final currentFilter = selectedFilter;
+
+    _emitState(
+      NewOrderSuccess(
+        cart: currentCart,
+        selectedAddons: currentAddons,
+        selectedMode: currentMode,
+        selectedService: currentService,
+        selectedFilter: currentFilter,
+      ),
+    );
   }
 
   void toggleAddon(String name) {
-    if (selectedAddons.contains(name)) {
-      selectedAddons.remove(name);
+    final currentCart = cart;
+    final currentAddons = Set<String>.from(selectedAddons);
+
+    if (currentAddons.contains(name)) {
+      currentAddons.remove(name);
     } else {
-      selectedAddons.add(name);
+      currentAddons.add(name);
     }
 
-    notifyListeners();
+    final currentMode = selectedMode;
+    final currentService = selectedService;
+    final currentFilter = selectedFilter;
+
+    _emitState(
+      NewOrderSuccess(
+        cart: currentCart,
+        selectedAddons: currentAddons,
+        selectedMode: currentMode,
+        selectedService: currentService,
+        selectedFilter: currentFilter,
+      ),
+    );
   }
 
   void initFastTrack(bool isFastTrack) {
+    final currentCart = cart;
+    final currentAddons = Set<String>.from(selectedAddons);
+
     if (isFastTrack) {
-      selectedMode = 0;
-      selectedAddons.add("Express Processing");
+      currentAddons.add("Express Processing");
     }
+
+    final currentMode = isFastTrack ? 0 : selectedMode;
+    final currentService = selectedService;
+    final currentFilter = selectedFilter;
+
+    _emitState(
+      NewOrderSuccess(
+        cart: currentCart,
+        selectedAddons: currentAddons,
+        selectedMode: currentMode,
+        selectedService: currentService,
+        selectedFilter: currentFilter,
+      ),
+    );
   }
 }

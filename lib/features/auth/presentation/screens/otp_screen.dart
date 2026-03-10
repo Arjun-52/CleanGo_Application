@@ -57,6 +57,9 @@ class _OtpScreenState extends State<OtpScreen> {
     String otp = _otpControllers.map((c) => c.text).join();
     bool success = await authProvider.verifyOtp(widget.verificationId, otp);
 
+    // Wait a frame for state to propagate
+    await Future.delayed(Duration.zero);
+
     if (success && mounted) {
       Navigator.pushReplacementNamed(context, AppRoutes.selectLocation);
     } else if (authProvider.error != null && mounted) {

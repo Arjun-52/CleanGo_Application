@@ -1,129 +1,142 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import '../../../orders/data/models/user_model.dart';
-import '../../data/datasources/auth_service.dart';
-
 import 'package:clean_go/features/auth/domain/usecases/auth_usecases.dart';
-import 'package:clean_go/features/auth/data/repositories/auth_repository_impl.dart';
+import 'states/auth_state.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthUseCases _authUseCases;
 
-  AuthProvider(this._authUseCases);
-
-  UserModel? _user;
-  bool _isLoading = false;
-  String? _error;
-
-  // OTP specific state
-  int _secondsRemaining = 30;
-  bool _canResend = false;
+  AuthState _authState = const AuthInitial();
+  OtpState _otpState = const OtpState(secondsRemaining: 30, canResend: false);
   Timer? _timer;
 
-  UserModel? get user => _user;
-  bool get isLoading => _isLoading;
-  String? get error => _error;
-  bool get isLoggedIn => _user != null;
+  AuthProvider(this._authUseCases);
 
-  // OTP getters
-  int get secondsRemaining => _secondsRemaining;
-  bool get canResend => _canResend;
+  AuthState get authState => _authState;
+  OtpState get otpState => _otpState;
 
-  /// Send OTP and return verification ID
+  UserModel? get user =>
+      _authState is AuthSuccess ? (_authState as AuthSuccess).user : null;
+
+  bool get isLoading => _authState is AuthLoading;
+
+  String? get error =>
+      _authState is AuthError ? (_authState as AuthError).message : null;
+
+  bool get isLoggedIn => user != null;
+
+  int get secondsRemaining => _otpState.secondsRemaining;
+  bool get canResend => _otpState.canResend;
+
+  void _emitAuthState(AuthState newState) {
+    _authState = newState;
+    notifyListeners();
+  }
+
+  void _emitOtpState(OtpState newState) {
+    _otpState = newState;
+    notifyListeners();
+  }
+
+  /// Send OTP
   Future<String?> sendOtp(String phoneNumber) async {
-    if (_isLoading) return null;
+    if (isLoading) return null;
 
-    print("DEBUG: Phone number entered: $phoneNumber");
-
-    // Validate phone number
     if (!_authUseCases.isValidPhoneNumber(phoneNumber)) {
-      print("DEBUG: Invalid phone number");
-      _error = 'Enter valid number';
-      notifyListeners();
+      _emitAuthState(AuthError('Enter valid number'));
       return null;
     }
 
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
+    _emitAuthState(const AuthLoading());
 
     try {
-      String verificationId = await _authUseCases.sendOtp(phoneNumber);
-      print("DEBUG: OTP sent successfully");
+      String verificationId = await _authUseCases
+          .sendOtp(phoneNumber)
+          .timeout(const Duration(seconds: 10));
+
+      _emitAuthState(const AuthInitial());
       return verificationId;
     } catch (e) {
-      print("DEBUG: OTP sending failed: $e");
-      _error = 'Failed to send OTP. Please try again.';
-      notifyListeners();
+      _emitAuthState(AuthError('Failed to send OTP. Please try again.'));
       return null;
-    } finally {
-      _isLoading = false;
-      notifyListeners();
     }
   }
 
   /// Verify OTP
   Future<bool> verifyOtp(String verificationId, String otp) async {
     if (otp.length != 6) {
-      _error = "Enter 6 digit OTP";
-      notifyListeners();
+      _emitAuthState(AuthError("Enter 6 digit OTP"));
       return false;
     }
 
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
+    _emitAuthState(const AuthLoading());
 
     try {
-      bool result = await _authUseCases.verifyOtp(verificationId, otp);
-      print("DEBUG: OTP verification successful");
+      /// Prevent infinite loading
+      bool result = await _authUseCases
+          .verifyOtp(verificationId, otp)
+          .timeout(const Duration(seconds: 10));
+
+      if (result) {
+        _emitAuthState(
+          AuthSuccess(
+            UserModel(id: "1", name: "Demo User", phone: "9347830977"),
+          ),
+        );
+      } else {
+        _emitAuthState(AuthError("Invalid OTP"));
+      }
+
       return result;
-    } catch (e) {
-      print("DEBUG: OTP verification failed: $e");
-      _error = 'Invalid OTP. Please try again.';
-      notifyListeners();
+    } on TimeoutException {
+      _emitAuthState(AuthError("Request timeout. Try again."));
       return false;
-    } finally {
-      _isLoading = false;
-      notifyListeners();
+    } catch (e) {
+      _emitAuthState(AuthError('OTP verification failed.'));
+      return false;
     }
   }
 
-  /// Start OTP resend timer
+  /// OTP Timer
   void startOtpTimer() {
-    _secondsRemaining = 30;
-    _canResend = false;
+    _emitOtpState(const OtpState(secondsRemaining: 30, canResend: false));
 
     _timer?.cancel();
+
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_secondsRemaining > 0) {
-        _secondsRemaining--;
-        notifyListeners();
+      int current = _otpState.secondsRemaining;
+
+      if (current > 0) {
+        _emitOtpState(
+          OtpState(secondsRemaining: current - 1, canResend: false),
+        );
       } else {
         timer.cancel();
-        _canResend = true;
-        notifyListeners();
+        _emitOtpState(const OtpState(secondsRemaining: 0, canResend: true));
       }
     });
   }
 
-  /// Clear error message
+  /// Clear errors
   void clearError() {
-    _error = null;
-    notifyListeners();
+    if (_authState is AuthError) {
+      _emitAuthState(const AuthInitial());
+    }
   }
 
-  /// Dispose resources
+  /// Logout
+  Future<void> logout() async {
+    try {
+      await _authUseCases.logout();
+    } catch (_) {}
+
+    _emitAuthState(const AuthInitial());
+  }
+
   @override
   void dispose() {
     _timer?.cancel();
     super.dispose();
-  }
-
-  Future<void> logout() async {
-    await _authUseCases.logout();
-    _user = null;
-    notifyListeners();
   }
 }
