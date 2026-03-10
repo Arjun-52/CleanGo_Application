@@ -129,8 +129,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) =>
-                            OrderDetailsScreen(orderId: order.id ?? ''),
+                        builder: (_) => ChangeNotifierProvider.value(
+                          value: context.read<OrderProvider>(),
+                          child: OrderDetailsScreen(orderId: order.id ?? ''),
+                        ),
                       ),
                     );
                   },

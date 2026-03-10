@@ -16,7 +16,6 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-
   late List<TextEditingController> _otpControllers;
   late List<FocusNode> _otpFocusNodes;
 
@@ -124,13 +123,11 @@ class _OtpScreenState extends State<OtpScreen> {
               const SizedBox(height: 30),
 
               /// OTP Input Field
-
               OtpInputField(
                 controllers: _otpControllers,
                 focusNodes: _otpFocusNodes,
                 onChanged: _moveNext,
               ),
-
 
               const SizedBox(height: 40),
 

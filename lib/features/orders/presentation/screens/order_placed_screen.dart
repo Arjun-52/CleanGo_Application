@@ -1,5 +1,8 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:clean_go/core/di/injection.dart' as di;
+import 'package:clean_go/features/orders/presentation/providers/order_provider.dart';
 
 import 'package:clean_go/features/orders/presentation/widgets/order_success_icon.dart';
 import 'package:clean_go/features/orders/presentation/widgets/order_summary_card.dart';
@@ -73,7 +76,12 @@ class OrderPlacedScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => OrderTrackingScreen()),
+                      MaterialPageRoute(
+                        builder: (_) => ChangeNotifierProvider(
+                          create: (_) => di.sl<OrderProvider>(),
+                          child: OrderTrackingScreen(),
+                        ),
+                      ),
                     );
                   },
                   child: const Text(

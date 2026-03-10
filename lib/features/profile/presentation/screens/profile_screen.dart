@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/features/orders/presentation/screens/order_history_screen.dart';
+import 'package:clean_go/features/orders/presentation/providers/order_provider.dart';
 
 import '../widgets/profile_header_card.dart';
 import '../widgets/profile_menu_card.dart';
@@ -66,7 +68,12 @@ class ProfileScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const OrderHistoryScreen()),
+                  MaterialPageRoute(
+                    builder: (_) => ChangeNotifierProvider.value(
+                      value: Provider.of<OrderProvider>(context, listen: false),
+                      child: const OrderHistoryScreen(),
+                    ),
+                  ),
                 );
               },
             ),

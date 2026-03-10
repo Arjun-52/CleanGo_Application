@@ -9,7 +9,9 @@ import './service_tile.dart';
 
 import 'package:clean_go/features/auth/presentation/providers/auth_provider.dart';
 import 'package:clean_go/features/orders/presentation/providers/order_provider.dart';
+import 'package:clean_go/features/orders/presentation/providers/new_order_provider.dart';
 import 'package:clean_go/features/orders/presentation/screens/new_order_screen.dart';
+import 'package:clean_go/core/di/injection.dart' as di;
 
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
@@ -113,9 +115,12 @@ class HomeContent extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const NewOrderScreen(
-                            serviceName: "Wash & Iron",
-                            isFastTrack: false,
+                          builder: (context) => ChangeNotifierProvider(
+                            create: (_) => di.sl<NewOrderProvider>(),
+                            child: const NewOrderScreen(
+                              serviceName: "Wash & Iron",
+                              isFastTrack: false,
+                            ),
                           ),
                         ),
                       );
@@ -131,9 +136,12 @@ class HomeContent extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const NewOrderScreen(
-                            serviceName: "Iron Only",
-                            isFastTrack: false,
+                          builder: (context) => ChangeNotifierProvider(
+                            create: (_) => di.sl<NewOrderProvider>(),
+                            child: const NewOrderScreen(
+                              serviceName: "Iron Only",
+                              isFastTrack: false,
+                            ),
                           ),
                         ),
                       );
@@ -149,9 +157,12 @@ class HomeContent extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const NewOrderScreen(
-                            serviceName: "Dry Clean",
-                            isFastTrack: false,
+                          builder: (context) => ChangeNotifierProvider(
+                            create: (_) => di.sl<NewOrderProvider>(),
+                            child: const NewOrderScreen(
+                              serviceName: "Dry Clean",
+                              isFastTrack: false,
+                            ),
                           ),
                         ),
                       );
@@ -167,9 +178,12 @@ class HomeContent extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const NewOrderScreen(
-                            serviceName: "Wash & Fold",
-                            isFastTrack: true,
+                          builder: (context) => ChangeNotifierProvider(
+                            create: (_) => di.sl<NewOrderProvider>(),
+                            child: const NewOrderScreen(
+                              serviceName: "Wash & Fold",
+                              isFastTrack: true,
+                            ),
                           ),
                         ),
                       );

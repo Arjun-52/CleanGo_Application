@@ -1,0 +1,35 @@
+AuthProvider:
+  - lib\main.dart
+  - lib\core\di\injection.dart
+  - lib\features\auth\data\datasources\auth_service.dart
+  - lib\features\auth\presentation\screens\login_screen.dart
+  - lib\features\auth\presentation\screens\otp_screen.dart
+  - lib\features\home\presentation\widgets\home_content.dart
+BookingProvider:
+  - lib\main.dart
+  - lib\core\di\injection.dart
+  - lib\features\home\presentation\screens\home_screen.dart
+OrderProvider:
+  - lib\main.dart
+  - lib\core\di\injection.dart
+  - lib\features\home\presentation\screens\home_screen.dart
+  - lib\features\home\presentation\widgets\home_content.dart
+  - lib\features\orders\presentation\providers\new_order_provider.dart
+  - lib\features\orders\presentation\screens\new_order_screen.dart
+  - lib\features\orders\presentation\screens\order_details_screen.dart
+  - lib\features\orders\presentation\screens\order_history_screen.dart
+NotificationProvider:
+  - lib\main.dart
+  - lib\core\di\injection.dart
+  - lib\features\home\presentation\screens\notification_screen.dart
+LocationProvider:
+  - lib\main.dart
+  - lib\core\di\injection.dart
+  - lib\features\home\presentation\screens\home_screen.dart
+  - lib\features\home\presentation\widgets\home_header.dart
+NewOrderProvider:
+  - lib\main.dart
+  - lib\core\di\injection.dart
+  - lib\features\orders\presentation\screens\new_order_screen.dart
+WalletProvider:
+  - lib\core\di\injection.dart

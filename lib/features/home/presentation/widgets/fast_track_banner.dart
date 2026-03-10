@@ -1,6 +1,9 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:clean_go/features/orders/presentation/screens/new_order_screen.dart';
+import 'package:clean_go/features/orders/presentation/providers/new_order_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:clean_go/core/di/injection.dart' as di;
 
 class FastTrackBanner extends StatelessWidget {
   const FastTrackBanner({super.key});
@@ -15,8 +18,13 @@ class FastTrackBanner extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  NewOrderScreen(serviceName: "Wash & Iron", isFastTrack: true),
+              builder: (context) => ChangeNotifierProvider(
+                create: (_) => di.sl<NewOrderProvider>(),
+                child: const NewOrderScreen(
+                  serviceName: "Wash & Iron",
+                  isFastTrack: true,
+                ),
+              ),
             ),
           );
         },

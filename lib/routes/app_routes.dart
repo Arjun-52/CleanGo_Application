@@ -1,7 +1,16 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:clean_go/core/di/injection.dart' as di;
 
-//  Auth
+import '../features/location/presentation/providers/location_provider.dart';
+import '../features/booking/presentation/providers/booking_provider.dart';
+import '../features/orders/presentation/providers/order_provider.dart';
+import '../features/orders/presentation/providers/new_order_provider.dart';
+import '../features/home/presentation/providers/notification_provider.dart';
+import '../features/wallet/presentation/providers/wallet_provider.dart';
+
+// Auth
 import '../features/auth/presentation/screens/login_screen.dart';
 import '../features/auth/presentation/screens/otp_screen.dart';
 
@@ -61,18 +70,43 @@ class AppRoutes {
       return OtpScreen(verificationId: verificationId);
     },
 
-    selectLocation: (context) => const SelectLocationScreen(),
-    confirmLocation: (context) => const ConfirmLocationScreen(),
-    addressForm: (context) => const AddressFormSheet(),
+    selectLocation: (context) => ChangeNotifierProvider(
+      create: (_) => di.sl<LocationProvider>(),
+      child: const SelectLocationScreen(),
+    ),
+    confirmLocation: (context) => ChangeNotifierProvider(
+      create: (_) => di.sl<LocationProvider>(),
+      child: const ConfirmLocationScreen(),
+    ),
+    addressForm: (context) => ChangeNotifierProvider(
+      create: (_) => di.sl<LocationProvider>(),
+      child: const AddressFormSheet(),
+    ),
 
     /// Main app with bottom navigation
-    main: (context) => const MainScreen(),
+    main: (context) => MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => di.sl<BookingProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<OrderProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<NotificationProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<LocationProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<NewOrderProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<WalletProvider>()),
+      ],
+      child: const MainScreen(),
+    ),
 
     services: (context) => const ServiceListScreen(),
     serviceDetail: (context) => const ServiceDetailScreen(),
 
-    cart: (context) => const CartScreen(),
-    bookingSummary: (context) => const BookingSummaryScreen(),
+    cart: (context) => ChangeNotifierProvider(
+      create: (_) => di.sl<BookingProvider>(),
+      child: const CartScreen(),
+    ),
+    bookingSummary: (context) => ChangeNotifierProvider(
+      create: (_) => di.sl<BookingProvider>(),
+      child: const BookingSummaryScreen(),
+    ),
     payment: (context) => const PaymentScreen(),
 
     editProfile: (context) => const EditProfileScreen(),
