@@ -54,7 +54,7 @@ class ServiceTile extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: iconColor.withValues(alpha: 0.9),
+                      color: iconColor.withValues(alpha: 1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(icon, color: Colors.white, size: 28),

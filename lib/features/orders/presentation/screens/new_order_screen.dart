@@ -1,3 +1,4 @@
+import 'package:clean_go/core/common_widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -218,12 +219,24 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
             child: Row(
               children: [
                 Expanded(
-                  child: Text(
-                    "₹${provider.totalPrice}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "₹${provider.totalPrice.toInt()}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      Text(
+                        "${provider.totalClothes} items",
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 

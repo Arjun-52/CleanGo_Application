@@ -90,16 +90,28 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).uri.toString();
+
+    int currentIndex = 0;
+
+    if (location.startsWith('/main/home')) {
+      currentIndex = 0;
+    } else if (location.startsWith('/main/new-order')) {
+      currentIndex = 1;
+    } else if (location.startsWith('/main/order-tracking')) {
+      currentIndex = 2;
+    } else if (location.startsWith('/main/wallet')) {
+      currentIndex = 3;
+    } else if (location.startsWith('/main/profile')) {
+      currentIndex = 4;
+    }
+
     return Scaffold(
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: currentIndex,
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-
-            context.go(_routes[index]);
-          });
+          context.go(_routes[index]);
         },
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xff0B3C5D),

@@ -19,7 +19,13 @@ class AddonRow extends StatelessWidget {
         Expanded(
           child: Text(item, style: TextStyle(fontWeight: FontWeight.bold)),
         ),
-        Text(price, style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(
+          price,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Color(0xff013E6D),
+          ),
+        ),
       ],
     );
   }

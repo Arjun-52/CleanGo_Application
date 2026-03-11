@@ -41,6 +41,15 @@ class NewOrderProvider with ChangeNotifier {
     selectedAddons: selectedAddons,
     selectedMode: selectedMode,
   );
+  int get totalClothes {
+    int count = 0;
+
+    for (var qty in cart.values) {
+      count += qty;
+    }
+
+    return count;
+  }
 
   void _emitState(NewOrderState newState) {
     _state = newState;

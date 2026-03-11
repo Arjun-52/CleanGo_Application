@@ -52,7 +52,13 @@ class AddonRow extends StatelessWidget {
                 ],
               ),
             ),
-            Text("+ ₹${addon.price}"),
+            Text(
+              "+ ₹${addon.price.toInt()}",
+              style: const TextStyle(
+                color: Color(0xff013E6D),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         ),
       ),
