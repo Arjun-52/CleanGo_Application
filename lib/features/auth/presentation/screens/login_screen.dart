@@ -1,8 +1,9 @@
-import 'package:clean_go/routes/app_routes.dart' show AppRoutes;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../routes/app_router.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/common_widgets/custom_button.dart';
 import '../providers/auth_provider.dart';
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String? verificationId = await authProvider.sendOtp(phoneNumber);
 
     if (verificationId != null && mounted) {
-      Navigator.pushNamed(context, AppRoutes.otp, arguments: verificationId);
+      GoRouter.of(context).go('${AppRoutes.otp}/$verificationId');
     } else if (authProvider.error != null && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

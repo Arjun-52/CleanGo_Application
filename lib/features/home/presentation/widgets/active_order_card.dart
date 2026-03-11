@@ -80,6 +80,10 @@ class ActiveOrderCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: const Color(0xffE6F4EA),
                     borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: const Color(0xFF008847),
+                      width: 0.5,
+                    ),
                   ),
                   child: const Row(
                     children: [

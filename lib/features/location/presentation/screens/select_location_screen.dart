@@ -1,5 +1,7 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../routes/app_router.dart';
 
 class SelectLocationScreen extends StatefulWidget {
   const SelectLocationScreen({super.key});
@@ -63,7 +65,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => GoRouter.of(context).go(AppRoutes.login),
                   ),
                   const Text(
                     "Select Location",
@@ -98,7 +100,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
               /// CURRENT LOCATION
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, '/confirm-location');
+                  GoRouter.of(context).go(AppRoutes.confirmLocation);
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,11 +151,9 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                             leading: const Icon(Icons.location_on_outlined),
                             title: Text(location),
                             onTap: () {
-                              Navigator.pushNamed(
+                              GoRouter.of(
                                 context,
-                                '/confirm-location',
-                                arguments: location,
-                              );
+                              ).go(AppRoutes.confirmLocation);
                             },
                           );
                         },

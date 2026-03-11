@@ -1,10 +1,11 @@
 import 'package:clean_go/core/constants/colors.dart';
-import 'package:clean_go/routes/app_routes.dart';
 import 'package:clean_go/features/auth/presentation/widgets/otp_input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
+import '../../../../routes/app_router.dart';
 
 class OtpScreen extends StatefulWidget {
   final String verificationId;
@@ -61,7 +62,7 @@ class _OtpScreenState extends State<OtpScreen> {
     await Future.delayed(Duration.zero);
 
     if (success && mounted) {
-      Navigator.pushReplacementNamed(context, AppRoutes.selectLocation);
+      GoRouter.of(context).go(AppRoutes.selectLocation);
     } else if (authProvider.error != null && mounted) {
       _showError(authProvider.error!);
     }
@@ -95,7 +96,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => GoRouter.of(context).go(AppRoutes.login),
                   ),
                   const Text(
                     "OTP Verification",

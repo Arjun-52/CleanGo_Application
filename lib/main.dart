@@ -2,11 +2,12 @@ import 'package:clean_go/features/location/presentation/providers/location_provi
 import 'package:clean_go/features/orders/presentation/providers/new_order_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:clean_go/core/di/injection.dart' as di;
+import 'package:go_router/go_router.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-import './routes/app_routes.dart';
+import './routes/app_router.dart';
 
 // Providers
 import './features/auth/presentation/providers/auth_provider.dart';
@@ -34,10 +35,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => di.sl<NotificationProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<OrderProvider>()),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.login,
-        routes: AppRoutes.routes,
+        routerConfig: appRouter,
       ),
     );
   }

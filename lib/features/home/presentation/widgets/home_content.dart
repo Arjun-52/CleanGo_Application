@@ -39,7 +39,7 @@ class HomeContent extends StatelessWidget {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    "Hello, $userName!",
+                    "Hello, John!",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -110,7 +110,7 @@ class HomeContent extends StatelessWidget {
                     title: "Wash & Iron",
                     subtitle: "Complete care",
                     icon: Icons.checkroom,
-                    iconColor: const Color(0xff1E8E7E),
+                    iconColor: const Color(0xFF148C81),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -132,6 +132,7 @@ class HomeContent extends StatelessWidget {
                     subtitle: "Crisp finish",
                     icon: Icons.iron,
                     iconColor: const Color(0xffF4A300),
+
                     onTap: () {
                       Navigator.push(
                         context,

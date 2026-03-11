@@ -1,8 +1,9 @@
 import 'package:clean_go/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import './address_form_screen.dart';
-import 'package:clean_go/routes/app_routes.dart';
+import '../../../../routes/app_router.dart';
 
 class ConfirmLocationScreen extends StatelessWidget {
   const ConfirmLocationScreen({super.key});
@@ -27,7 +28,8 @@ class ConfirmLocationScreen extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () =>
+                        GoRouter.of(context).go(AppRoutes.selectLocation),
                   ),
                   const Text(
                     "Confirm Location",
@@ -179,12 +181,7 @@ class ConfirmLocationScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          AppRoutes.main,
-                          (route) => false,
-                        );
-                        ;
+                        GoRouter.of(context).go('/main/home');
                       },
                       child: const Text(
                         "Confirm Location",

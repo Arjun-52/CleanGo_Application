@@ -29,7 +29,22 @@ class ItemRow extends StatelessWidget {
         children: [
           const Icon(Icons.checkroom),
           const SizedBox(width: 12),
-          Expanded(child: Text(item.name)),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(item.name, style: const TextStyle(fontSize: 15)),
+                const SizedBox(height: 3),
+                Text(
+                  "₹${item.price}",
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFF7E8392),
+                  ),
+                ),
+              ],
+            ),
+          ),
           qty == 0
               ? GestureDetector(
                   onTap: onAdd,

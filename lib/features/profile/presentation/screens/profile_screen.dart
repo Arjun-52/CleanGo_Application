@@ -1,13 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:clean_go/core/constants/colors.dart';
-import 'package:clean_go/features/orders/presentation/screens/order_history_screen.dart';
-import 'package:clean_go/features/orders/presentation/providers/order_provider.dart';
-
-import '../widgets/profile_header_card.dart';
-import '../widgets/profile_menu_card.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../routes/app_router.dart';
 import '../widgets/logout_button.dart';
-
 import './edit_profile_screen.dart';
 import './saved_addresses_screen.dart';
 
@@ -34,59 +29,95 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
 
-            ProfileHeaderCard(
-              name: "John Kevin",
-              email: "johnkevin@gmail.com",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const EditProfileScreen()),
-                );
-              },
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      context.goEditProfile();
+                    },
+                    child: const CircleAvatar(
+                      radius: 30,
+                      backgroundColor: const Color(0xFF0B3C5D),
+                      child: const Icon(
+                        Icons.person_outline,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "John Kevin",
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "johnkevin@gmail.com",
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Icon(Icons.edit),
+                ],
+              ),
             ),
 
             const SizedBox(height: 24),
 
-            ProfileMenuCard(
-              icon: Icons.location_on_outlined,
-              title: "Saved Addresses",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const SavedAddressesScreen(),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.location_on_outlined,
+                    color: AppColors.primary,
                   ),
-                );
-              },
+                  const SizedBox(width: 12),
+                  const Text(
+                    "Saved Addresses",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
 
             const SizedBox(height: 14),
 
-            ProfileMenuCard(
-              icon: Icons.receipt_long_outlined,
-              title: "Order History",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => ChangeNotifierProvider.value(
-                      value: Provider.of<OrderProvider>(context, listen: false),
-                      child: const OrderHistoryScreen(),
-                    ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.receipt_long_outlined,
+                    color: AppColors.primary,
                   ),
-                );
-              },
+                  const SizedBox(width: 12),
+                  const Text(
+                    "Order History",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
 
             const SizedBox(height: 24),
 
             LogoutButton(
               onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  '/login',
-                  (route) => false,
-                );
+                context.goLogin();
               },
             ),
 

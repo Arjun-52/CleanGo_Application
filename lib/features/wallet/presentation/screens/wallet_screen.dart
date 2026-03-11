@@ -143,7 +143,7 @@ class WalletScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Transactions",
+                    "Transactions History",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
 

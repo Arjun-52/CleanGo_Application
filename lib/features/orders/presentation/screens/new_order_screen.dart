@@ -112,30 +112,20 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 29,
                     mainAxisSpacing: 29,
-                    childAspectRatio: 1.05,
+                    childAspectRatio: 1.35,
                   ),
                   itemBuilder: (context, index) {
                     final service = provider.services[index];
                     final isSelected = provider.selectedService == index;
 
-                    return Stack(
-                      children: [
-                        ServiceTile(
-                          icon: service["icon"],
-                          iconColor: service["color"],
-                          title: service["title"],
-                          subtitle: service["subtitle"],
-                          isSelected: isSelected,
-                          onTap: () => provider.selectService(index),
-                        ),
-
-                        if (isSelected)
-                          const Positioned(
-                            top: 2,
-                            right: 2,
-                            child: Icon(Icons.check_circle, color: Colors.blue),
-                          ),
-                      ],
+                    return ServiceTile(
+                      icon: service["icon"],
+                      iconColor: service["color"],
+                      title: service["title"],
+                      subtitle: service["subtitle"],
+                      isSelected: isSelected,
+                      showSelection: true,
+                      onTap: () => provider.selectService(index),
                     );
                   },
                 ),

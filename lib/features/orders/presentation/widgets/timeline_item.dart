@@ -28,7 +28,7 @@ class TimelineItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// LEFT SIDE (CIRCLE + LINE)
+          /// CIRCLE + LINE
           Column(
             children: [
               Container(
@@ -65,13 +65,10 @@ class TimelineItem extends StatelessWidget {
               ),
 
               if (!isLast)
-                Transform.translate(
-                  offset: const Offset(0, 23),
-                  child: Container(
-                    width: 3,
-                    height: 90,
-                    color: const Color(0xFF148C81),
-                  ),
+                Container(
+                  width: 3,
+                  height: 110,
+                  color: const Color(0xFF148C81),
                 ),
             ],
           ),

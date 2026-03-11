@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clean_go/core/di/injection.dart' as di;
 import 'package:clean_go/features/orders/presentation/providers/order_provider.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:clean_go/features/orders/presentation/widgets/order_success_icon.dart';
 import 'package:clean_go/features/orders/presentation/widgets/order_summary_card.dart';
 import 'package:clean_go/features/orders/presentation/widgets/pickup_otp_info_box.dart';
 
 import 'package:clean_go/features/orders/presentation/screens/order_tracking_screen.dart';
-import '../../../../routes/app_routes.dart';
+import '../../../../routes/app_router.dart';
 
 class OrderPlacedScreen extends StatelessWidget {
   const OrderPlacedScreen({super.key});
@@ -74,15 +75,7 @@ class OrderPlacedScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ChangeNotifierProvider(
-                          create: (_) => di.sl<OrderProvider>(),
-                          child: OrderTrackingScreen(),
-                        ),
-                      ),
-                    );
+                    GoRouter.of(context).go('/main/order-tracking');
                   },
                   child: const Text(
                     "Track Order",
@@ -104,11 +97,7 @@ class OrderPlacedScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      AppRoutes.main,
-                      (route) => false,
-                    );
+                    context.goHome();
                   },
                   child: const Text(
                     "Go to Home",

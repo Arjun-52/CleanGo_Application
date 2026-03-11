@@ -1,6 +1,6 @@
 import 'package:clean_go/core/constants/colors.dart';
+import 'package:clean_go/routes/app_router.dart';
 import 'package:flutter/material.dart';
-import '../../../../routes/app_routes.dart';
 
 class AddressFormSheet extends StatefulWidget {
   const AddressFormSheet({super.key});
@@ -101,13 +101,7 @@ class _AddressFormSheetState extends State<AddressFormSheet> {
                 ),
               ),
               onPressed: () {
-                () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    AppRoutes.main,
-                    (route) => false,
-                  );
-                };
+                context.goHome();
               },
               child: const Text("Done", style: TextStyle(color: Colors.white)),
             ),

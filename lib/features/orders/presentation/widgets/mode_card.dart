@@ -42,10 +42,16 @@ class ModeCard extends StatelessWidget {
                   height: 56,
                   width: 56,
                   decoration: BoxDecoration(
-                    color: const Color(0xB2E2E2E2),
+                    color: selected
+                        ? const Color(0xFF013E6D) // selected background
+                        : const Color(0xB2E2E2E2), // normal background
                     borderRadius: BorderRadius.circular(18),
                   ),
-                  child: Icon(icon, size: 28, color: Colors.grey.shade700),
+                  child: Icon(
+                    icon,
+                    size: 28,
+                    color: selected ? Colors.white : Colors.grey.shade700,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(

@@ -54,25 +54,25 @@ class OrderConstants {
       "title": "Wash & Iron",
       "subtitle": "Complete care",
       "icon": Icons.local_laundry_service,
-      "color": Colors.green,
+      "color": Color(0xFF148C81),
     },
     {
       "title": "Iron Only",
       "subtitle": "Crisp finish",
       "icon": Icons.iron,
-      "color": Colors.orange,
+      "color": Color(0xFFF6A415),
     },
     {
       "title": "Dry Clean",
       "subtitle": "Premium care",
       "icon": Icons.dry_cleaning,
-      "color": Colors.blue,
+      "color": Color(0xFF013E6D),
     },
     {
       "title": "Wash & Fold",
       "subtitle": "Quick service",
       "icon": Icons.checkroom,
-      "color": Colors.indigo,
+      "color": Color(0xFF013E6D),
     },
   ];
 }
