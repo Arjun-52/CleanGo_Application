@@ -11,10 +11,10 @@ class LogoutButton extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.red.withOpacity(0.4)),
+        border: Border.all(color: Colors.red.withValues(alpha: 0.9)),
         boxShadow: [
           BoxShadow(
-            color: Colors.red.withOpacity(0.08),
+            color: Colors.white,
             blurRadius: 18,
             offset: const Offset(0, 6),
           ),

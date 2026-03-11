@@ -57,9 +57,18 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Select Date",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  const Row(
+                    children: [
+                      Icon(Icons.calendar_today, size: 18),
+                      SizedBox(width: 6),
+                      Text(
+                        "Select Date",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 12),
@@ -82,9 +91,18 @@ class _SelectPickupSlotScreenState extends State<SelectPickupSlotScreen> {
 
                   const SizedBox(height: 24),
 
-                  const Text(
-                    "Available Slots",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  const Row(
+                    children: [
+                      Icon(Icons.access_time, size: 18),
+                      SizedBox(width: 6),
+                      Text(
+                        "Available Slots",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 12),

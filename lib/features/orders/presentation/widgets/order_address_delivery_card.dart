@@ -79,7 +79,7 @@ class OrderAddressDeliveryCard extends StatelessWidget {
               ),
             ],
           ),
-
+          const Divider(),
           const SizedBox(height: 14),
 
           /// Delivery time

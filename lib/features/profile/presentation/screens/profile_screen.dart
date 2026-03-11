@@ -1,4 +1,5 @@
 import 'package:clean_go/core/constants/colors.dart';
+import 'package:clean_go/features/profile/presentation/widgets/profile_menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../routes/app_router.dart';
@@ -23,94 +24,91 @@ class ProfileScreen extends StatelessWidget {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
         ),
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 20),
 
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      context.goEditProfile();
-                    },
-                    child: const CircleAvatar(
+            /// PROFILE CARD
+            GestureDetector(
+              onTap: () {
+                context.go('/main/edit-profile');
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.06),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    const CircleAvatar(
                       radius: 30,
-                      backgroundColor: const Color(0xFF0B3C5D),
-                      child: const Icon(
+                      backgroundColor: Color(0xFF0B3C5D),
+                      child: Icon(
                         Icons.person_outline,
                         color: Colors.white,
                         size: 32,
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "John Kevin",
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+
+                    const SizedBox(width: 12),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "John Kevin",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "johnkevin@gmail.com",
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
-                            fontSize: 14,
+                          const SizedBox(height: 4),
+                          Text(
+                            "johnkevin@gmail.com",
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 14,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const Icon(Icons.edit),
-                ],
+
+                    const Icon(Icons.chevron_right, color: Colors.grey),
+                  ],
+                ),
               ),
             ),
 
             const SizedBox(height: 24),
 
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.location_on_outlined,
-                    color: AppColors.primary,
-                  ),
-                  const SizedBox(width: 12),
-                  const Text(
-                    "Saved Addresses",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
+            /// SAVED ADDRESSES
+            ProfileMenuCard(
+              icon: Icons.location_on_outlined,
+              title: "Saved Addresses",
+              onTap: () {
+                context.go('/main/saved-addresses');
+              },
             ),
 
-            const SizedBox(height: 14),
-
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.receipt_long_outlined,
-                    color: AppColors.primary,
-                  ),
-                  const SizedBox(width: 12),
-                  const Text(
-                    "Order History",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
+            /// ORDER HISTORY
+            ProfileMenuCard(
+              icon: Icons.receipt_long_outlined,
+              title: "Order History",
+              onTap: () {
+                context.go('/main/order-history');
+              },
             ),
 
             const SizedBox(height: 24),

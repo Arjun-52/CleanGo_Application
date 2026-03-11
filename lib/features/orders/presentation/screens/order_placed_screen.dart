@@ -1,4 +1,5 @@
 import 'package:clean_go/core/constants/colors.dart';
+import 'package:clean_go/features/orders/presentation/widgets/order_placed_summary_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:clean_go/core/di/injection.dart' as di;
@@ -51,10 +52,10 @@ class OrderPlacedScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              const OrderSummaryCard(
+              const OrderPlacedSummaryCard(
                 orderNumber: "CLN-2026-001",
                 itemCount: 2,
-                serviceType: "Standard",
+                serviceMode: "Standard",
                 amount: "₹95",
               ),
 
