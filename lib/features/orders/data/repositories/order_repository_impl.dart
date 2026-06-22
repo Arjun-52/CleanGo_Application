@@ -6,6 +6,7 @@ import '../models/qr_scan_order_model.dart';
 import '../models/media_evidence_model.dart';
 import '../models/create_order_model.dart';
 import '../models/order_timeline_model.dart';
+import '../models/update_processing_stage_response.dart';
 
 class OrderRepositoryImpl implements IOrderRepository {
   final OrderService remoteDataSource;
@@ -107,5 +108,13 @@ class OrderRepositoryImpl implements IOrderRepository {
   @override
   Future<OrderTimelineModel> getOrderTimeline(String orderId) {
     return remoteDataSource.getOrderTimeline(orderId);
+  }
+
+  @override
+  Future<UpdateProcessingStageResponse> updateProcessingStage({
+    required String orderId,
+    required String status,
+  }) {
+    return remoteDataSource.updateProcessingStage(orderId, status);
   }
 }

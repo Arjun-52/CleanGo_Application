@@ -4,6 +4,7 @@ import '../../data/models/qr_scan_order_model.dart';
 import '../../data/models/media_evidence_model.dart';
 import '../../data/models/create_order_model.dart';
 import '../../data/models/order_timeline_model.dart';
+import '../../data/models/update_processing_stage_response.dart';
 
 abstract class IOrderRepository {
   Future<List<OrderEntity>> getOrders();
@@ -33,4 +34,8 @@ abstract class IOrderRepository {
     required String storeId,
   });
   Future<OrderTimelineModel> getOrderTimeline(String orderId);
+  Future<UpdateProcessingStageResponse> updateProcessingStage({
+    required String orderId,
+    required String status,
+  });
 }

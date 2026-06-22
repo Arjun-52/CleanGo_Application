@@ -27,9 +27,10 @@ import 'package:clean_go/features/orders/presentation/providers/order_provider.d
 import 'package:clean_go/features/orders/presentation/providers/new_order_provider.dart';
 import 'package:clean_go/features/orders/presentation/providers/qr_scan_provider.dart';
 import 'package:clean_go/features/orders/presentation/providers/order_timeline_provider.dart';
+import 'package:clean_go/features/orders/domain/usecases/update_processing_stage_usecase.dart';
+import 'package:clean_go/features/orders/presentation/providers/order_stage_provider.dart';
 
 import 'package:clean_go/features/home/presentation/providers/notification_provider.dart';
-
 import 'package:clean_go/core/services/payment_service.dart';
 import 'package:clean_go/features/wallet/presentation/providers/wallet_provider.dart';
 
@@ -69,6 +70,9 @@ Future<void> init() async {
   sl.registerLazySingleton<BookingUseCases>(() => BookingUseCases(sl()));
   sl.registerLazySingleton<LocationUseCases>(() => LocationUseCases(sl()));
   sl.registerLazySingleton<OrderUseCases>(() => OrderUseCases(sl()));
+  sl.registerLazySingleton<UpdateProcessingStageUseCase>(
+    () => UpdateProcessingStageUseCase(sl()),
+  );
 
   // --------------------------------------------------------------------------
   // Providers
@@ -82,4 +86,5 @@ Future<void> init() async {
   sl.registerFactory<WalletProvider>(() => WalletProvider(sl()));
   sl.registerFactory<QrScanProvider>(() => QrScanProvider(sl()));
   sl.registerFactory<OrderTimelineProvider>(() => OrderTimelineProvider(sl()));
+  sl.registerFactory<OrderStageProvider>(() => OrderStageProvider(sl()));
 }

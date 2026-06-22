@@ -16,6 +16,9 @@ import './features/orders/presentation/providers/order_provider.dart';
 import './features/home/presentation/providers/notification_provider.dart';
 import './features/orders/presentation/providers/qr_scan_provider.dart';
 
+import './features/orders/presentation/providers/order_timeline_provider.dart';
+import './features/orders/presentation/providers/order_stage_provider.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -36,6 +39,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => di.sl<NotificationProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<OrderProvider>()),
         ChangeNotifierProvider(create: (_) => di.sl<QrScanProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<OrderTimelineProvider>()),
+        ChangeNotifierProvider(create: (_) => di.sl<OrderStageProvider>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

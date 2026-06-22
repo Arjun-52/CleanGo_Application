@@ -228,7 +228,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         children: [Icon(icon, size: 22), const SizedBox(width: 12), Text(name)],
       ),
       onTap: () {
-        setState(() => selectedUpi = index);
+        setState(() => selectedUpi = index);  
       },
     );
   }

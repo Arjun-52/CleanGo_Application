@@ -5,11 +5,123 @@ import '../../data/models/qr_scan_order_model.dart';
 import '../providers/qr_scan_provider.dart';
 import '../providers/states/qr_scan_state.dart';
 import '../../../../routes/app_router.dart';
+import '../providers/order_stage_provider.dart';
+import '../providers/states/order_stage_state.dart';
 
 class QrOrderDetailsScreen extends StatelessWidget {
   final QrScanOrderModel order;
 
   const QrOrderDetailsScreen({super.key, required this.order});
+
+  void _showUpdateStageBottomSheet(BuildContext context, String orderId, QrScanProvider qrProvider) {
+    final stages = [
+      "Wash",
+      "Iron",
+      "Dry Clean",
+      "QC",
+      "Packed",
+      "Ready for Delivery",
+    ];
+
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Update Processing Stage",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryDark,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  "Select the current processing status stage for this order:",
+                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+                const SizedBox(height: 20),
+                Consumer<OrderStageProvider>(
+                  builder: (context, stageProvider, child) {
+                    return Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: stages.map((stage) {
+                        final isUpdating = stageProvider.isLoading;
+                        return ChoiceChip(
+                          label: Text(stage),
+                          selected: false,
+                          onSelected: isUpdating
+                              ? null
+                              : (_) async {
+                                  final success = await stageProvider.updateStage(
+                                    orderId: orderId,
+                                    status: stage,
+                                  );
+                                  if (context.mounted) {
+                                    if (success) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text("Processing stage successfully updated to '$stage'"),
+                                          backgroundColor: AppColors.success,
+                                        ),
+                                      );
+                                      Navigator.pop(context);
+                                      // Refresh order details to update status in the screen
+                                      if (order.packetQr != null) {
+                                        qrProvider.scanQrCode(order.packetQr!);
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(stageProvider.error ?? "Failed to update stage"),
+                                          backgroundColor: AppColors.error,
+                                        ),
+                                      );
+                                    }
+                                  }
+                                },
+                          labelStyle: TextStyle(
+                            color: isUpdating ? Colors.grey : AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          backgroundColor: Colors.white,
+                          selectedColor: AppColors.primary.withOpacity(0.2),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: AppColors.primary.withOpacity(0.5)),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   String _formatDateString(DateTime? dateTime) {
     if (dateTime == null) return "--";
@@ -91,8 +203,8 @@ class QrOrderDetailsScreen extends StatelessWidget {
                     const Padding(
                       padding: EdgeInsets.only(bottom: 12.0),
                       child: LinearProgressIndicator(
-                        backgroundColor: Colors.transparent,
-                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                         backgroundColor: Colors.transparent,
+                         valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
                       ),
                     ),
 
@@ -141,22 +253,45 @@ class QrOrderDetailsScreen extends StatelessWidget {
                   _buildLogisticsCard(currentOrder),
                   const SizedBox(height: 16),
 
-                  // View Timeline Button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 48,
-                    child: OutlinedButton.icon(
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: AppColors.primary),
-                        foregroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  // Actions Section
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 48,
+                          child: OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: AppColors.primary),
+                              foregroundColor: AppColors.primary,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            ),
+                            onPressed: () {
+                              context.goOrderTimeline(currentOrder.id ?? 'dc943695-1223-46d1-9234-f385d42868e0');
+                            },
+                            icon: const Icon(Icons.timeline),
+                            label: const Text("Timeline", style: TextStyle(fontWeight: FontWeight.bold)),
+                          ),
+                        ),
                       ),
-                      onPressed: () {
-                        context.goOrderTimeline(currentOrder.id ?? 'dc943695-1223-46d1-9234-f385d42868e0');
-                      },
-                      icon: const Icon(Icons.timeline),
-                      label: const Text("View Timeline", style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: SizedBox(
+                          height: 48,
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            ),
+                            onPressed: () {
+                              _showUpdateStageBottomSheet(context, currentOrder.id ?? "", provider);
+                            },
+                            icon: const Icon(Icons.edit_note),
+                            label: const Text("Update Stage", style: TextStyle(fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 24),
 

@@ -7,6 +7,8 @@ import '../models/qr_scan_response.dart';
 import '../models/media_evidence_model.dart';
 import '../models/create_order_model.dart';
 import '../models/order_timeline_model.dart';
+import '../models/update_processing_stage_request.dart';
+import '../models/update_processing_stage_response.dart';
 
 class OrderService {
   final ApiClient apiClient;
@@ -291,6 +293,25 @@ class OrderService {
       throw Exception("Invalid response format from server");
     } catch (e) {
       print("DEBUG: getOrderTimeline error: $e");
+      rethrow;
+    }
+  }
+
+  /// Update Processing Stage API
+  Future<UpdateProcessingStageResponse> updateProcessingStage(String orderId, String status) async {
+    try {
+      final request = UpdateProcessingStageRequest(status: status);
+      final response = await apiClient.patch(
+        '/api/orders/$orderId',
+        data: request.toJson(),
+      );
+
+      if (response.data is Map<String, dynamic>) {
+        return UpdateProcessingStageResponse.fromJson(response.data as Map<String, dynamic>);
+      }
+      throw Exception("Invalid response format from server");
+    } catch (e) {
+      print("DEBUG: updateProcessingStage error: $e");
       rethrow;
     }
   }
