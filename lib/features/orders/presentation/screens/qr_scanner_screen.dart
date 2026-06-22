@@ -53,7 +53,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> with SingleTickerProv
     if (success && mounted) {
       final state = provider.state;
       if (state is QrScanSuccess) {
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => QrOrderDetailsScreen(order: state.orderDetails),

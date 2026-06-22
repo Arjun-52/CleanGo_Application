@@ -3,6 +3,9 @@ import '../../domain/entities/order_entity.dart';
 import '../../domain/repositories/i_order_repository.dart';
 import '../datasources/order_service.dart';
 import '../models/qr_scan_order_model.dart';
+import '../models/media_evidence_model.dart';
+import '../models/create_order_model.dart';
+import '../models/order_timeline_model.dart';
 
 class OrderRepositoryImpl implements IOrderRepository {
   final OrderService remoteDataSource;
@@ -61,5 +64,48 @@ class OrderRepositoryImpl implements IOrderRepository {
   @override
   Future<QrScanOrderModel> scanQrCode(String qrCode) {
     return remoteDataSource.scanQrCode(qrCode);
+  }
+
+  @override
+  Future<MediaEvidenceModel> uploadMediaEvidence({
+    required String orderId,
+    required String type,
+    required String url,
+    String? caption,
+    bool hasDamage = false,
+    bool isSigned = false,
+  }) {
+    return remoteDataSource.uploadMediaEvidence(
+      orderId: orderId,
+      type: type,
+      url: url,
+      caption: caption,
+      hasDamage: hasDamage,
+      isSigned: isSigned,
+    );
+  }
+
+  @override
+  Future<CreateOrderModel> createOrder({
+    required String customerId,
+    required String customerName,
+    required int itemsCount,
+    required String serviceMode,
+    required String serviceType,
+    required String storeId,
+  }) {
+    return remoteDataSource.createOrder(
+      customerId: customerId,
+      customerName: customerName,
+      itemsCount: itemsCount,
+      serviceMode: serviceMode,
+      serviceType: serviceType,
+      storeId: storeId,
+    );
+  }
+
+  @override
+  Future<OrderTimelineModel> getOrderTimeline(String orderId) {
+    return remoteDataSource.getOrderTimeline(orderId);
   }
 }

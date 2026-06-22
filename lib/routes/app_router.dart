@@ -42,6 +42,8 @@ import '../features/profile/presentation/screens/saved_addresses_screen.dart';
 import '../features/booking/presentation/providers/booking_provider.dart';
 import '../features/orders/presentation/providers/new_order_provider.dart';
 import '../features/wallet/presentation/providers/wallet_provider.dart';
+import '../features/orders/presentation/providers/order_timeline_provider.dart';
+import '../features/orders/presentation/screens/order_timeline_screen.dart';
 
 class AppRoutes {
   static const String login = '/login';
@@ -66,6 +68,7 @@ class AppRoutes {
   static const String editProfile = '/edit-profile';
   static const String savedAddresses = '/saved-addresses';
   static const String qrScanner = '/qr-scanner';
+  static const String orderTimeline = '/order-timeline';
 }
 
 // MAIN SCREEN WITH NESTED NAVIGATION
@@ -181,6 +184,18 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.qrScanner,
       builder: (context, state) => const QrScannerScreen(),
+    ),
+
+    // Order Timeline Route
+    GoRoute(
+      path: '${AppRoutes.orderTimeline}/:orderId',
+      builder: (context, state) {
+        final orderId = state.pathParameters['orderId']!;
+        return ChangeNotifierProvider(
+          create: (_) => di.sl<OrderTimelineProvider>(),
+          child: OrderTimelineScreen(orderId: orderId),
+        );
+      },
     ),
 
     // Main Navigation with Nested Routes
@@ -332,5 +347,6 @@ extension AppRouterExtension on BuildContext {
   void goSelectLocation() => go(AppRoutes.selectLocation);
   void goConfirmLocation() => go(AppRoutes.confirmLocation);
   void goAddressForm() => go(AppRoutes.addressForm);
-  void goQrScanner() => go(AppRoutes.qrScanner);
+  void goQrScanner() => push(AppRoutes.qrScanner);
+  void goOrderTimeline(String orderId) => push('${AppRoutes.orderTimeline}/$orderId');
 }

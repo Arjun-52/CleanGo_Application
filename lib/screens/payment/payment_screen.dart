@@ -1,5 +1,8 @@
 import 'package:clean_go/features/orders/presentation/screens/order_placed_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:clean_go/features/orders/presentation/providers/new_order_provider.dart';
+import 'package:clean_go/features/orders/presentation/providers/states/new_order_state.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -13,6 +16,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<NewOrderProvider>();
+    final isCreating = provider.createOrderState is CreateOrderLoading;
+    final totalAmount = provider.totalPrice.toInt();
+
     return Scaffold(
       backgroundColor: const Color(0xffF6F7F9),
 
@@ -131,16 +138,72 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (_) => const OrderPlaced(),
-                    ),
-                    (route) => false,
-                  );
-                },
+                onPressed: isCreating ? null : () async {
+                  final orderProvider = context.read<NewOrderProvider>();
+                  
+                  // Validation
+                  const customerId = "1b88ab09-6f39-4893-8880-a7077c8c81fe";
+                  const customerName = "Rahul Verma";
+                  const storeId = "47d1c382-7fc8-498a-9065-606674158cc3";
+                  final itemsCount = orderProvider.totalClothes;
+                  final serviceMode = orderProvider.selectedMode == 0 ? "Fasttrack" : "Standard";
+                  
+                  String serviceType = "Wash & Iron";
+                  if (orderProvider.selectedService >= 0 && orderProvider.selectedService < orderProvider.services.length) {
+                    serviceType = orderProvider.services[orderProvider.selectedService]["title"] as String? ?? "Wash & Iron";
+                  }
 
-                child: const Text("Pay ₹95", style: TextStyle(fontSize: 16)),
+                  if (customerId.isEmpty || customerName.isEmpty || storeId.isEmpty || itemsCount <= 0 || serviceMode.isEmpty || serviceType.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Validation Error: Please select items and ensure all details are valid."),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+
+                  final createdOrder = await orderProvider.createOrder(
+                    customerId: customerId,
+                    customerName: customerName,
+                    itemsCount: itemsCount,
+                    serviceMode: serviceMode,
+                    serviceType: serviceType,
+                    storeId: storeId,
+                  );
+
+                  if (createdOrder != null && mounted) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (_) => OrderPlacedScreen(order: createdOrder),
+                      ),
+                      (route) => false,
+                    );
+                  } else if (mounted) {
+                    final errorMsg = orderProvider.createOrderState is CreateOrderError
+                        ? (orderProvider.createOrderState as CreateOrderError).message
+                        : "Failed to create order";
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(errorMsg),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                },
+                child: isCreating
+                    ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      )
+                    : Text(
+                        "Pay ₹$totalAmount",
+                        style: const TextStyle(fontSize: 16, color: Colors.white),
+                      ),
               ),
             ),
           ],

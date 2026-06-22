@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../../../data/models/create_order_model.dart';
 
 abstract class NewOrderState {
   const NewOrderState();
@@ -62,4 +63,20 @@ class NewOrderError extends NewOrderState {
 
   @override
   int get hashCode => message.hashCode;
+}
+
+class CreateOrderLoading extends NewOrderState {
+  const CreateOrderLoading();
+}
+
+class CreateOrderSuccess extends NewOrderState {
+  final CreateOrderModel order;
+
+  const CreateOrderSuccess(this.order);
+}
+
+class CreateOrderError extends NewOrderState {
+  final String message;
+
+  const CreateOrderError(this.message);
 }

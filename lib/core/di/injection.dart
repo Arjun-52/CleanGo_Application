@@ -26,6 +26,7 @@ import 'package:clean_go/features/orders/domain/usecases/order_usecases.dart';
 import 'package:clean_go/features/orders/presentation/providers/order_provider.dart';
 import 'package:clean_go/features/orders/presentation/providers/new_order_provider.dart';
 import 'package:clean_go/features/orders/presentation/providers/qr_scan_provider.dart';
+import 'package:clean_go/features/orders/presentation/providers/order_timeline_provider.dart';
 
 import 'package:clean_go/features/home/presentation/providers/notification_provider.dart';
 
@@ -76,8 +77,9 @@ Future<void> init() async {
   sl.registerFactory<BookingProvider>(() => BookingProvider(sl()));
   sl.registerFactory<LocationProvider>(() => LocationProvider(sl()));
   sl.registerFactory<OrderProvider>(() => OrderProvider(sl()));
-  sl.registerFactory<NewOrderProvider>(() => NewOrderProvider());
+  sl.registerFactory<NewOrderProvider>(() => NewOrderProvider(sl()));
   sl.registerFactory<NotificationProvider>(() => NotificationProvider());
   sl.registerFactory<WalletProvider>(() => WalletProvider(sl()));
   sl.registerFactory<QrScanProvider>(() => QrScanProvider(sl()));
+  sl.registerFactory<OrderTimelineProvider>(() => OrderTimelineProvider(sl()));
 }

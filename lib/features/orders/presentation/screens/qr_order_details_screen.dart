@@ -4,6 +4,7 @@ import '../../../../core/constants/colors.dart';
 import '../../data/models/qr_scan_order_model.dart';
 import '../providers/qr_scan_provider.dart';
 import '../providers/states/qr_scan_state.dart';
+import '../../../../routes/app_router.dart';
 
 class QrOrderDetailsScreen extends StatelessWidget {
   final QrScanOrderModel order;
@@ -138,6 +139,31 @@ class QrOrderDetailsScreen extends StatelessWidget {
                   _buildSectionTitle("Logistics & OTPs"),
                   const SizedBox(height: 8),
                   _buildLogisticsCard(currentOrder),
+                  const SizedBox(height: 16),
+
+                  // View Timeline Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: AppColors.primary),
+                        foregroundColor: AppColors.primary,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      onPressed: () {
+                        context.goOrderTimeline(currentOrder.id ?? 'dc943695-1223-46d1-9234-f385d42868e0');
+                      },
+                      icon: const Icon(Icons.timeline),
+                      label: const Text("View Timeline", style: TextStyle(fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // QC Evidence Upload Section
+                  _buildSectionTitle("QC Evidence & Upload"),
+                  const SizedBox(height: 8),
+                  QcEvidenceUploadSection(orderId: currentOrder.orderRef ?? currentOrder.id ?? ""),
                   const SizedBox(height: 24),
                 ],
               ),
@@ -376,6 +402,413 @@ class QrOrderDetailsScreen extends StatelessWidget {
             ),
           ],
         ),
+      ],
+    );
+  }
+}
+
+class QcEvidenceUploadSection extends StatefulWidget {
+  final String orderId;
+
+  const QcEvidenceUploadSection({super.key, required this.orderId});
+
+  @override
+  State<QcEvidenceUploadSection> createState() => _QcEvidenceUploadSectionState();
+}
+
+class _QcEvidenceUploadSectionState extends State<QcEvidenceUploadSection> {
+  final TextEditingController _captionController = TextEditingController();
+  bool _hasDamage = false;
+  bool _isSigned = false;
+  String? _uploadedImageUrl;
+  bool _isLocalFileUploading = false;
+
+  @override
+  void dispose() {
+    _captionController.dispose();
+    super.dispose();
+  }
+
+  String _formatDateTimeString(DateTime? dateTime) {
+    if (dateTime == null) return "--";
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    final day = dateTime.day.toString().padLeft(2, '0');
+    final month = months[dateTime.month - 1];
+    final year = dateTime.year;
+    final hour = (dateTime.hour % 12 == 0 ? 12 : dateTime.hour % 12).toString().padLeft(2, '0');
+    final minute = dateTime.minute.toString().padLeft(2, '0');
+    final period = dateTime.hour >= 12 ? "PM" : "AM";
+    return "$day $month $year $hour:$minute $period";
+  }
+
+  Future<void> _handleImageSelection(BuildContext context, String source) async {
+    final provider = context.read<QrScanProvider>();
+    setState(() {
+      _isLocalFileUploading = true;
+      _uploadedImageUrl = null;
+    });
+
+    await provider.simulateImageSelection(source);
+
+    setState(() {
+      _isLocalFileUploading = false;
+      _uploadedImageUrl = "https://images.unsplash.com/photo-1545156521-77bd85671d30"; // Mock laundry packet photo
+    });
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Mock image selected and uploaded to cloud storage successfully!")),
+      );
+    }
+  }
+
+  Future<void> _handleUpload(BuildContext context) async {
+    if (_uploadedImageUrl == null || _uploadedImageUrl!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Validation Error: Please capture or select an image first"),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    if (widget.orderId.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Validation Error: Order ID is required"),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    final provider = context.read<QrScanProvider>();
+    final success = await provider.uploadMediaEvidence(
+      orderId: widget.orderId,
+      type: "photo",
+      url: _uploadedImageUrl!,
+      caption: _captionController.text.trim().isEmpty ? null : _captionController.text.trim(),
+      hasDamage: _hasDamage,
+      isSigned: _isSigned,
+    );
+
+    if (success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Media evidence uploaded successfully!"),
+          backgroundColor: AppColors.success,
+        ),
+      );
+      // Clear form
+      setState(() {
+        _captionController.clear();
+        _hasDamage = false;
+        _isSigned = false;
+        _uploadedImageUrl = null;
+      });
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(provider.uploadState is UploadEvidenceError
+              ? (provider.uploadState as UploadEvidenceError).message
+              : "Failed to upload evidence"),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.watch<QrScanProvider>();
+    final isUploading = provider.uploadState is UploadEvidenceLoading || _isLocalFileUploading;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Upload form Card
+        Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Upload New QC Evidence",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.primary),
+                ),
+                const SizedBox(height: 16),
+
+                // Capture/Gallery Buttons
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                        ),
+                        onPressed: isUploading ? null : () => _handleImageSelection(context, "camera"),
+                        icon: const Icon(Icons.camera_alt),
+                        label: const Text("Capture Photo"),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: AppColors.primary),
+                          foregroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                        ),
+                        onPressed: isUploading ? null : () => _handleImageSelection(context, "gallery"),
+                        icon: const Icon(Icons.photo_library),
+                        label: const Text("From Gallery"),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Image Upload Progress
+                if (_isLocalFileUploading) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Uploading to storage...",
+                        style: TextStyle(fontSize: 12, color: AppColors.grey),
+                      ),
+                      Text(
+                        "${(provider.imageUploadProgress * 100).toStringAsFixed(0)}%",
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  LinearProgressIndicator(
+                    value: provider.imageUploadProgress,
+                    backgroundColor: AppColors.greyLight,
+                    valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
+                // Image Preview
+                if (_uploadedImageUrl != null) ...[
+                  const Text(
+                    "Image Preview:",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.greyDark),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    height: 150,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.greyLight),
+                    ),
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            _uploadedImageUrl!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          ),
+                        ),
+                        Positioned(
+                          right: 8,
+                          top: 8,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.black54,
+                            child: IconButton(
+                              icon: const Icon(Icons.close, color: Colors.white),
+                              onPressed: isUploading
+                                  ? null
+                                  : () => setState(() => _uploadedImageUrl = null),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
+                // Caption Field
+                TextField(
+                  controller: _captionController,
+                  enabled: !isUploading,
+                  decoration: InputDecoration(
+                    labelText: "Caption / Notes",
+                    hintText: "e.g. Package picked up successfully",
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // Damage Toggle
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(
+                      children: [
+                        Icon(Icons.report_problem_outlined, color: AppColors.warning),
+                        SizedBox(width: 8),
+                        Text("Has Damage / Issues", style: TextStyle(fontWeight: FontWeight.w500)),
+                      ],
+                    ),
+                    Switch(
+                      value: _hasDamage,
+                      activeColor: AppColors.primary,
+                      onChanged: isUploading ? null : (val) => setState(() => _hasDamage = val),
+                    ),
+                  ],
+                ),
+
+                // Signature Toggle
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(
+                      children: [
+                        Icon(Icons.draw_outlined, color: AppColors.primaryLight),
+                        SizedBox(width: 8),
+                        Text("Is Signed", style: TextStyle(fontWeight: FontWeight.w500)),
+                      ],
+                    ),
+                    Switch(
+                      value: _isSigned,
+                      activeColor: AppColors.primary,
+                      onChanged: isUploading ? null : (val) => setState(() => _isSigned = val),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryDark,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    onPressed: isUploading ? null : () => _handleUpload(context),
+                    child: isUploading
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          )
+                        : const Text(
+                            "Upload Evidence",
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                  ),
+                ),
+
+                // Error Message if any
+                if (provider.uploadState is UploadEvidenceError) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    (provider.uploadState as UploadEvidenceError).message,
+                    style: const TextStyle(color: AppColors.error, fontSize: 12, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ),
+
+        // Evidence History Card
+        if (provider.uploadedEvidences.isNotEmpty) ...[
+          const SizedBox(height: 20),
+          const Text(
+            "Uploaded Evidence List",
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.primary),
+          ),
+          const SizedBox(height: 8),
+          ...provider.uploadedEvidences.map((evidence) {
+            return Card(
+              margin: const EdgeInsets.only(bottom: 12),
+              elevation: 0,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Image thumbnail
+                    if (evidence.url != null && evidence.url!.isNotEmpty)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          evidence.url!,
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    const SizedBox(width: 12),
+
+                    // Details
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Evidence Type: ${evidence.type ?? 'Photo'}",
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "Caption: ${evidence.caption ?? 'No caption provided'}",
+                            style: const TextStyle(fontSize: 12, color: Colors.black87),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "Damage Status: ${evidence.hasDamage == true ? 'Has Damage' : 'No Damage'}",
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: evidence.hasDamage == true ? AppColors.error : AppColors.success,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            "Signature Status: ${evidence.isSigned == true ? 'Signed' : 'Not Signed'}",
+                            style: const TextStyle(fontSize: 11, color: AppColors.greyDark),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            "Upload Time: ${_formatDateTimeString(evidence.uploadedAt ?? DateTime.now())}",
+                            style: const TextStyle(fontSize: 10, color: AppColors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ],
       ],
     );
   }

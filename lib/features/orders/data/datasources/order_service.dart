@@ -4,6 +4,9 @@ import '../../domain/entities/order_entity.dart';
 import '../../../../core/network/api_client.dart';
 import '../models/qr_scan_order_model.dart';
 import '../models/qr_scan_response.dart';
+import '../models/media_evidence_model.dart';
+import '../models/create_order_model.dart';
+import '../models/order_timeline_model.dart';
 
 class OrderService {
   final ApiClient apiClient;
@@ -188,6 +191,106 @@ class OrderService {
       throw Exception("Invalid response format from server");
     } catch (e) {
       print("DEBUG: scanQrCode error: $e");
+      rethrow;
+    }
+  }
+
+  /// Upload QC Evidence Media
+  Future<MediaEvidenceModel> uploadMediaEvidence({
+    required String orderId,
+    required String type,
+    required String url,
+    String? caption,
+    bool hasDamage = false,
+    bool isSigned = false,
+  }) async {
+    try {
+      final request = MediaEvidenceUploadRequest(
+        orderId: orderId,
+        type: type,
+        url: url,
+        caption: caption,
+        hasDamage: hasDamage,
+        isSigned: isSigned,
+      );
+
+      final response = await apiClient.post(
+        '/api/media/upload',
+        data: request.toJson(),
+      );
+
+      if (response.data is Map<String, dynamic>) {
+        final uploadResponse = MediaEvidenceUploadResponse.fromJson(response.data as Map<String, dynamic>);
+        if (uploadResponse.status == 'success' && uploadResponse.data != null) {
+          return uploadResponse.data!;
+        } else {
+          throw Exception(uploadResponse.message.isNotEmpty ? uploadResponse.message : "Failed to upload evidence");
+        }
+      }
+      throw Exception("Invalid response format from server");
+    } catch (e) {
+      print("DEBUG: uploadMediaEvidence error: $e");
+      rethrow;
+    }
+  }
+
+  /// Create Order API
+  Future<CreateOrderModel> createOrder({
+    required String customerId,
+    required String customerName,
+    required int itemsCount,
+    required String serviceMode,
+    required String serviceType,
+    required String storeId,
+  }) async {
+    try {
+      final request = CreateOrderRequest(
+        customerId: customerId,
+        customerName: customerName,
+        itemsCount: itemsCount,
+        serviceMode: serviceMode,
+        serviceType: serviceType,
+        storeId: storeId,
+      );
+
+      final response = await apiClient.post(
+        '/api/orders',
+        data: request.toJson(),
+      );
+
+      if (response.data is Map<String, dynamic>) {
+        final createResponse = CreateOrderResponse.fromJson(response.data as Map<String, dynamic>);
+        if (createResponse.status == 'success' && createResponse.data != null) {
+          return createResponse.data!;
+        } else {
+          throw Exception("Failed to create order");
+        }
+      }
+      throw Exception("Invalid response format from server");
+    } catch (e) {
+      print("DEBUG: createOrder error: $e");
+      rethrow;
+    }
+  }
+
+  /// Get Order Timeline API
+  Future<OrderTimelineModel> getOrderTimeline(String orderId) async {
+    try {
+      final response = await apiClient.get(
+        '/api/orders/$orderId',
+      );
+
+      if (response.data is Map<String, dynamic>) {
+        final timelineResponse = OrderTimelineResponse.fromJson(response.data as Map<String, dynamic>);
+        if (timelineResponse.status == 'success' && timelineResponse.data != null) {
+          return timelineResponse.data!;
+        } else {
+          throw Exception(timelineResponse.message.isNotEmpty ? timelineResponse.message : "Failed to fetch order timeline");
+        }
+      }
+      throw Exception("Invalid response format from server");
+    } catch (e) {
+      print("DEBUG: getOrderTimeline error: $e");
       rethrow;
     }
   }

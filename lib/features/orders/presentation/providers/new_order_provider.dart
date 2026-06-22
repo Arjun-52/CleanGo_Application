@@ -1,16 +1,23 @@
 import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
 import '../../domain/order_constans/order_constans.dart';
 import '../../domain/usecases/order_pricing.dart';
+import '../../domain/usecases/order_usecases.dart';
+import '../../data/models/create_order_model.dart';
 import 'states/new_order_state.dart';
 
 class NewOrderProvider with ChangeNotifier {
+  final OrderUseCases _orderUseCases;
   NewOrderState _state = const NewOrderInitial();
+  NewOrderState _createOrderState = const NewOrderInitial();
 
   final categorizedItems = OrderConstants.categorizedItems;
   final addons = OrderConstants.addons;
   final services = OrderConstants.services;
 
-  NewOrderProvider();
+  NewOrderProvider(this._orderUseCases);
+
+  NewOrderState get createOrderState => _createOrderState;
 
   NewOrderState get state => _state;
 
@@ -199,5 +206,53 @@ class NewOrderProvider with ChangeNotifier {
         selectedFilter: currentFilter,
       ),
     );
+  }
+
+  Future<CreateOrderModel?> createOrder({
+    required String customerId,
+    required String customerName,
+    required int itemsCount,
+    required String serviceMode,
+    required String serviceType,
+    required String storeId,
+  }) async {
+    _createOrderState = const CreateOrderLoading();
+    notifyListeners();
+
+    try {
+      final order = await _orderUseCases.createOrder(
+        customerId: customerId,
+        customerName: customerName,
+        itemsCount: itemsCount,
+        serviceMode: serviceMode,
+        serviceType: serviceType,
+        storeId: storeId,
+      );
+      _createOrderState = CreateOrderSuccess(order);
+      notifyListeners();
+      return order;
+    } catch (e) {
+      String errorMessage = "Failed to create order";
+      if (e is DioException) {
+        if (e.response?.data != null && e.response?.data is Map) {
+          final data = e.response?.data as Map;
+          if (data['message'] != null) {
+            errorMessage = data['message'].toString();
+          }
+        } else {
+          errorMessage = e.message ?? "Network failure";
+        }
+      } else {
+        errorMessage = e.toString().replaceAll("Exception: ", "");
+      }
+      _createOrderState = CreateOrderError(errorMessage);
+      notifyListeners();
+      return null;
+    }
+  }
+
+  void resetCreateOrderState() {
+    _createOrderState = const NewOrderInitial();
+    notifyListeners();
   }
 }
