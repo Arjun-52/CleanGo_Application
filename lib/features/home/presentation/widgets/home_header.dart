@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:clean_go/features/home/presentation/screens/notification_screen.dart';
 import 'package:clean_go/features/location/presentation/providers/location_provider.dart';
 import 'package:clean_go/features/location/data/models/address_model.dart';
+import 'package:clean_go/routes/app_router.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -108,34 +109,46 @@ class HomeHeader extends StatelessWidget {
             ],
           ),
 
-          /// Notification Icon
-          InkWell(
-            borderRadius: BorderRadius.circular(30),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NotificationScreen(),
+          Row(
+            children: [
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                onTap: () => context.goQrScanner(),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.qr_code_scanner, size: 26, color: Color(0xFF013E6D)),
                 ),
-              );
-            },
-            child: Stack(
-              children: [
-                const Icon(Icons.notifications_none, size: 26),
-                Positioned(
-                  right: 3,
-                  top: 3,
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
+              ),
+              const SizedBox(width: 8),
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NotificationScreen(),
                     ),
-                  ),
+                  );
+                },
+                child: Stack(
+                  children: [
+                    const Icon(Icons.notifications_none, size: 26),
+                    Positioned(
+                      right: 3,
+                      top: 3,
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

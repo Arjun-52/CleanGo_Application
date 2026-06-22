@@ -3,6 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../orders/data/models/user_model.dart';
 import '../../../../core/network/api_client.dart';
+import '../models/send_otp_request.dart';
+import '../models/send_otp_response.dart';
+import '../models/verify_otp_request.dart';
+import '../models/verify_otp_response.dart';
 
 class AuthService {
   final ApiClient apiClient;
@@ -121,5 +125,29 @@ class AuthService {
   Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.containsKey(tokenKey);
+  }
+
+  // Customer Send OTP API
+  Future<SendOtpResponse> sendOtpApi(SendOtpRequest request) async {
+    final response = await apiClient.post(
+      '/api/auth/customer/send-otp',
+      data: request.toJson(),
+    );
+    if (response.data is Map<String, dynamic>) {
+      return SendOtpResponse.fromJson(response.data as Map<String, dynamic>);
+    }
+    throw Exception("Invalid response from server");
+  }
+
+  // Customer Verify OTP API
+  Future<VerifyOtpResponse> verifyOtpApi(VerifyOtpRequest request) async {
+    final response = await apiClient.post(
+      '/api/auth/customer/verify-otp',
+      data: request.toJson(),
+    );
+    if (response.data is Map<String, dynamic>) {
+      return VerifyOtpResponse.fromJson(response.data as Map<String, dynamic>);
+    }
+    throw Exception("Invalid response from server");
   }
 }

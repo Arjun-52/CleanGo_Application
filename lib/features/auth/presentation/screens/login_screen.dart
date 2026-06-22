@@ -30,6 +30,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
     String phoneNumber = _phoneController.text.trim();
 
+    if (phoneNumber.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Phone number cannot be empty'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    if (phoneNumber.length != 10 || !RegExp(r'^[6-9]\d{9}$').hasMatch(phoneNumber)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter a valid 10-digit phone number'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     String? verificationId = await authProvider.sendOtp(phoneNumber);
 
     if (verificationId != null && mounted) {

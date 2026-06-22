@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
+import '../providers/states/auth_state.dart';
 import '../../../../routes/app_router.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -27,7 +28,13 @@ class _OtpScreenState extends State<OtpScreen> {
     _otpFocusNodes = List.generate(6, (_) => FocusNode());
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AuthProvider>(context, listen: false).startOtpTimer();
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      authProvider.startOtpTimer();
+      
+      final state = authProvider.authState;
+      if (state is SendOtpSuccess && state.devOtp != null && state.devOtp!.isNotEmpty) {
+        _showTopSnackBar(state.devOtp!);
+      }
     });
   }
 
@@ -56,6 +63,11 @@ class _OtpScreenState extends State<OtpScreen> {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     String otp = _otpControllers.map((c) => c.text).join();
+    if (otp.length != 6 || !RegExp(r'^\d{6}$').hasMatch(otp)) {
+      _showError("Please enter a valid 6-digit OTP");
+      return;
+    }
+
     bool success = await authProvider.verifyOtp(widget.verificationId, otp);
 
     // Wait a frame for state to propagate
@@ -69,9 +81,50 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   /// Handle OTP resend
-  void _resendOtp() {
+  void _resendOtp() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    authProvider.startOtpTimer();
+    String? result = await authProvider.sendOtp(widget.verificationId);
+    if (result != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('OTP resent successfully'),
+          backgroundColor: Colors.green,
+        ),
+      );
+      authProvider.startOtpTimer();
+      
+      final state = authProvider.authState;
+      if (state is SendOtpSuccess && state.devOtp != null && state.devOtp!.isNotEmpty) {
+        _showTopSnackBar(state.devOtp!);
+      }
+    } else if (authProvider.error != null && mounted) {
+      _showError(authProvider.error!);
+    }
+  }
+
+  void _showTopSnackBar(String devOtp) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Development OTP: $devOtp',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blue.shade700,
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height - 120,
+          left: 20,
+          right: 20,
+        ),
+        dismissDirection: DismissDirection.up,
+        duration: const Duration(seconds: 10),
+      ),
+    );
   }
 
   void _showError(String msg) {
@@ -107,10 +160,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
               const SizedBox(height: 80),
 
-              const Text(
-                "We have sent a verification code\nto +91 9347830977",
+              Text(
+                "We have sent a verification code\nto ${widget.verificationId}",
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   height: 1.6,
                   fontWeight: FontWeight.w500,

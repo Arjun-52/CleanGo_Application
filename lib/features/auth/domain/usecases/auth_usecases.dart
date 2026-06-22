@@ -1,5 +1,7 @@
 import '../entities/user_entity.dart';
 import '../repositories/i_auth_repository.dart';
+import '../../data/models/send_otp_response.dart';
+import '../../data/models/verify_otp_response.dart';
 
 class AuthUseCases {
   final IAuthRepository repository;
@@ -36,5 +38,13 @@ class AuthUseCases {
 
   Future<bool> isLoggedIn() {
     return repository.isLoggedIn();
+  }
+
+  Future<SendOtpResponse> sendOtpCustomer(String phone) {
+    return repository.sendOtpCustomer(phone);
+  }
+
+  Future<VerifyOtpResponse> verifyOtpCustomer({required String phone, required String otp}) {
+    return repository.verifyOtpCustomer(phone: phone, otp: otp);
   }
 }

@@ -2,6 +2,7 @@ import '../models/tracking_model.dart';
 import '../../domain/entities/order_entity.dart';
 import '../../domain/repositories/i_order_repository.dart';
 import '../datasources/order_service.dart';
+import '../models/qr_scan_order_model.dart';
 
 class OrderRepositoryImpl implements IOrderRepository {
   final OrderService remoteDataSource;
@@ -55,5 +56,10 @@ class OrderRepositoryImpl implements IOrderRepository {
   @override
   Future<bool> rateOrder(String orderId, int rating, String? review) {
     return remoteDataSource.rateOrder(orderId, rating, review);
+  }
+
+  @override
+  Future<QrScanOrderModel> scanQrCode(String qrCode) {
+    return remoteDataSource.scanQrCode(qrCode);
   }
 }

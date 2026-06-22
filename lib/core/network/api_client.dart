@@ -7,7 +7,7 @@ class ApiClient {
   ApiClient() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'https://api.cleango.com/v1',
+        baseUrl: 'https://backendcleango.gyaanplant.co.in',
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),
         headers: {
@@ -20,29 +20,39 @@ class ApiClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // Token Injection
+          final isPublicEndpoint = options.path.contains('/api/auth/customer/send-otp') ||
+              options.path.contains('/api/auth/customer/verify-otp');
+          
           final prefs = await SharedPreferences.getInstance();
           final token = prefs.getString("auth_token");
           
-          if (token != null && token.isNotEmpty) {
+          print("DEBUG: Loading token from storage: $token");
+          
+          if (!isPublicEndpoint && token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
+            print("DEBUG: Attached Authorization header (Bearer token) to request");
+          } else {
+            print("DEBUG: No Authorization header attached (isPublic: $isPublicEndpoint)");
           }
           
-          print("DEBUG: API ${options.method} ${options.uri}");
+          print("DEBUG: API REQUEST -> ${options.method} ${options.uri}");
+          print("DEBUG: Request Headers: ${options.headers}");
+          print("DEBUG: Request Body: ${options.data}");
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          // You can globally handle success responses or log them
+          print("DEBUG: API RESPONSE -> Success Status: ${response.statusCode}");
+          print("DEBUG: Response Body: ${response.data}");
           return handler.next(response);
         },
         onError: (DioException e, handler) async {
-          // Global Error Handling
+          print("DEBUG: API ERROR -> Status: ${e.response?.statusCode}");
+          print("DEBUG: Error Response Body: ${e.response?.data}");
+          
           if (e.response?.statusCode == 401) {
             print("DEBUG: 401 Unauthorized - Token might be expired.");
-            // Handle refresh token logic or emit a logout event here
           } else if (e.response?.statusCode == 500) {
             print("DEBUG: 500 Internal Server Error.");
-            // Handle server crashes logic globally
           }
           
           return handler.next(e);
@@ -51,8 +61,6 @@ class ApiClient {
     );
   }
 
-  // --- Wrapper Methods for future usage ---
-  
   Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) async {
     return await _dio.get(path, queryParameters: queryParameters);
   }

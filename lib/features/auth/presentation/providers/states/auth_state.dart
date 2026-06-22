@@ -62,3 +62,32 @@ class OtpState {
   @override
   int get hashCode => Object.hash(secondsRemaining, canResend);
 }
+
+class SendOtpLoading extends AuthState {
+  const SendOtpLoading();
+}
+
+class SendOtpSuccess extends AuthState {
+  final String phone;
+  final String? devOtp;
+  const SendOtpSuccess({required this.phone, this.devOtp});
+}
+
+class SendOtpError extends AuthState {
+  final String message;
+  const SendOtpError(this.message);
+}
+
+class VerifyOtpLoading extends AuthState {
+  const VerifyOtpLoading();
+}
+
+class VerifyOtpSuccess extends AuthState {
+  final String accessToken;
+  const VerifyOtpSuccess({required this.accessToken});
+}
+
+class VerifyOtpError extends AuthState {
+  final String message;
+  const VerifyOtpError(this.message);
+}

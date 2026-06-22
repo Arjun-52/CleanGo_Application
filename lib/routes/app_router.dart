@@ -21,6 +21,7 @@ import '../features/orders/presentation/screens/order_tracking_screen.dart';
 import '../features/orders/presentation/screens/order_history_screen.dart';
 import '../features/orders/presentation/screens/order_details_screen.dart';
 import '../features/orders/presentation/screens/order_placed_screen.dart';
+import '../features/orders/presentation/screens/qr_scanner_screen.dart';
 
 // Services
 import '../features/services/presentation/screens/service_list_screen.dart';
@@ -64,6 +65,7 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String editProfile = '/edit-profile';
   static const String savedAddresses = '/saved-addresses';
+  static const String qrScanner = '/qr-scanner';
 }
 
 // MAIN SCREEN WITH NESTED NAVIGATION
@@ -173,6 +175,12 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.addressForm,
       builder: (context, state) => const AddressFormSheet(),
+    ),
+
+    // QR Scanner Route
+    GoRoute(
+      path: AppRoutes.qrScanner,
+      builder: (context, state) => const QrScannerScreen(),
     ),
 
     // Main Navigation with Nested Routes
@@ -324,4 +332,5 @@ extension AppRouterExtension on BuildContext {
   void goSelectLocation() => go(AppRoutes.selectLocation);
   void goConfirmLocation() => go(AppRoutes.confirmLocation);
   void goAddressForm() => go(AppRoutes.addressForm);
+  void goQrScanner() => go(AppRoutes.qrScanner);
 }

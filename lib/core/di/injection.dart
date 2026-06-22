@@ -25,6 +25,7 @@ import 'package:clean_go/features/orders/domain/repositories/i_order_repository.
 import 'package:clean_go/features/orders/domain/usecases/order_usecases.dart';
 import 'package:clean_go/features/orders/presentation/providers/order_provider.dart';
 import 'package:clean_go/features/orders/presentation/providers/new_order_provider.dart';
+import 'package:clean_go/features/orders/presentation/providers/qr_scan_provider.dart';
 
 import 'package:clean_go/features/home/presentation/providers/notification_provider.dart';
 
@@ -78,4 +79,5 @@ Future<void> init() async {
   sl.registerFactory<NewOrderProvider>(() => NewOrderProvider());
   sl.registerFactory<NotificationProvider>(() => NotificationProvider());
   sl.registerFactory<WalletProvider>(() => WalletProvider(sl()));
+  sl.registerFactory<QrScanProvider>(() => QrScanProvider(sl()));
 }

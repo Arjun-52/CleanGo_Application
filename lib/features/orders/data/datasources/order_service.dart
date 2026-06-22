@@ -2,6 +2,8 @@ import 'package:clean_go/features/orders/data/models/tracking_model.dart';
 import '../models/order_model.dart';
 import '../../domain/entities/order_entity.dart';
 import '../../../../core/network/api_client.dart';
+import '../models/qr_scan_order_model.dart';
+import '../models/qr_scan_response.dart';
 
 class OrderService {
   final ApiClient apiClient;
@@ -163,5 +165,30 @@ class OrderService {
 
   Future<bool> rateOrder(String orderId, int rating, String? review) async {
     return true;
+  }
+
+  /// Scan QR Code API
+  Future<QrScanOrderModel> scanQrCode(String qrCode) async {
+    try {
+      final response = await apiClient.post(
+        '/api/orders/qr/scan',
+        data: {
+          'packetQr': qrCode,
+          'location': 'Pickup Point - MG Road',
+        },
+      );
+      if (response.data is Map<String, dynamic>) {
+        final scanResponse = QrScanResponse.fromJson(response.data as Map<String, dynamic>);
+        if (scanResponse.status == 'success' && scanResponse.data != null) {
+          return scanResponse.data!;
+        } else {
+          throw Exception(scanResponse.message.isNotEmpty ? scanResponse.message : "Failed to scan QR code");
+        }
+      }
+      throw Exception("Invalid response format from server");
+    } catch (e) {
+      print("DEBUG: scanQrCode error: $e");
+      rethrow;
+    }
   }
 }

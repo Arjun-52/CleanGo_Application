@@ -1,5 +1,6 @@
 import '../entities/order_entity.dart';
 import '../../data/models/tracking_model.dart';
+import '../../data/models/qr_scan_order_model.dart';
 
 abstract class IOrderRepository {
   Future<List<OrderEntity>> getOrders();
@@ -11,4 +12,5 @@ abstract class IOrderRepository {
   Future<bool> verifyDeliveryOtp(String orderId, String otp);
   Future<bool> cancelOrder(String orderId);
   Future<bool> rateOrder(String orderId, int rating, String? review);
+  Future<QrScanOrderModel> scanQrCode(String qrCode);
 }

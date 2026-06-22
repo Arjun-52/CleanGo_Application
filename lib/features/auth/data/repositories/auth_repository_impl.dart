@@ -2,6 +2,10 @@ import '../../../orders/data/models/user_model.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/i_auth_repository.dart';
 import '../datasources/auth_service.dart';
+import '../models/send_otp_request.dart';
+import '../models/send_otp_response.dart';
+import '../models/verify_otp_request.dart';
+import '../models/verify_otp_response.dart';
 
 class AuthRepositoryImpl implements IAuthRepository {
   final AuthService remoteDataSource;
@@ -48,5 +52,15 @@ class AuthRepositoryImpl implements IAuthRepository {
   @override
   Future<bool> isLoggedIn() {
     return remoteDataSource.isLoggedIn();
+  }
+
+  @override
+  Future<SendOtpResponse> sendOtpCustomer(String phone) {
+    return remoteDataSource.sendOtpApi(SendOtpRequest(phone: phone));
+  }
+
+  @override
+  Future<VerifyOtpResponse> verifyOtpCustomer({required String phone, required String otp}) {
+    return remoteDataSource.verifyOtpApi(VerifyOtpRequest(phone: phone, otp: otp));
   }
 }

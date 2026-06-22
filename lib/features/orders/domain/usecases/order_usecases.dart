@@ -1,6 +1,7 @@
 import '../entities/order_entity.dart';
 import '../../data/models/tracking_model.dart';
 import '../repositories/i_order_repository.dart';
+import '../../data/models/qr_scan_order_model.dart';
 
 class OrderUseCases {
   final IOrderRepository repository;
@@ -41,5 +42,9 @@ class OrderUseCases {
 
   Future<bool> rateOrder(String orderId, int rating, String? review) {
     return repository.rateOrder(orderId, rating, review);
+  }
+
+  Future<QrScanOrderModel> scanQrCode(String qrCode) {
+    return repository.scanQrCode(qrCode);
   }
 }
